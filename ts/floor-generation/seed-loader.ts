@@ -1,6 +1,6 @@
 //load new random seed
 function randomSeed(){
-	e$('#seed-input').value  = <string><unknown>seedRand.rangeInclusive(1, 99999999);
+	e$("#seed-input").value  = <string><unknown>seedRand.rangeInclusive(1, 99999999);
 	//$('#seed-input').value = 68906772; // map at Diibble, sequence breaker in mine1
 	loadSeed();
 }
@@ -13,11 +13,25 @@ function nextRand (seed) {
 }
 
 let loadSeed = () => {		
-		start(parseInt((e$('#seed-input').value)));
+		start(parseInt((e$("#seed-input").value)));
 }
 
+//remove items from unchecked check-boxes from the lootTable
+function toggleUncheckedItems (): void {
 
+	const CBRelic: HTMLInputElement[] = Object.values(e$("#relic-selection").getElementsByTagName("input"));
+	const CBPotion: HTMLInputElement[] = Object.values(e$("#potion-selection").getElementsByTagName("input"));
 
+	const unckeckedBoxes = CBRelic.filter( box => !box.checked);
+	const unckeckedPotions = CBPotion.filter( box => !box.checked);
+
+	const missing = unckeckedBoxes.map((box) => box.value);
+	const missingPotions = unckeckedPotions.map((box) => box.value);
+
+	toggleWeight(missing, "relic");
+	toggleWeight(missingPotions, "potion");
+
+}
 
 function start(seed){
 	e$('#levels').innerHTML = '';
