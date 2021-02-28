@@ -1,0 +1,149 @@
+html, body {
+	margin: 0 auto;
+	max-width:1300px;
+}
+
+header {
+	text-align: center;
+	margin: 4em 0;
+}
+
+h1{
+	font-size: 3em;
+}
+
+
+	
+
+#items-to-hide {
+	-display: none;
+	display: flex;
+	flex-flow: column wrap;
+	align-content: stretch;
+	height:0px;
+	transition: height 0.5s;
+	overflow:hidden;
+}
+
+#show-more:checked ~ #items-to-hide {
+	display: flex;
+	height:450px;
+}
+
+#top-menu {
+	display: flex;
+	flex-flow: column wrap;
+	align-content: stretch;
+	height:200px;
+}
+
+fieldset {
+	padding: 1em;
+	margin: 0.5em;
+}
+
+#seed-options, #save-select {
+	overflow:hidden;
+	height:200px;
+	margin: 0.5em;
+}
+
+
+
+#save-select > label {
+	display:block;
+}
+input {
+	margin: 0.4em;
+}
+
+#save-select > #save-file {
+	margin-left: 2em;
+}
+
+fieldset > p {
+	font-size:0.7em;
+}
+
+#relic-selection, #potion-selection  {
+	overflow:hidden;
+	display: flex;
+	flex-flow: column wrap;
+	height:450px;
+}
+
+#potion-selection {
+	width: 450px;
+	flex-grow:1;
+}
+#relic-selection {
+	width: 700px;
+	flex-grow:2;
+}
+
+#relic-selection > label {
+	-display:inline-block;
+	-width: 150px;
+}
+
+.button-wrap {
+	margin:1em 0;
+	text-align:center;
+}
+.button-wrap > button {
+	font-size: 2em;
+}
+
+.altar-option {
+	margin: 1em 0;
+}
+
+.zone {
+	display: flex;
+	justify-content:space-around;
+}
+
+.level {
+	min-height:300px;
+	min-width: 250px;
+	margin-bottom:1em;
+}
+
+.icon-relicOn, .icon-shop {
+	margin-left: 40px;
+	border-bottom: 1px solid #aaa;
+}
+
+.icon-relic::Before, .icon-item::Before, .icon-potion::Before, .icon-relicOn::Before, .icon-shop::Before, .icon-food::Before  {
+	display:inline-block;
+	height:32px;
+	width:32px;
+	position:relative;
+	vertical-align: middle;
+}
+
+.icon-relicOn::Before, .icon-shop::Before{
+	position:absolute;
+	margin-left:-40px;
+}
+
+.icon-potion::Before {
+	content: url(img/MapIcon_Potion.png);
+}
+.icon-food::Before {
+	content: url(img/MapIcon_Food.png);
+}
+
+.icon-item::Before {
+	content: url(img/MapIcon_Item.png);
+}
+.icon-relic::Before {
+	content: url(img/MapIcon_Relic.png);
+}
+
+.icon-relicOn::Before {
+	content: url(img/MapIcon_RelicOn.png);
+}
+.icon-shop::Before {
+	content: url(img/MapIcon_Shop.png);
+}

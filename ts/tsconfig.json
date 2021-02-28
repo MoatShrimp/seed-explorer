@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "watch": true,
+        "lib": ["dom", "ES2017"],
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "outFile": "../js/script.js"
+    },
+
+"files": [
+	"helpers/e$.ts",
+	"helpers/toUInt32.ts",
+    "classes/Random.ts",
+    "loadSave.ts",
+    "applySettings.ts",
+    "./master-table.ts",
+    "./layout.ts",
+    "./global-variables.ts",
+    "./looting.ts",
+	"floor-generation/dibble.ts",
+	"./floor-generation/shop.ts",
+    "floor-generation/seed-loader.ts",
+    "./scripts.ts"
+]
+}

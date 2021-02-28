@@ -1,0 +1,91 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Undermine seed lookup | Have you had your daily dosage of mining?</title>
+	<meta name="description" content="Undermine seed lookup">
+	<meta name="author" content="MoatShrimp">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/minireset.css/0.0.2/minireset.min.css"/>
+	<link rel="stylesheet" href="style.css">
+
+	<script src="js/script.js"></script>
+
+</head>
+
+<body>
+	<header>
+		<h1 class="logo">
+			Undermine seed lookup v.4.7a
+		</h1>
+	</header>
+
+	<main>
+		<section id="top-menu">
+		
+			<fieldset id="save-select">
+					<legend>Select a save file</legend>
+					<label>
+						<input type="radio" name="save" value="0" id="new-save-radio" class="save-radio">
+						New File
+					</label>
+					<label>
+						<input type="radio" name="save" value="100" id="100-save-radio" class="save-radio">
+						100% File
+					</label>
+					<label>
+						<input type="radio" name="save" value="own" id="own-save-radio" class="save-radio">
+						Load your own*:
+					</label>
+					<input type="file" id="save-file-input" name="save-file" accept=".json"></input>
+					<p>*The save files can be found in the folder:<br>
+						%AppData%\..\LocalLow\Thorium Entertainment\UnderMine\Saves
+					</p>
+			</fieldset>
+			<fieldset id="seed-options">
+				<legend>Seed</legend>
+				<label>
+					Seed: 
+					<input type="text" id="seed-input" name="seedID" value="1234">
+				</label>
+				<button id="random-seed-button">Random Seed</button>
+				
+				<div class="altar-option">
+					<label>Relic on altar:
+						<select id="altar" name="altar"></select>
+					</label>
+				</div>
+				<div class="button-wrap">
+					<button type="button" id="load-seed-button">Load seed!</button>
+				</div>
+				
+			</fieldset>
+		</section>
+		
+		<section id="menu-options">
+			<fieldset id="open-close-menu">
+				
+				<input type="checkbox" name="show" id="show-more">
+				<label for="show-more">Show save file options  \/</label>
+				<div id="items-to-hide">
+					<fieldset id="potion-selection">
+						<legend>Select crafted potions</legend>
+					</fieldset>
+					
+					<fieldset id="relic-selection">
+						<legend>Select crafted relics</legend>
+					</fieldset>
+				</div>
+			</fieldset>
+		</section>
+		
+		
+		<section id="levels">
+		
+		</section>
+
+	</main>
+	<footer>
+	</footer>
+</body>
+</html>
