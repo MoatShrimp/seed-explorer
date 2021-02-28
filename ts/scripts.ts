@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	const loadSeedButton = e$('#load-seed-button');
 
 	//load layout elements
-	settings.checkboxes.relic = listCraftable('relic');
-	settings.checkboxes.potion = listCraftable('potion');
+	listCraftable('relic');
+	listCraftable('potion');
 	populateAltar();
 	loadLootTables ();
 
@@ -24,22 +24,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	newRadio.addEventListener('change', async function () {
 		if (this.checked) {
-			settings = await loadSave(this);
+			settings = loadSave(this);
 			applySettings(settings);
+			loadSeed();
 		}
 		//loadSave(this);
 	});
 	fullRadio.addEventListener('change', async function () {
 		if (this.checked) {
-			settings = await loadSave(this);
+			settings =loadSave(this);
 			applySettings(settings);
+			loadSeed();
 		}
 		//loadSave(this);
 	});	
 	loadRadio.addEventListener('change', async function() {
 		if (this.checked && loadInput.files[0]) {
-			settings = await loadSave(this,loadInput.files[0])
-			applySettings(settings)
+
+			const file = loadInput.files[0];
+  			const reader = new FileReader();
+
+			reader.onload = (e) => {
+				settings = loadSave(loadRadio, <string>e.target.result);
+				applySettings(settings)
+				loadSeed();
+			};
+
+			reader.readAsText(file);
 		}
 		/*if (loadInput.files[0]) {
 			loadSave(this, loadInput.files[0]);
@@ -52,8 +63,17 @@ document.addEventListener("DOMContentLoaded", () => {
 	//save file input
 	loadInput.addEventListener('change', async function () {
 		loadRadio.checked = true;
-		settings = await loadSave(loadRadio, loadInput.files[0]);
-		applySettings(settings);
+
+		const file = loadInput.files[0];
+		const reader = new FileReader();
+
+		reader.onload = (e) => {
+			settings = loadSave(loadRadio, <string>e.target.result);
+			applySettings(settings)
+			loadSeed();
+		};
+
+		reader.readAsText(file);
 		//loadSave(loadRadio, loadInput.files[0]);
 	}); 
 
