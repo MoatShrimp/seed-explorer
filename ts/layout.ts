@@ -22,9 +22,6 @@ function listCraftable (table) {
 			selection.appendChild(itemLable);
 		}
 	});
-	
-	let boxCollection = Object.values(selection.getElementsByTagName('input'));
-	return boxCollection.filter((box) => box.type == 'checkbox');
 }
 
 //toggle all checkboxes in collection

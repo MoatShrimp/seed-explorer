@@ -44,15 +44,19 @@ const rand = {
 	table: null
 };
 
-let settings:any = {
+let settings = {
 	checkboxes: {
-		relic: [],
-		potion: []
+		relic: null,
+		potion: null
 	},
-	altarRelic: {
-		value:0
-	},
-	flags: {}
+	"altarRelic": -1,
+	flags: {
+		"shop_basic_item": 1,
+		"shop_food": 1,
+		"shop_potion_relic": 1,
+		"dibble_extra_item": 0,
+		"dibble_relic": 0
+	}
 }
 
 const seedRand = new Random(Date.now());
