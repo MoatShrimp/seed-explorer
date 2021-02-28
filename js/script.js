@@ -88,75 +88,53 @@ class Random {
         return table.find((currentItem) => ((randWeight -= currentItem.weight) <= 0));
     }
 }
-async function loadSave(radio, file) {
+function loadSave(radio, file) {
     const settingsOut = {
         checkboxes: {
             relic: null,
             potion: null
         },
-        'altarRelic': -1,
+        "altarRelic": -1,
         flags: {
-            'shop_basic_item': 0,
-            'shop_food': 0,
-            'shop_potion_relic': 0,
-            'dibble_extra_item': 0,
-            'dibble_relic': 0
+            "shop_basic_item": 1,
+            "shop_food": 1,
+            "shop_potion_relic": 1,
+            "dibble_extra_item": 0,
+            "dibble_relic": 0
         }
     };
-    Object.values(e$('#relic-selection').getElementsByTagName('input'));
-    const CBRelic = e$('#relic-selection').getElementsByTagName('input');
-    const CBPotion = e$('#potion-selection').getElementsByTagName('input');
+    const CBRelic = Object.values(e$("#relic-selection").getElementsByTagName("input"));
+    const CBPotion = Object.values(e$("#potion-selection").getElementsByTagName("input"));
     switch (radio.value) {
-        case 'own':
-            const readUploadedFileAsText = (inputFile) => {
-                const reader = new FileReader();
-                return new Promise((resolve, reject) => {
-                    reader.onerror = () => {
-                        reader.abort();
-                        reject(new DOMException("Problem parsing save file."));
-                    };
-                    reader.onload = () => {
-                        resolve(reader.result);
-                    };
-                    reader.readAsText(inputFile);
-                });
-            };
-            const handleUpload = async () => {
-                try {
-                    const saveContents = await readUploadedFileAsText(file);
-                    const saveData = JSON.parse(saveContents);
-                    if ('altarItemID' in saveData && 'peonID' in saveData) {
-                        const relicIDs = saveData.unlocked.map(craftedGUID => masterTable.relic.findIndex(relic => relic.guid === craftedGUID));
-                        settingsOut.checkboxes.relic = Object.values(CBRelic).filter(box => relicIDs.find((ID => box.value == ID.toString())));
-                        const potionIDs = saveData.unlocked.map(craftedGUID => masterTable.potion.findIndex(potion => potion.guid === craftedGUID));
-                        settingsOut.checkboxes.potion = Object.values(CBPotion).filter(box => potionIDs.find((ID => box.value == ID.toString())));
-                        settingsOut.altarRelic = masterTable.relic.findIndex(relic => relic.guid == saveData.altarItemID);
-                        saveData.upgradeString.split(',').forEach(item => {
-                            let [key, value] = item.split(':');
-                            settingsOut.flags[key] = value;
-                        });
-                    }
-                }
-                catch (e) {
-                    console.warn(e.message);
-                }
-            };
-            await handleUpload();
+        case "0":
             break;
         case '100':
-            settingsOut.checkboxes.relic = Object.values(CBRelic);
-            settingsOut.checkboxes.potion = Object.values(CBPotion);
+            settingsOut.checkboxes.relic = CBRelic;
+            settingsOut.checkboxes.potion = CBPotion;
             settingsOut.altarRelic = 149;
             settingsOut.flags['shop_basic_item'] = 2;
             settingsOut.flags['shop_food'] = 3;
             settingsOut.flags['shop_potion_relic'] = 3;
             settingsOut.flags['dibble_extra_item'] = 1;
             settingsOut.flags['dibble_relic'] = 1;
+            break;
+        case 'own':
+            const saveData = JSON.parse(file);
+            const relicIDs = saveData.unlocked.map(craftedGUID => masterTable.relic.findIndex(relic => relic.guid === craftedGUID)).filter(ID => ID > -1);
+            settingsOut.checkboxes.relic = CBRelic.filter(box => relicIDs.includes(parseInt(box.value)));
+            const potionIDs = saveData.unlocked.map(craftedGUID => masterTable.potion.findIndex(potion => potion.guid === craftedGUID)).filter(ID => ID > -1);
+            settingsOut.checkboxes.potion = CBPotion.filter(box => potionIDs.includes(parseInt(box.value)));
+            settingsOut.altarRelic = masterTable.relic.findIndex(relic => relic.guid === saveData.altarItemID);
+            saveData.upgradeString.split(',').forEach(item => {
+                const [key, value] = item.split(':');
+                settingsOut.flags[key] = parseInt(value);
+            });
+            break;
     }
     return settingsOut;
 }
-async function applySettings(settings) {
-    console.log(settings.altarRelic);
+var no1, no2;
+function applySettings(settings) {
     checkAll(e$('#relic-selection').getElementsByTagName('input'), false);
     if (settings.checkboxes.relic) {
         checkAll(settings.checkboxes.relic, true);
@@ -165,7 +143,7 @@ async function applySettings(settings) {
     if (settings.checkboxes.potion) {
         checkAll(settings.checkboxes.potion, true);
     }
-    e$('altar').value = settings.altarRelic;
+    e$('#altar').value = settings.altarRelic;
 }
 const masterTable = {
     "relic": [
@@ -5253,8 +5231,6 @@ function listCraftable(table) {
             selection.appendChild(itemLable);
         }
     });
-    let boxCollection = Object.values(selection.getElementsByTagName('input'));
-    return boxCollection.filter((box) => box.type == 'checkbox');
 }
 function checkAll(boxCollaction, toggle) {
     for (const box of boxCollaction) {
@@ -5323,13 +5299,17 @@ const rand = {
 };
 let settings = {
     checkboxes: {
-        relic: [],
-        potion: []
+        relic: null,
+        potion: null
     },
-    altarRelic: {
-        value: 0
-    },
-    flags: {}
+    "altarRelic": -1,
+    flags: {
+        "shop_basic_item": 1,
+        "shop_food": 1,
+        "shop_potion_relic": 1,
+        "dibble_extra_item": 0,
+        "dibble_relic": 0
+    }
 };
 const seedRand = new Random(Date.now());
 function loadLootTables() {
@@ -5360,6 +5340,16 @@ function toggleWeight(indices = 157, subTable = 'relic', isZero = true) {
 }
 function toggleOthermine(on = false) {
     toggleWeight([133, 134, 157], 'relic', !on);
+}
+function toggleUncheckedItems() {
+    const CBRelic = Object.values(e$("#relic-selection").getElementsByTagName("input"));
+    const CBPotion = Object.values(e$("#potion-selection").getElementsByTagName("input"));
+    const unckeckedBoxes = CBRelic.filter(box => !box.checked);
+    const unckeckedPotions = CBPotion.filter(box => !box.checked);
+    const missing = unckeckedBoxes.map((box) => parseInt(box.value));
+    const missingPotions = unckeckedPotions.map((box) => parseInt(box.value));
+    toggleWeight(missing, "relic");
+    toggleWeight(missingPotions, "potion");
 }
 function dibble(seed) {
     let table = [], index = [], item = [], html = [], wTable = [];
@@ -5401,12 +5391,16 @@ function dibble(seed) {
 }
 function shop(zone, level) {
     const shopName = `shop-${zone}-${level}`;
+    const totalPoR = settings.flags.shop_potion_relic;
+    const totalFood = settings.flags.shop_food;
+    const totalBasic = settings.flags.shop_basic_item;
+    const totalItems = totalPoR + totalFood + totalBasic;
+    const wTable = [], table = [], index = [], item = [], html = [];
     let shopRoom = document.createElement("div");
     shopRoom.id = shopName;
     shopRoom.classList.add("icon-shop");
     e$('#' + zone + level).appendChild(shopRoom);
-    let table = [], index = [], item = [], html = [], wTable = [];
-    for (let i = 0; i < 3; ++i) {
+    for (let i = 0; i < totalPoR; ++i) {
         wTable.push(rand.shop.getWeightedTable(lootTables.potionOrRelic));
         table.push(masterTable.weightedTables[wTable[i].masterIndex]);
         index.push(rand[table[i].randState].loot(lootTables[table[i].key]));
@@ -5414,12 +5408,13 @@ function shop(zone, level) {
             toggleWeight(index[i]);
         }
     }
-    table.push({ "key": "food", "type": "food", "randState": "shopHealth" });
-    table.push({ "key": "food", "type": "food", "randState": "shopHealth" });
-    table.push({ "key": "food", "type": "food", "randState": "shopHealth" });
-    table.push({ "key": "item", "type": "item", "randState": "shopBasicItem" });
-    table.push({ "key": "item", "type": "item", "randState": "shopBasicItem" });
-    for (let i = 3; i < 8; ++i) {
+    for (let i = 0; i < totalFood; ++i) {
+        table.push({ "key": "food", "type": "food", "randState": "shopHealth" });
+    }
+    for (let i = 0; i < totalBasic; ++i) {
+        table.push({ "key": "item", "type": "item", "randState": "shopBasicItem" });
+    }
+    for (let i = totalPoR; i < totalItems; ++i) {
         index.push(rand[table[i].randState].loot(lootTables[table[i].key]));
     }
     index.forEach((index, i) => {
@@ -5433,7 +5428,7 @@ function shop(zone, level) {
     });
 }
 function randomSeed() {
-    e$('#seed-input').value = seedRand.rangeInclusive(1, 99999999);
+    e$("#seed-input").value = seedRand.rangeInclusive(1, 99999999);
     loadSeed();
 }
 function nextRand(seed) {
@@ -5442,8 +5437,18 @@ function nextRand(seed) {
     });
 }
 let loadSeed = () => {
-    start(parseInt((e$('#seed-input').value)));
+    start(parseInt((e$("#seed-input").value)));
 };
+function toggleUncheckedItems() {
+    const CBRelic = Object.values(e$("#relic-selection").getElementsByTagName("input"));
+    const CBPotion = Object.values(e$("#potion-selection").getElementsByTagName("input"));
+    const unckeckedBoxes = CBRelic.filter(box => !box.checked);
+    const unckeckedPotions = CBPotion.filter(box => !box.checked);
+    const missing = unckeckedBoxes.map((box) => box.value);
+    const missingPotions = unckeckedPotions.map((box) => box.value);
+    toggleWeight(missing, "relic");
+    toggleWeight(missingPotions, "potion");
+}
 function start(seed) {
     e$('#levels').innerHTML = '';
     loadLootTables();
@@ -5511,28 +5516,36 @@ document.addEventListener("DOMContentLoaded", () => {
     const loadInput = e$('#save-file-input');
     const randomSeedButton = e$('#random-seed-button');
     const loadSeedButton = e$('#load-seed-button');
-    settings.checkboxes.relic = listCraftable('relic');
-    settings.checkboxes.potion = listCraftable('potion');
+    listCraftable('relic');
+    listCraftable('potion');
     populateAltar();
     loadLootTables();
     randomSeed();
     newRadio.checked = true;
     newRadio.addEventListener('change', async function () {
         if (this.checked) {
-            settings = await loadSave(this);
+            settings = loadSave(this);
             applySettings(settings);
+            loadSeed();
         }
     });
     fullRadio.addEventListener('change', async function () {
         if (this.checked) {
-            settings = await loadSave(this);
+            settings = loadSave(this);
             applySettings(settings);
+            loadSeed();
         }
     });
     loadRadio.addEventListener('change', async function () {
         if (this.checked && loadInput.files[0]) {
-            settings = await loadSave(this, loadInput.files[0]);
-            applySettings(settings);
+            const file = loadInput.files[0];
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                settings = loadSave(loadRadio, e.target.result);
+                applySettings(settings);
+                loadSeed();
+            };
+            reader.readAsText(file);
         }
         else if (this.checked) {
             loadInput.click();
@@ -5540,8 +5553,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     loadInput.addEventListener('change', async function () {
         loadRadio.checked = true;
-        settings = await loadSave(loadRadio, loadInput.files[0]);
-        applySettings(settings);
+        const file = loadInput.files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            settings = loadSave(loadRadio, e.target.result);
+            applySettings(settings);
+            loadSeed();
+        };
+        reader.readAsText(file);
     });
     randomSeedButton.addEventListener('click', randomSeed);
     loadSeedButton.addEventListener('click', loadSeed);
