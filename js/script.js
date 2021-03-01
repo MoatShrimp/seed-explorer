@@ -5342,12 +5342,8 @@ function toggleOthermine(on = false) {
 function toggleUncheckedItems() {
     const CBRelic = Object.values(e$("#relic-selection").getElementsByTagName("input"));
     const CBPotion = Object.values(e$("#potion-selection").getElementsByTagName("input"));
-    const unckeckedBoxes = CBRelic.filter(box => !box.checked);
-    const unckeckedPotions = CBPotion.filter(box => !box.checked);
-    const missing = unckeckedBoxes.map((box) => parseInt(box.value));
-    const missingPotions = unckeckedPotions.map((box) => parseInt(box.value));
-    toggleWeight(missing, "relic");
-    toggleWeight(missingPotions, "potion");
+    toggleWeight(CBRelic.flatMap(box => (box.checked) ? parseInt(box.value) : []), "relic");
+    toggleWeight(CBPotion.flatMap(box => (box.checked) ? parseInt(box.value) : []), "potion");
 }
 function dibble(seed) {
     let tables = [], index = [], item = [], html = [], wTables = [];
@@ -5441,6 +5437,7 @@ function start(seed) {
     e$('#levels').innerHTML = '';
     loadLootTables();
     nextRand(seed);
+    toggleUncheckedItems();
     let currentRelics;
     let relicText;
     toggleWeight(3, 'food');
