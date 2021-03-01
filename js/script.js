@@ -120,10 +120,8 @@ function loadSave(radio, file) {
             break;
         case 'own':
             const saveData = JSON.parse(file);
-            const relicIDs = saveData.unlocked.map(craftedGUID => masterTable.relic.findIndex(relic => relic.guid === craftedGUID)).filter(ID => ID > -1);
-            settingsOut.checkboxes.relic = CBRelic.filter(box => relicIDs.includes(parseInt(box.value)));
-            const potionIDs = saveData.unlocked.map(craftedGUID => masterTable.potion.findIndex(potion => potion.guid === craftedGUID)).filter(ID => ID > -1);
-            settingsOut.checkboxes.potion = CBPotion.filter(box => potionIDs.includes(parseInt(box.value)));
+            settingsOut.checkboxes.relic = saveData.unlocked.flatMap(craftedGUID => CBRelic.find(box => parseInt(box.value) === masterTable.relic.findIndex(relic => relic.guid === craftedGUID)) ?? []);
+            settingsOut.checkboxes.potion = saveData.unlocked.flatMap(craftedGUID => CBPotion.find(box => parseInt(box.value) === masterTable.potion.findIndex(potion => potion.guid === craftedGUID)) ?? []);
             settingsOut.altarRelic = masterTable.relic.findIndex(relic => relic.guid === saveData.altarItemID);
             saveData.upgradeString.split(',').forEach(item => {
                 const [key, value] = item.split(':');
@@ -5352,7 +5350,7 @@ function toggleUncheckedItems() {
     toggleWeight(missingPotions, "potion");
 }
 function dibble(seed) {
-    let table = [], index = [], item = [], html = [], wTable = [];
+    let tables = [], index = [], item = [], html = [], wTables = [];
     let field = document.createElement("fieldset");
     field.id = 'hub';
     field.classList.add('zone');
@@ -5367,22 +5365,22 @@ function dibble(seed) {
     sublegend.textContent = 'Dibble';
     subfield.appendChild(sublegend);
     e$('#hub').appendChild(subfield);
-    wTable.push(rand.shop.getWeightedTable(lootTables.dibbleRelic));
-    wTable.push(rand.shop.getWeightedTable(lootTables.dibble));
-    wTable.push(rand.shop.getWeightedTable(lootTables.dibble));
-    wTable.forEach((wTable) => {
-        table.push(masterTable.weightedTables[wTable.masterIndex]);
+    wTables.push(rand.shop.getWeightedTable(lootTables.dibbleRelic));
+    wTables.push(rand.shop.getWeightedTable(lootTables.dibble));
+    wTables.push(rand.shop.getWeightedTable(lootTables.dibble));
+    wTables.forEach((wTable) => {
+        tables.push(masterTable.weightedTables[wTable.masterIndex]);
     });
-    table.forEach((table) => {
+    tables.forEach((table) => {
         index.push(rand[table.randState].loot(lootTables[table.key]));
     });
     index.forEach((index, i) => {
-        item.push(masterTable[table[i].type][index]);
+        item.push(masterTable[tables[i].type][index]);
     });
-    if (table[0].type == 'relic') {
+    if (tables[0].type == 'relic') {
         toggleWeight(index[0]);
     }
-    table.forEach((table, i) => {
+    tables.forEach((table, i) => {
         html.push(document.createElement("div"));
         html[i].classList.add('icon-' + table.type);
         html[i].innerHTML = item[i].display;
@@ -5439,16 +5437,6 @@ function nextRand(seed) {
 let loadSeed = () => {
     start(parseInt((e$("#seed-input").value)));
 };
-function toggleUncheckedItems() {
-    const CBRelic = Object.values(e$("#relic-selection").getElementsByTagName("input"));
-    const CBPotion = Object.values(e$("#potion-selection").getElementsByTagName("input"));
-    const unckeckedBoxes = CBRelic.filter(box => !box.checked);
-    const unckeckedPotions = CBPotion.filter(box => !box.checked);
-    const missing = unckeckedBoxes.map((box) => box.value);
-    const missingPotions = unckeckedPotions.map((box) => box.value);
-    toggleWeight(missing, "relic");
-    toggleWeight(missingPotions, "potion");
-}
 function start(seed) {
     e$('#levels').innerHTML = '';
     loadLootTables();
