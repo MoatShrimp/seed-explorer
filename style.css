@@ -74,11 +74,11 @@ fieldset > p {
 
 #potion-selection {
 	width: 450px;
-	flex-grow:1;
+	-flex-grow:1;
 }
 #relic-selection {
 	width: 700px;
-	flex-grow:2;
+	-flex-grow:2;
 }
 
 #relic-selection > label {
