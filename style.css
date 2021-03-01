@@ -27,7 +27,7 @@ h1{
 
 #show-more:checked ~ #items-to-hide {
 	display: flex;
-	height:450px;
+	height:470px;
 }
 
 #top-menu {
@@ -66,7 +66,7 @@ fieldset > p {
 }
 
 #relic-selection, #potion-selection  {
-	overflow:hidden;
+	-overflow:hidden;
 	display: flex;
 	flex-flow: column wrap;
 	height:450px;
@@ -74,11 +74,9 @@ fieldset > p {
 
 #potion-selection {
 	width: 450px;
-	-flex-grow:1;
 }
 #relic-selection {
 	width: 700px;
-	-flex-grow:2;
 }
 
 #relic-selection > label {
