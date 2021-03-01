@@ -38,11 +38,14 @@ function loadSave(radio:HTMLInputElement, file?:string) {
 			break;
 		case 'own': // loaded save, parse data
 			const saveData = JSON.parse(file);
+		
+			settingsOut.checkboxes.relic = saveData.unlocked.flatMap( craftedGUID => 
+				CBRelic.find( box => parseInt(box.value) === masterTable.relic.findIndex( relic => relic.guid === craftedGUID)) ?? []
+			);
 
-			const relicIDs: number[] = saveData.unlocked.map( craftedGUID => masterTable.relic.findIndex( relic => relic.guid === craftedGUID)).filter(ID => ID > -1);
-            settingsOut.checkboxes.relic = CBRelic.filter( box => relicIDs.includes(parseInt(box.value)));
-            const potionIDs: number[] = saveData.unlocked.map( craftedGUID => masterTable.potion.findIndex( potion => potion.guid === craftedGUID)).filter(ID => ID > -1);
-            settingsOut.checkboxes.potion = CBPotion.filter( box => potionIDs.includes(parseInt(box.value)));
+			settingsOut.checkboxes.potion = saveData.unlocked.flatMap( craftedGUID => 
+				CBPotion.find( box => parseInt(box.value) === masterTable.potion.findIndex( potion => potion.guid === craftedGUID)) ?? []
+			);
 
             settingsOut.altarRelic = masterTable.relic.findIndex( relic => relic.guid === saveData.altarItemID);
             
