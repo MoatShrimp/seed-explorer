@@ -50,9 +50,10 @@ fieldset {
 
 
 
-#save-select > label {
+#save-radio-selecion > label {
 	display:block;
 }
+
 input {
 	margin: 0.4em;
 }

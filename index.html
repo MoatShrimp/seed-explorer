@@ -26,18 +26,20 @@
 		
 			<fieldset id="save-select">
 					<legend>Select a save file</legend>
-					<label>
-						<input type="radio" name="save" value="0" id="new-save-radio" class="save-radio">
-						New File
-					</label>
-					<label>
-						<input type="radio" name="save" value="100" id="100-save-radio" class="save-radio">
-						100% File
-					</label>
-					<label>
-						<input type="radio" name="save" value="own" id="own-save-radio" class="save-radio">
-						Load your own*:
-					</label>
+					<div id="save-radio-selecion">
+						<label>
+							<input type="radio" name="save" value="0" id="new-save-radio" class="save-radio">
+							New File
+						</label>
+						<label>
+							<input type="radio" name="save" value="100" id="100-save-radio" class="save-radio">
+							100% File
+						</label>
+						<label>
+							<input type="radio" name="save" value="own" id="own-save-radio" class="save-radio">
+							Load your own*:
+						</label>
+					</div>
 					<input type="file" id="save-file-input" name="save-file" accept=".json"></input>
 					<p>*The save files can be found in the folder:<br>
 						%AppData%\..\LocalLow\Thorium Entertainment\UnderMine\Saves

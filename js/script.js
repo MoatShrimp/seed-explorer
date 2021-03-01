@@ -5495,6 +5495,7 @@ function start(seed) {
     }
 }
 document.addEventListener("DOMContentLoaded", () => {
+    const saveSelection = e$("#save-radio-selecion");
     const newRadio = e$('#new-save-radio');
     const fullRadio = e$('#100-save-radio');
     const loadRadio = e$('#own-save-radio');
@@ -5507,46 +5508,29 @@ document.addEventListener("DOMContentLoaded", () => {
     loadLootTables();
     randomSeed();
     newRadio.checked = true;
-    newRadio.addEventListener('change', async function () {
-        if (this.checked) {
-            settings = loadSave(this);
+    e$("#save-radio-selecion").addEventListener("click", (event) => {
+        if (loadRadio.checked) {
+            if (loadInput.files[0]) {
+                let file = loadInput.files[0];
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    settings = loadSave(loadRadio, e.target.result);
+                    applySettings(settings);
+                    loadSeed();
+                };
+                reader.readAsText(file);
+            }
+            else {
+                loadInput.click();
+            }
+        }
+        else {
+            settings = loadSave(event.target);
             applySettings(settings);
             loadSeed();
         }
     });
-    fullRadio.addEventListener('change', async function () {
-        if (this.checked) {
-            settings = loadSave(this);
-            applySettings(settings);
-            loadSeed();
-        }
-    });
-    loadRadio.addEventListener('change', async function () {
-        if (this.checked && loadInput.files[0]) {
-            const file = loadInput.files[0];
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                settings = loadSave(loadRadio, e.target.result);
-                applySettings(settings);
-                loadSeed();
-            };
-            reader.readAsText(file);
-        }
-        else if (this.checked) {
-            loadInput.click();
-        }
-    });
-    loadInput.addEventListener('change', async function () {
-        loadRadio.checked = true;
-        const file = loadInput.files[0];
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            settings = loadSave(loadRadio, e.target.result);
-            applySettings(settings);
-            loadSeed();
-        };
-        reader.readAsText(file);
-    });
+    loadInput.addEventListener('change', () => loadRadio.click());
     randomSeedButton.addEventListener('click', randomSeed);
     loadSeedButton.addEventListener('click', loadSeed);
 });
