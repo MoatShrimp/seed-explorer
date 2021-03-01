@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "ESNext",
         "watch": true,
-        "lib": ["dom", "ES2017"],
+        "lib": ["dom", "ES2019"],
         "removeComments": true,
         "preserveConstEnums": true,
         "outFile": "../js/script.js"
