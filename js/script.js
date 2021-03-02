@@ -1,11 +1,18 @@
+"use strict";
 function e$(name, parent = document) {
     switch (name.charAt(0)) {
-        case '#':
-            return parent.getElementById(name.slice(1));
         case '.':
             return parent.getElementsByClassName(name.slice(1));
         default:
-            return parent.getElementsByTagName(name);
+            return parent.getElementById(name);
+    }
+}
+function e$c(type, options) {
+    if (options) {
+        return Object.assign(document.createElement(type), options);
+    }
+    else {
+        return document.createElement(type);
     }
 }
 function toUInt32(floatVar) { return floatVar >>> 0; }
@@ -50,9 +57,9 @@ class Random {
         return table.reduce((totalWeight, currentItem) => totalWeight + currentItem.weight, 0);
     }
     getItem(table, masterTable, randomNum) {
-        return masterTable.relic[table.find((currentItem) => ((randomNum -= currentItem.weight) <= 0)).masterIndex].display;
+        return masterTable.relic[(table.find((currentItem) => ((randomNum -= currentItem.weight) <= 0))).masterIndex].display;
     }
-    range(min = 0, max = 2) {
+    range(min = 0, max = 99999999) {
         if (max < min) {
             [min, max] = [max, min];
         }
@@ -103,8 +110,8 @@ function loadSave(radio, file) {
             "dibble_relic": 0
         }
     };
-    const CBRelic = Object.values(e$("#relic-selection").getElementsByTagName("input"));
-    const CBPotion = Object.values(e$("#potion-selection").getElementsByTagName("input"));
+    const CBRelic = Object.values(e$("relic-selection").getElementsByTagName("input"));
+    const CBPotion = Object.values(e$("potion-selection").getElementsByTagName("input"));
     switch (radio.value) {
         case "0":
             break;
@@ -133,17 +140,18 @@ function loadSave(radio, file) {
 }
 var no1, no2;
 function applySettings(settings) {
-    checkAll(e$('#relic-selection').getElementsByTagName('input'), false);
+    console.log("here");
+    checkAll(e$('relic-selection').getElementsByTagName('input'), false);
     if (settings.checkboxes.relic) {
         checkAll(settings.checkboxes.relic, true);
     }
-    checkAll(e$('#potion-selection').getElementsByTagName('input'), false);
+    checkAll(e$('potion-selection').getElementsByTagName('input'), false);
     if (settings.checkboxes.potion) {
         checkAll(settings.checkboxes.potion, true);
     }
-    e$('#altar').value = settings.altarRelic;
+    e$('altar').value = settings.altarRelic;
 }
-const masterTable = {
+const masterTable = Object.freeze({
     "relic": [
         {
             "guid": "1981b4af04434077afafc78691056387",
@@ -5214,7 +5222,7 @@ const masterTable = {
             }
         }
     ]
-};
+});
 function listCraftable(table) {
     const selection = document.getElementById(`${table}-selection`);
     selection.innerHTML = `<legend>Crafted ${table}s</legend>`;
@@ -5340,47 +5348,38 @@ function toggleOthermine(on = false) {
     toggleWeight([133, 134, 157], 'relic', !on);
 }
 function toggleUncheckedItems() {
-    const CBRelic = Object.values(e$("#relic-selection").getElementsByTagName("input"));
-    const CBPotion = Object.values(e$("#potion-selection").getElementsByTagName("input"));
-    toggleWeight(CBRelic.flatMap(box => (box.checked) ? parseInt(box.value) : []), "relic");
-    toggleWeight(CBPotion.flatMap(box => (box.checked) ? parseInt(box.value) : []), "potion");
+    const CBRelic = Object.values(e$("relic-selection").getElementsByTagName("input"));
+    const CBPotion = Object.values(e$("potion-selection").getElementsByTagName("input"));
+    toggleWeight(CBRelic.flatMap(box => !(box.checked) ? parseInt(box.value) : []), "relic");
+    toggleWeight(CBPotion.flatMap(box => !(box.checked) ? parseInt(box.value) : []), "potion");
 }
 function dibble(seed) {
-    let tables = [], index = [], item = [], html = [], wTables = [];
-    let field = document.createElement("fieldset");
-    field.id = 'hub';
-    field.classList.add('zone');
-    let legend = document.createElement("legend");
-    legend.textContent = 'Hub';
-    field.appendChild(legend);
-    e$('#levels').appendChild(field);
-    let subfield = document.createElement("fieldset");
-    subfield.id = 'dibble';
-    subfield.classList.add('level');
-    let sublegend = document.createElement("legend");
-    sublegend.textContent = 'Dibble';
-    subfield.appendChild(sublegend);
-    e$('#hub').appendChild(subfield);
-    wTables.push(rand.shop.getWeightedTable(lootTables.dibbleRelic));
-    wTables.push(rand.shop.getWeightedTable(lootTables.dibble));
-    wTables.push(rand.shop.getWeightedTable(lootTables.dibble));
-    wTables.forEach((wTable) => {
-        tables.push(masterTable.weightedTables[wTable.masterIndex]);
-    });
-    tables.forEach((table) => {
-        index.push(rand[table.randState].loot(lootTables[table.key]));
-    });
-    index.forEach((index, i) => {
-        item.push(masterTable[tables[i].type][index]);
-    });
-    if (tables[0].type == 'relic') {
-        toggleWeight(index[0]);
+    const wTables = [], items = [];
+    const totalItems = 2 + settings.flags.dibble_extra_item;
+    if (settings.flags.dibble_relic) {
+        wTables.push(rand.shop.getWeightedTable(lootTables.dibbleRelic));
     }
-    tables.forEach((table, i) => {
-        html.push(document.createElement("div"));
-        html[i].classList.add('icon-' + table.type);
-        html[i].innerHTML = item[i].display;
-        e$('#dibble').appendChild(html[i]);
+    for (let i = settings.flags.dibble_relic; i < totalItems; ++i) {
+        wTables.push(rand.shop.getWeightedTable(lootTables.dibble));
+    }
+    wTables.forEach((subtable) => {
+        const table = masterTable.weightedTables[subtable.masterIndex];
+        const index = rand[table.randState].loot(lootTables[table.key]);
+        items.push({ display: masterTable[table.type][index].display, type: table.type });
+        if (table.type === "relic") {
+            toggleWeight(index, "relic");
+        }
+    });
+    const field = e$c("fieldset", { id: "hub", classList: "zone" });
+    const legend = e$c("legend", { textContent: "Hub" });
+    field.appendChild(legend);
+    e$('levels').appendChild(field);
+    const subfield = e$c("fieldset", { id: "dibble", classList: "level" });
+    const sublegend = e$c("legend", { textContent: "Dibble" });
+    subfield.appendChild(sublegend);
+    e$('hub').appendChild(subfield);
+    items.forEach((item, i) => {
+        e$('dibble').appendChild(e$c("div", { classList: `icon-${item.type}`, innerText: item.display }));
     });
 }
 function shop(zone, level) {
@@ -5393,12 +5392,12 @@ function shop(zone, level) {
     let shopRoom = document.createElement("div");
     shopRoom.id = shopName;
     shopRoom.classList.add("icon-shop");
-    e$('#' + zone + level).appendChild(shopRoom);
+    e$(zone + level).appendChild(shopRoom);
     for (let i = 0; i < totalPoR; ++i) {
         wTable.push(rand.shop.getWeightedTable(lootTables.potionOrRelic));
         table.push(masterTable.weightedTables[wTable[i].masterIndex]);
         index.push(rand[table[i].randState].loot(lootTables[table[i].key]));
-        if (table[i].type == "relic") {
+        if (table[i].type === "relic") {
             toggleWeight(index[i]);
         }
     }
@@ -5418,11 +5417,11 @@ function shop(zone, level) {
         html.push(document.createElement("div"));
         html[i].classList.add(`icon-${table.type}`);
         html[i].innerHTML = item[i].display;
-        e$(`#${shopName}`).appendChild(html[i]);
+        e$(shopName).appendChild(html[i]);
     });
 }
 function randomSeed() {
-    e$("#seed-input").value = seedRand.rangeInclusive(1, 99999999);
+    e$("seed-input").value = seedRand.rangeInclusive(1, 99999999);
     loadSeed();
 }
 function nextRand(seed) {
@@ -5431,10 +5430,10 @@ function nextRand(seed) {
     });
 }
 let loadSeed = () => {
-    start(parseInt((e$("#seed-input").value)));
+    start(parseInt((e$("seed-input").value)));
 };
 function start(seed) {
-    e$('#levels').innerHTML = '';
+    e$('levels').innerHTML = '';
     loadLootTables();
     nextRand(seed);
     toggleUncheckedItems();
@@ -5446,8 +5445,8 @@ function start(seed) {
     toggleWeight(134);
     toggleWeight(157);
     dibble(seed);
-    if (e$('#altar').value) {
-        toggleWeight(e$('#altar').value);
+    if (e$('altar').value) {
+        toggleWeight(e$('altar').value);
     }
     nextZone('mine', 0, 'The Goldmines', seed);
     nextZone('dungeon', 1, 'Delvemore Dungeon', seed);
@@ -5462,7 +5461,7 @@ function start(seed) {
         let legend = document.createElement("legend");
         legend.textContent = title;
         field.appendChild(legend);
-        e$('#levels').appendChild(field);
+        e$('levels').appendChild(field);
         for (let i = 1; i <= 4; ++i) {
             nextRand(seed + i);
             let subfield = document.createElement("fieldset");
@@ -5471,13 +5470,13 @@ function start(seed) {
             let sublegend = document.createElement("legend");
             sublegend.textContent = 'Level ' + i;
             subfield.appendChild(sublegend);
-            e$('#' + zone).appendChild(subfield);
+            e$(zone).appendChild(subfield);
             let relicRoom = document.createElement("div");
             relicRoom.id = 'relic' + zone + i;
             relicRoom.classList.add('icon-relicOn');
-            e$('#' + zone + i).appendChild(relicRoom);
+            e$(zone + i).appendChild(relicRoom);
             let relic;
-            if (((zoneID + i) == 1) && e$('#new-save-radio').checked) {
+            if (((zoneID + i) === 1) && e$('new-save-radio').checked) {
                 relic = nextItem('relicStarter');
             }
             else {
@@ -5487,7 +5486,7 @@ function start(seed) {
             relicText = document.createElement("div");
             relicText.classList.add('icon-relic');
             relicText.innerHTML = relic.relic.display;
-            e$('#relic' + zone + i).appendChild(relicText);
+            e$('relic' + zone + i).appendChild(relicText);
             if ((zoneID + i) > 1) {
                 shop(zone, i);
             }
@@ -5495,20 +5494,22 @@ function start(seed) {
     }
 }
 document.addEventListener("DOMContentLoaded", () => {
-    const saveSelection = e$("#save-radio-selecion");
-    const newRadio = e$('#new-save-radio');
-    const fullRadio = e$('#100-save-radio');
-    const loadRadio = e$('#own-save-radio');
-    const loadInput = e$('#save-file-input');
-    const randomSeedButton = e$('#random-seed-button');
-    const loadSeedButton = e$('#load-seed-button');
+    const saveSelection = e$("save-radio-selecion");
+    const newRadio = e$('new-save-radio');
+    const fullRadio = e$('100-save-radio');
+    const loadRadio = e$('own-save-radio');
+    const loadInput = e$('save-file-input');
+    const randomSeedButton = e$('random-seed-button');
+    const loadSeedButton = e$('load-seed-button');
     listCraftable('relic');
     listCraftable('potion');
     populateAltar();
     loadLootTables();
     randomSeed();
     newRadio.checked = true;
-    e$("#save-radio-selecion").addEventListener("click", (event) => {
+    const radioEvent = new Event("change");
+    e$("menu-options").addEventListener("change", () => loadSeed());
+    e$("save-radio-selecion").addEventListener("change", (event) => {
         if (loadRadio.checked) {
             if (loadInput.files[0]) {
                 let file = loadInput.files[0];
@@ -5530,7 +5531,10 @@ document.addEventListener("DOMContentLoaded", () => {
             loadSeed();
         }
     });
-    loadInput.addEventListener('change', () => loadRadio.click());
+    loadInput.addEventListener('change', () => {
+        loadRadio.checked = true;
+        e$("save-radio-selecion").dispatchEvent(radioEvent);
+    });
     randomSeedButton.addEventListener('click', randomSeed);
     loadSeedButton.addEventListener('click', loadSeed);
 });

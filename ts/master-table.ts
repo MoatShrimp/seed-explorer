@@ -1,5 +1,5 @@
 //Database for all enumerable items
-const masterTable = {
+const masterTable = Object.freeze({
 	"relic": [
 		{
 			"guid": "1981b4af04434077afafc78691056387",
@@ -5070,4 +5070,4 @@ const masterTable = {
 			}
 		}
 	]	
-};
+});

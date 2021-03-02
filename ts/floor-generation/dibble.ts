@@ -1,48 +1,39 @@
 
 //load Dibbles stock
 function dibble(seed) {
+	const wTables = [], items = [];
+	const totalItems = 2 + settings.flags.dibble_extra_item;
 
-	let tables = [], index = [], item = [], html = [], wTables = [];
-	let field = document.createElement("fieldset");
-	field.id = 'hub';
-	field.classList.add('zone');
-	let legend = document.createElement("legend");
-	legend.textContent = 'Hub';
-	field.appendChild(legend);
-	e$('#levels').appendChild(field);
-
-	let subfield = document.createElement("fieldset");
-	subfield.id = 'dibble';
-	subfield.classList.add('level');
-	let sublegend = document.createElement("legend");
-	sublegend.textContent = 'Dibble';
-	subfield.appendChild(sublegend);
-	e$('#hub').appendChild(subfield);
-
-	wTables.push(rand.shop.getWeightedTable(lootTables.dibbleRelic));
-	wTables.push(rand.shop.getWeightedTable(lootTables.dibble));
-	wTables.push(rand.shop.getWeightedTable(lootTables.dibble));
-
-	wTables.forEach((wTable) => {
-		tables.push(masterTable.weightedTables[wTable.masterIndex]);
-	});
-
-	tables.forEach((table) => {
-		index.push(rand[table.randState].loot(lootTables[table.key]));
-	});
-
-	index.forEach((index, i) => {
-		item.push(masterTable[tables[i].type][index]);
-	});
-
-	if (tables[0].type == 'relic') {
-		toggleWeight(index[0]);
+	// make list of items
+	if (settings.flags.dibble_relic) {
+		wTables.push(rand.shop.getWeightedTable(lootTables.dibbleRelic));
 	}
+	for (let i = settings.flags.dibble_relic; i < totalItems; ++i) {
+		wTables.push(rand.shop.getWeightedTable(lootTables.dibble));
+	}
+	
+	wTables.forEach( (subtable) => {		
+		const table = masterTable.weightedTables[subtable.masterIndex];
+		const index = rand[table.randState].loot(lootTables[table.key]);
+		items.push({display:masterTable[table.type][index].display, type:table.type})
+		if (table.type === "relic"){
+			toggleWeight(index, "relic");
+		}
+	})
+	
+	//create html base
+	const field = e$c("fieldset", {id:"hub", classList:"zone"})
+	const legend = e$c("legend", {textContent: "Hub"});
+	field.appendChild(legend);
+	e$('levels').appendChild(field);
 
-	tables.forEach((table, i) => {
-		html.push(document.createElement("div"));
-		html[i].classList.add('icon-' + table.type);
-		html[i].innerHTML = item[i].display;
-		e$('#dibble').appendChild(html[i]);
+	const subfield = e$c("fieldset", {id:"dibble", classList:"level"})
+	const sublegend = e$c("legend", {textContent:"Dibble"});
+	subfield.appendChild(sublegend);
+	e$('hub').appendChild(subfield);
+
+	//apend each item to the list
+	items.forEach((item, i) => {
+		e$('dibble').appendChild(e$c("div", {classList:`icon-${item.type}`, innerText:item.display}));
 	});
 }

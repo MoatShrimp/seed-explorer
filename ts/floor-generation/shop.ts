@@ -13,7 +13,7 @@ function shop(zone, level) {
 	let shopRoom = document.createElement("div");
 	shopRoom.id = shopName;
 	shopRoom.classList.add("icon-shop");
-	e$('#' + zone + level).appendChild(shopRoom);
+	e$(zone + level).appendChild(shopRoom);
 
 	
 
@@ -26,7 +26,7 @@ function shop(zone, level) {
 		index.push(rand[table[i].randState].loot(lootTables[table[i].key]));
 
 		//zero the relic before loading next
-		if (table[i].type == "relic") {
+		if (table[i].type === "relic") {
 			toggleWeight(index[i]);
 		}
 	}
@@ -57,7 +57,7 @@ function shop(zone, level) {
 		html.push(document.createElement("div"));
 		html[i].classList.add(`icon-${table.type}`);
 		html[i].innerHTML = item[i].display;
-		e$(`#${shopName}`).appendChild(html[i]);
+		e$(shopName).appendChild(html[i]);
 	});
 
 

@@ -31,23 +31,23 @@ class Random {
 	}
 	
 	//next random int based on xorshift128
-	get nextInt():number {
+	get nextInt() {
 		return this.nextUInt % 0x7FFFFFFF; //mod Int.MaxValue
 	}	 
 	//alias for nextInt
-	get next():number { 
+	get next() { 
 		return this.nextInt;
 	} 
 	
 	//return a float between 0.0 and 1.0, not matching Unity
-	get value():number {
+	get value() {
 		return 1 - this.rangeFloat();
 	}	
 	
 	//next random uint based on xorshift128
-	get nextUInt():number {
+	get nextUInt() {
 		let x = this.seed.shift(); //drops first value in array and retuns value
-		let y = this.seed[2];
+		let y = this.seed[2]; // last value in array
 
 		x ^= x << 11;
 		x ^= x >>> 8;
@@ -59,16 +59,16 @@ class Random {
 		return y;
 	}
 	
-	getWeight (table) {
-		return table.reduce((totalWeight, currentItem) => totalWeight + currentItem.weight, 0);
+	getWeight (table:object[]):number {
+		return table.reduce((totalWeight, currentItem:any) => totalWeight + currentItem.weight, 0);
 	}
 
 	getItem (table, masterTable, randomNum) {
-	   return masterTable.relic[table.find((currentItem) => ((randomNum -= currentItem.weight) <= 0)).masterIndex].display
+	   return masterTable.relic[(table.find((currentItem) => ((randomNum -= currentItem.weight) <= 0))).masterIndex].display
 	}
 
 	//return uint between min and max
-	range (min = 0, max = 2) {
+	range (min = 0, max = 99999999) {
 		if (max < min){ 
 			[min, max] = [max, min];
 		}		
@@ -84,7 +84,7 @@ class Random {
 	}
 
 	//Copy of rangeInclusive from Undermine
-	rangeInclusive(min:number, max:number) {
+	rangeInclusive(min:number, max:number):number {
 		return this.range(min, max + 1);
 	}	 
 	

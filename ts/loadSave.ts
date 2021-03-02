@@ -17,8 +17,8 @@ function loadSave(radio:HTMLInputElement, file?:string) {
 	}
 
 	//list all collections of check-boxes
-	const CBRelic: HTMLInputElement[] = Object.values(e$("#relic-selection").getElementsByTagName("input"));
-	const CBPotion: HTMLInputElement[] = Object.values(e$("#potion-selection").getElementsByTagName("input"));
+	const CBRelic: HTMLInputElement[] = Object.values(e$("relic-selection").getElementsByTagName("input"));
+	const CBPotion: HTMLInputElement[] = Object.values(e$("potion-selection").getElementsByTagName("input"));
 
 	//main selection
 	switch(radio.value) {
@@ -53,7 +53,7 @@ function loadSave(radio:HTMLInputElement, file?:string) {
                 const [key, value] = item.split(':');
                 settingsOut.flags[key] = parseInt(value);
             });		
-
+			
 			break;
 		
 	}

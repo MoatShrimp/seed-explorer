@@ -1,6 +1,6 @@
 //load new random seed
 function randomSeed(){
-	e$("#seed-input").value  = <string><unknown>seedRand.rangeInclusive(1, 99999999);
+	e$("seed-input").value  = <string><unknown>seedRand.rangeInclusive(1, 99999999);
 	//$('#seed-input').value = 68906772; // map at Diibble, sequence breaker in mine1
 	loadSeed();
 }
@@ -13,11 +13,11 @@ function nextRand (seed) {
 }
 
 let loadSeed = () => {		
-		start(parseInt((e$("#seed-input").value)));
+		start(parseInt((e$("seed-input").value)));
 }
 
 function start(seed){
-	e$('#levels').innerHTML = '';
+	e$('levels').innerHTML = '';
 	loadLootTables ();
 	nextRand(seed);
 	//toggleMissing();
@@ -33,8 +33,8 @@ function start(seed){
 	
 	dibble(seed);
 	
-	if (e$('#altar').value) {
-		toggleWeight(e$('#altar').value);
+	if (e$('altar').value) {
+		toggleWeight(e$('altar').value);
 	}
 
 	
@@ -57,7 +57,7 @@ function start(seed){
 		let legend = document.createElement("legend");
 		legend.textContent = title;
 		field.appendChild(legend);
-		e$('#levels').appendChild(field);
+		e$('levels').appendChild(field);
 	
 		for (let i = 1; i <= 4; ++i) { 
 			nextRand(seed + i);
@@ -68,15 +68,15 @@ function start(seed){
 			let sublegend = document.createElement("legend");
 			sublegend.textContent = 'Level ' + i;
 			subfield.appendChild(sublegend);
-			e$('#' + zone).appendChild(subfield);
+			e$(zone).appendChild(subfield);
 			 
 			let relicRoom = document.createElement("div");
 			relicRoom.id = 'relic' + zone + i;
 			relicRoom.classList.add('icon-relicOn');
-			e$('#' + zone + i).appendChild(relicRoom);
+			e$(zone + i).appendChild(relicRoom);
 
 			let relic:any; 
-			if (((zoneID + i) == 1) && e$('#new-save-radio').checked) {
+			if (((zoneID + i) === 1) && e$('new-save-radio').checked) {
 				relic = nextItem('relicStarter');
 			}
 			else {
@@ -88,7 +88,7 @@ function start(seed){
 			relicText = document.createElement("div");
 			relicText.classList.add('icon-relic');
 			relicText.innerHTML = relic.relic.display;
-			e$('#relic' + zone + i).appendChild(relicText);		   
+			e$('relic' + zone + i).appendChild(relicText);		   
 			
 			if ((zoneID + i) > 1){
 				shop (zone, i);

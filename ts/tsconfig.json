@@ -5,7 +5,8 @@
         "lib": ["dom", "ES2019"],
         "removeComments": true,
         "preserveConstEnums": true,
-        "outFile": "../js/script.js"
+        "outFile": "../js/script.js",
+        "alwaysStrict": true
     },
 
 "files": [
