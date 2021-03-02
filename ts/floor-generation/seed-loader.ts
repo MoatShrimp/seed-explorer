@@ -20,17 +20,15 @@ function start(seed){
 	e$('levels').innerHTML = '';
 	loadLootTables ();
 	nextRand(seed);
-	//toggleMissing();
 	toggleUncheckedItems();
+
 	let currentRelics;
 	let relicText;
 	toggleWeight(3, 'food');
 	toggleWeight(66, 'potion');
-	//toggleWeight(4, 'item');
 	toggleWeight(133);
 	toggleWeight(134);
-	toggleWeight(157);   
-	
+	toggleWeight(157);
 	dibble(seed);
 	
 	if (e$('altar').value) {
@@ -77,6 +75,7 @@ function start(seed){
 
 			let relic:any; 
 			if (((zoneID + i) === 1) && e$('new-save-radio').checked) {
+				toggleWeight(146, "relic");
 				relic = nextItem('relicStarter');
 			}
 			else {

@@ -34,8 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				const reader = new FileReader();
 				
 				reader.onload = (e) => {
-					settings = loadSave(loadRadio, <string>e.target.result);
-					
+					settings = loadSave(loadRadio, <string>e.target.result);					
 					applySettings(settings)
 					loadSeed();
 				};

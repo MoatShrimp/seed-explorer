@@ -60,4 +60,3 @@ function loadSave(radio:HTMLInputElement, file?:string) {
 
 	return settingsOut; // return mutated settingsOut
 }
-var no1, no2;

@@ -138,9 +138,7 @@ function loadSave(radio, file) {
     }
     return settingsOut;
 }
-var no1, no2;
 function applySettings(settings) {
-    console.log("here");
     checkAll(e$('relic-selection').getElementsByTagName('input'), false);
     if (settings.checkboxes.relic) {
         checkAll(settings.checkboxes.relic, true);
@@ -5444,6 +5442,7 @@ function start(seed) {
     toggleWeight(133);
     toggleWeight(134);
     toggleWeight(157);
+    console.log(lootTables);
     dibble(seed);
     if (e$('altar').value) {
         toggleWeight(e$('altar').value);
@@ -5477,6 +5476,7 @@ function start(seed) {
             e$(zone + i).appendChild(relicRoom);
             let relic;
             if (((zoneID + i) === 1) && e$('new-save-radio').checked) {
+                toggleWeight(146, "relic");
                 relic = nextItem('relicStarter');
             }
             else {

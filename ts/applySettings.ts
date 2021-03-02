@@ -1,5 +1,5 @@
 function applySettings (settings) {
-    console.log("here")
+
     checkAll(e$('relic-selection').getElementsByTagName('input'), false);
     if (settings.checkboxes.relic) {
         checkAll(settings.checkboxes.relic, true);
