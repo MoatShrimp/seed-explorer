@@ -342,7 +342,7 @@ const mineEncounterGroups =  Object.freeze({
         {"weight":1, "name": "Mine_Small_End_Normal", "requirements":"", "m_value": "end"},
 		{"weight":1, "name": "Mine_Small_End_Worm", "requirements":"end_worm", "m_value": "end_worm"},
 		{"weight":1, "name": "Mine_Small_End_Tutorial", "requirements":"", "m_value": "end_tutorial"},
-		{"weight":1, "name": "Mine_Small_End_Boss", "requirements":"", "m_value": "end_boss"}
+		{"weeight":1, "name": "Mine_Small_End_Boss", "requirements":"", "m_value": "end_boss"}
     ]
 
 });
