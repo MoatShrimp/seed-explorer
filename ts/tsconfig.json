@@ -18,6 +18,7 @@
     "./master-table.ts",
     "./floor.ts",
     "./encounterGroups.ts",
+    "./maps.ts",
     "./getRooms.ts",
     "./layout.ts",
     "./global-variables.ts",

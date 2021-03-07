@@ -1,7 +1,7 @@
 interface encounterGroups {
     [zone: string]: {
         [encounterGroup: string]:[
-            {weight:number, roomName: string, roomTag?:string, requirement?: string, sequence?: 
+            {weight:number, roomName: string, roomTag?:string, doorType?:string, requirement?: string, sequence?: 
                 {roomTypes:string[], tag:string, branch?:number, chance?:number, requirement?:string, direction?:number}
             }
         ]
@@ -49,13 +49,6 @@ const mineEncounterGroups =  Object.freeze({
             {weight:3, roomName: "Mine_Small_Normal_Statues"},//46899
             {weight:3, roomName: "Mine_Small_Normal_LargeSpinnerTrack"}//52226
         ],
-        "end_encounters"://50064
-		[
-            {weight:1, roomName: "Mine_Small_End_Normal", roomTag: "end"},//46718
-			{weight:1, roomName: "Mine_Small_End_Worm", roomTag: "end_worm"},//49126
-			{weight:1, roomName: "Mine_Small_End_Tutorial", roomTag: "end_tutorial"},//47735
-			{weight:1, roomName: "Mine_Small_End_Boss", roomTag: "end_boss"}//45842
-        ],
         "relic_encounters_unlocked"://46470
 		[
             {weight:4, roomName: "Mine_Small_Relic_Locked_Pots", requirement:"noRelicHex"},//45031
@@ -66,102 +59,90 @@ const mineEncounterGroups =  Object.freeze({
         ],
         "relic_encounters"://51785
 		[
-            {weight:4, roomName: "Mine_Small_Relic_Locked_Pots", requirement:"noRelicHex"},//48458
-			{weight:4, roomName: "Mine_Small_Relic_Locked_Torches", requirement:"noRelicHex"},//45800
-			{weight:4, roomName: "Mine_Small_Relic_Locked_Hole", requirement:"noRelicHex"},//48827
-			{weight:1, roomName: "Mine_Small_Relic_Locked_TorchPuzzle", requirement:"noRelicHex"},//51612
-			{weight:4, roomName: "Mine_Small_Relic_Locked_Statues", requirement:"noRelicHex"}//51997
-        ],
-        "special_encounters"://46818
-		[
-            {weight:1, roomName: "Mine_Small_Special_DodsonCage", requirement:"dodsonNotRescued"},//45181
-            {weight:1, roomName: "Mine_Small_Special_WaylandShop", requirement:"waylandNotRescued"},//50180
-            {weight:1, roomName: "Mine_Small_Special_WaylandShopHallway", requirement:"waylandNotRescued", roomTag: "waylandshophallway"},//47928
-            {weight:1, roomName: "Mine_Small_Special_MushroomFamily", requirement:"noGreenShroom", roomTag: "mushroom"},//45129
-            {weight:1, roomName: "Mine_Small_Special_MushroomFarm", requirement:"noBlueShroom", roomTag: "mushroom"},//47532
-            {weight:1, roomName: "Mine_Small_Special_BlackRabbit", requirement:"blackRabbitNotMet", roomTag: "black_rabbit_first"},//45409
-            {weight:1, roomName: "Mine_Small_Special_Hoodie_Locked", requirement:"hoodieNotMet", roomTag: "hoodie_entrance"},//48900
-            {weight:1, roomName: "Mine_Small_Special_Hoodie_Unlocked", requirement:"hoodieMet", roomTag: "hoodie_entrance"},//46864
-            {weight:1, roomName: "Mine_Small_Special_TributeFountain", requirement:"thisRunFountainNotFound", roomTag: "tribute_fountain"}//48707
+            {weight:4, roomName: "Mine_Small_Relic_Locked_Pots", doorType:"locked", requirement:"noRelicHex"},//48458
+			{weight:4, roomName: "Mine_Small_Relic_Locked_Torches", doorType:"locked", requirement:"noRelicHex"},//45800
+			{weight:4, roomName: "Mine_Small_Relic_Locked_Hole", doorType:"locked", requirement:"noRelicHex"},//48827
+			{weight:1, roomName: "Mine_Small_Relic_Locked_TorchPuzzle", doorType:"locked", requirement:"noRelicHex"},//51612
+			{weight:4, roomName: "Mine_Small_Relic_Locked_Statues", doorType:"locked", requirement:"noRelicHex"}//51997
         ],
         "secret"://45085
 		[
-            {weight:4, roomName: "Mine_Small_Secret_WaterChest", sequence://47448
-            	{"type": ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            {weight:4, roomName: "Mine_Small_Secret_WaterChest", doorType:"secret", sequence://47448
+            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
             },
-            {weight:4, roomName: "Mine_Small_Secret_Carts", sequence://51587
-            	{"type": ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            {weight:4, roomName: "Mine_Small_Secret_Carts", doorType:"secret", sequence://51587
+            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
             },
-            {weight:1, roomName: "Mine_Small_Secret_Altar", sequence://51761
-            	{"type": ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            {weight:1, roomName: "Mine_Small_Secret_Altar", doorType:"secret", sequence://51761
+            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
             },
-            {weight:3, roomName: "Mine_Small_Secret_CursedTorch", sequence://46662
-				{"type": ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            {weight:3, roomName: "Mine_Small_Secret_CursedTorch", doorType:"secret", sequence://46662
+				{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
             },
-            {weight:3, roomName: "Mine_Small_Secret_Crystals", sequence://49012
-            	{"type": ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            {weight:3, roomName: "Mine_Small_Secret_Crystals", doorType:"secret", sequence://49012
+            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
             },
-            {weight:4, roomName: "Mine_Small_Secret_Chest", sequence://45847
-            	{"type": ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            {weight:4, roomName: "Mine_Small_Secret_Chest", doorType:"secret", sequence://45847
+            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
             },
-            {weight:3, roomName: "Mine_Small_Secret_SpikeSacrifice", sequence://46575
-            	{"type": ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            {weight:3, roomName: "Mine_Small_Secret_SpikeSacrifice", doorType:"secret", sequence://46575
+            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
             },
-            {weight:1, roomName: "Mine_Small_Secret_Blessing", sequence://47495
-            	{"type": ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            {weight:1, roomName: "Mine_Small_Secret_Blessing", doorType:"secret", sequence://47495
+            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
             },
-            {weight:3, roomName: "Mine_Small_Secret_Items", sequence://49928
-            	{"type": ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            {weight:3, roomName: "Mine_Small_Secret_Items", doorType:"secret", sequence://49928
+            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
             },
-            {weight:3, roomName: "Mine_Small_Secret_Chest", sequence://46401
-            	{"type": ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            {weight:3, roomName: "Mine_Small_Secret_Chest", doorType:"secret", sequence://46401
+            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
             },
-            {weight:3, roomName: "Mine_Small_Secret_ChestCommon", sequence://46634
-            	{"type": ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
+            {weight:3, roomName: "Mine_Small_Secret_ChestCommon", doorType:"secret", sequence://46634
+            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
             },
-            {weight:3, roomName: "Mine_Small_Secret_KeyBlock", sequence://50112
-            	{"type": ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
+            {weight:3, roomName: "Mine_Small_Secret_KeyBlock", doorType:"secret", sequence://50112
+            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
             },
-            {weight:3, roomName: "Mine_Small_Secret_Bombs", sequence://46616
-            	{"type": ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
+            {weight:3, roomName: "Mine_Small_Secret_Bombs", doorType:"secret", sequence://46616
+            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
             },
-            {weight:10, roomName: "Mine_Small_Secret_DogShadow", requirement: "dogShadowNotFound", sequence://46497
-            	{"type": ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
+            {weight:10, roomName: "Mine_Small_Secret_DogShadow", doorType:"secret", requirement: "dogShadowNotFound", sequence://46497
+            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
             },
-            {weight:2, roomName: "Mine_Small_Secret_LeverBlocks", sequence://45540
-            	{"type": ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
+            {weight:2, roomName: "Mine_Small_Secret_LeverBlocks", doorType:"secret", sequence://45540
+            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
             },
-            {weight:1, roomName: "Mine_Small_Secret_Tent", sequence://50488
-            	{"type": ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
+            {weight:1, roomName: "Mine_Small_Secret_Tent", doorType:"secret", sequence://50488
+            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
             },
-            {weight:2, roomName: "Mine_Small_Secret_Nugg", sequence://53023
-            	{"type": ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
+            {weight:2, roomName: "Mine_Small_Secret_Nugg", doorType:"secret", sequence://53023
+            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
             },
-            {weight:3, roomName: "Mine_Small_Secret_Bard", requirement: "thisRunBardNotMet", sequence://48615
-				{"type": ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
+            {weight:3, roomName: "Mine_Small_Secret_Bard", doorType:"secret", requirement: "thisRunBardNotMet", sequence://48615
+				{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
             },
-            {weight:3, roomName: "Mine_Small_Secret_TributeFountain", requirement:"bogUnlocked", sequence://48501
-                {"type": ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
+            {weight:3, roomName: "Mine_Small_Secret_TributeFountain", doorType:"secret", requirement:"bogUnlocked", sequence://48501
+                {roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
             }
         ],
         "hidden"://46542
 		[
-            {weight:3, roomName: "Mine_Small_Hidden_WaterChest"},//45785
-			{weight:3, roomName: "Mine_Small_Hidden_Carts"},//45297
-			{weight:1, roomName: "Mine_Small_Hidden_TreasureHunt", requirement: "noTreasureNote"},//50018
-			{weight:1, roomName: "Mine_Small_Hidden_Altar"},//51599
-			{weight:2, roomName: "Mine_Small_Hidden_CursedTorch"},//45564
-			{weight:2, roomName: "Mine_Small_Hidden_CursedRelic"},//45202
-			{weight:3, roomName: "Mine_Small_Hidden_Crystals"},//49368
-			{weight:1, roomName: "Mine_Small_Hidden_Lab"},//49180
-			{weight:3, roomName: "Mine_Small_Hidden_Chest"},//49106
-			{weight:3, roomName: "Mine_Small_Hidden_SpikeSacrifice"},//47523
-			{weight:1, roomName: "Mine_Small_Hidden_Blessing"},//46689
-			{weight:1, roomName: "Mine_Small_Hidden_Blessing02"},//51892
-			{weight:1, roomName: "Mine_Small_Hidden_ButchersRoom"},//50084
-			{weight:1, roomName: "Mine_Small_Hidden_RatFriendship", requirement: "noRatBond"},//52611
-			{weight:3, roomName: "Mine_Small_Hidden_Chest"},//50729
-			{weight:2, roomName: "Mine_Small_Hidden_Bard", requirement: "thisRunBardNotMet"}//52652
+            {weight:3, roomName: "Mine_Small_Hidden_WaterChest", doorType:"hidden"},//45785
+			{weight:3, roomName: "Mine_Small_Hidden_Carts", doorType:"hidden"},//45297
+			{weight:1, roomName: "Mine_Small_Hidden_TreasureHunt", doorType:"hidden", requirement: "noTreasureNote"},//50018
+			{weight:1, roomName: "Mine_Small_Hidden_Altar", doorType:"hidden"},//51599
+			{weight:2, roomName: "Mine_Small_Hidden_CursedTorch", doorType:"hidden"},//45564
+			{weight:2, roomName: "Mine_Small_Hidden_CursedRelic", doorType:"hidden"},//45202
+			{weight:3, roomName: "Mine_Small_Hidden_Crystals", doorType:"hidden"},//49368
+			{weight:1, roomName: "Mine_Small_Hidden_Lab", doorType:"hidden"},//49180
+			{weight:3, roomName: "Mine_Small_Hidden_Chest", doorType:"hidden"},//49106
+			{weight:3, roomName: "Mine_Small_Hidden_SpikeSacrifice", doorType:"hidden"},//47523
+			{weight:1, roomName: "Mine_Small_Hidden_Blessing", doorType:"hidden"},//46689
+			{weight:1, roomName: "Mine_Small_Hidden_Blessing02", doorType:"hidden"},//51892
+			{weight:1, roomName: "Mine_Small_Hidden_ButchersRoom", doorType:"hidden"},//50084
+			{weight:1, roomName: "Mine_Small_Hidden_RatFriendship", doorType:"hidden", requirement: "noRatBond"},//52611
+			{weight:3, roomName: "Mine_Small_Hidden_Chest", doorType:"hidden"},//50729
+			{weight:2, roomName: "Mine_Small_Hidden_Bard", doorType:"hidden", requirement: "thisRunBardNotMet"}//52652
         ],
         "treasure_encounters"://49906
 		[
@@ -172,7 +153,7 @@ const mineEncounterGroups =  Object.freeze({
             {weight:3, roomName: "Mine_Small_Treasure_LockedRocks"},//50936
             {weight:2, roomName: "Mine_Small_Treasure_StatuePuzzle"},//52537
             {weight:3, roomName: "Mine_Small_Treasure_LockedBlocks"},//51138
-            {weight:1, roomName: "Mine_Small_Treasure_CursedRelics"},//52942
+            {weight:1, roomName: "Mine_Small_Treasure_CursedRelics", doorType:"locked"},//52942
             {weight:3, roomName: "Mine_Small_Treasure_SpikeCage"},//50588
             {weight:3, roomName: "Mine_Small_Treasure_RockCage"},//48912
             {weight:1, roomName: "Mine_Small_Treasure_SpikeSacrifice"},//51837
@@ -180,40 +161,54 @@ const mineEncounterGroups =  Object.freeze({
             {weight:2, roomName: "Mine_Small_Treasure_HealthLever"},//52384
             {weight:2, roomName: "Mine_Small_Treasure_Pillar"}//45655
         ],
-        "treasure_basic_encounters"://49882
-        [
-            {weight:1, roomName: "Mine_Small_Treasure_Basic_Skeleton"},//49827
-            {weight:1, roomName: "Mine_Small_Treasure_Basic_Rocks"},//51355
-            {weight:1, roomName: "Mine_Small_Treasure_Basic_Plain"},//51894
-        ],
         "altar"://51277
 		[
-            {weight:2, roomName: "Mine_Small_Altar_Torches", requirement:"priestessMet", sequence://45728
-				{"type": ["mineSmall"], tag: "altar_guacamole", branch: 1}
+            {weight:2, roomName: "Mine_Small_Altar_Torches", requirement:"priestessMet",//45728
+                weightedDoorTypes: [
+                    {weight:1, doorType:"open"},
+                    {weight:1, doorType:"locked"}
+                ],
+                sequence:
+				{roomTypes: ["mineSmall"], tag: "altar_guacamole", branch: 1}
             },
-            {weight:2, roomName: "Mine_Small_Altar_Statues", requirement:"priestessMet", sequence://48658
-				{"type": ["mineSmall"], tag: "altar_guacamole", branch: 1}
+            {weight:2, roomName: "Mine_Small_Altar_Statues", requirement:"priestessMet",//48658
+                weightedDoorTypes: [
+                    {weight:1, doorType:"open"},
+                    {weight:1, doorType:"locked"}
+                ],
+                sequence:
+				{roomTypes: ["mineSmall"], tag: "altar_guacamole", branch: 1}
             },
-            {weight:2, roomName: "Mine_Small_Altar_Bridges", requirement:"priestessMet", sequence://50011
-                {"type": ["mineSmall"], tag: "altar_guacamole", branch: 1}
+            {weight:2, roomName: "Mine_Small_Altar_Bridges", requirement:"priestessMet",//50011
+                weightedDoorTypes: [
+                    {weight:1, doorType:"open"},
+                    {weight:1, doorType:"locked"}
+                ],
+                sequence:
+                {roomTypes: ["mineSmall"], tag: "altar_guacamole", branch: 1}
             },
-            {weight:2, roomName: "Mine_Small_Altar_Tiled", requirement:"priestessMet", sequence://47799
-                {"type": ["mineSmall"], tag: "altar_guacamole", branch: 1}
+            {weight:2, roomName: "Mine_Small_Altar_Tiled", requirement:"priestessMet",//47799
+                weightedDoorTypes: [
+                    {weight:1, doorType:"open"},
+                    {weight:1, doorType:"locked"}
+                ],
+                sequence:
+                {roomTypes: ["mineSmall"], tag: "altar_guacamole", branch: 1}
             }
         ],
         "altar_locked"://47098
 		[
-            {weight:2, roomName: "Mine_Small_Altar_Torches", requirement:"priestessMet", sequence://45736
-				{"type": ["mineSmall"], tag: "altar_guacamole", branch: 1}
+            {weight:2, roomName: "Mine_Small_Altar_Torches", doorType:"locked", requirement:"priestessMet", sequence://45736
+				{roomTypes: ["mineSmall"], tag: "altar_guacamole", branch: 1}
             },
-            {weight:2, roomName: "Mine_Small_Altar_Statues", requirement:"priestessMet", sequence://46779
-				{"type": ["mineSmall"], tag: "altar_guacamole", branch: 1}
+            {weight:2, roomName: "Mine_Small_Altar_Statues", doorType:"locked", requirement:"priestessMet", sequence://46779
+				{roomTypes: ["mineSmall"], tag: "altar_guacamole", branch: 1}
             },
-            {weight:2, roomName: "Mine_Small_Altar_Bridges", requirement:"priestessMet", sequence://46186
-                {"type": ["mineSmall"], tag: "altar_guacamole", branch: 1}
+            {weight:2, roomName: "Mine_Small_Altar_Bridges", doorType:"locked", requirement:"priestessMet", sequence://46186
+                {roomTypes: ["mineSmall"], tag: "altar_guacamole", branch: 1}
             },
-            {weight:2, roomName: "Mine_Small_Altar_Tiled", requirement:"priestessMet", sequence://52373
-                {"type": ["mineSmall"], tag: "altar_guacamole", branch: 1}
+            {weight:2, roomName: "Mine_Small_Altar_Tiled", doorType:"locked", requirement:"priestessMet", sequence://52373
+                {roomTypes: ["mineSmall"], tag: "altar_guacamole", branch: 1}
             }
         ],
         "altar_guacamole"://46070
@@ -230,36 +225,36 @@ const mineEncounterGroups =  Object.freeze({
             {weight:3, roomName: "Mine_Small_Easy_Pillar"},//48626
             {weight:1, roomName: "Mine_Small_Easy_Plain"}//50053            
         ],
-        "tutorial"://45284
+        "treasure_basic_encounters"://49882
         [
-            {weight:1, roomName: "Mine_Small_Tutorial_Jump", roomTag:"tutorial_jump"},//48068
-            {weight:1, roomName: "Mine_Small_Tutorial_Attack", roomTag:"tutorial_attack"},//50086
-            {weight:1, roomName: "Mine_Small_Tutorial_Bomb", roomTag:"tutorial_bomb"},//48852
-            {weight:1, roomName: "Mine_Small_Tutorial_Relic", roomTag:"tutorial_relic"},//52632
-            {weight:1, roomName: "Mine_Small_Tutorial_Begin", roomTag:"begin_tutorial"},//50679
-            {weight:1, roomName: "Mine_Small_Tutorial_Secret", roomTag:"tutorial_secret"}//51526
+            {weight:1, roomName: "Mine_Small_Treasure_Basic_Skeleton"},//49827
+            {weight:1, roomName: "Mine_Small_Treasure_Basic_Rocks"},//51355
+            {weight:1, roomName: "Mine_Small_Treasure_Basic_Plain"},//51894
         ],
         "direct":
         [
+            //end_encounters - 50064
             {weight:1, roomName: "Mine_Small_End_Normal", roomTag: "end"},//46718
 			{weight:1, roomName: "Mine_Small_End_Worm", roomTag: "end_worm"},//49126
 			{weight:1, roomName: "Mine_Small_End_Tutorial", roomTag: "end_tutorial"},//47735
 			{weight:1, roomName: "Mine_Small_End_Boss", roomTag: "end_boss"},//45842
+            //special_encounters - 46818
             {weight:1, roomName: "Mine_Small_Special_DodsonCage", roomTag: "DodsonCageEncounter", requirement:"dodsonNotRescued"},//45181
             {weight:1, roomName: "Mine_Small_Special_WaylandShop", roomTag: "waylandshop", requirement:"waylandNotRescued",},//50180
-            {weight:1, roomName: "Mine_Small_Special_WaylandShopHallway",roomTag: "waylandshophallway", requirement:"waylandNotRescued"},//47928
-            {weight:1, roomName: "Mine_Small_Special_MushroomFamily", roomTag: "mushroom", requirement:"noGreenShroom"},//45129
+            {weight:1, roomName: "Mine_Small_Special_WaylandShopHallway",roomTag: "waylandshophallway", doorType:"rock", requirement:"waylandNotRescued"},//47928
+            {weight:1, roomName: "Mine_Small_Special_MushroomFamily", roomTag: "mushroom", doorType:"rock", requirement:"noGreenShroom"},//45129
             {weight:1, roomName: "Mine_Small_Special_MushroomFarm", roomTag: "mushroom", requirement:"noBlueShroom"},//47532
             {weight:1, roomName: "Mine_Small_Special_BlackRabbit", roomTag: "black_rabbit_first", requirement:"blackRabbitNotMet"},//45409
-            {weight:1, roomName: "Mine_Small_Special_Hoodie_Locked", roomTag: "hoodie_entrance", requirement:"hoodieNotMet"},//48900
+            {weight:1, roomName: "Mine_Small_Special_Hoodie_Locked", roomTag: "hoodie_entrance", doorType:"crystal", requirement:"hoodieNotMet"},//48900
             {weight:1, roomName: "Mine_Small_Special_Hoodie_Unlocked", roomTag: "hoodie_entrance", requirement:"hoodieMet"},//46864
             {weight:1, roomName: "Mine_Small_Special_TributeFountain", roomTag: "tribute_fountain", requirement:"thisRunFountainNotFound"},//48707
+            //tutorial - 45284
             {weight:1, roomName: "Mine_Small_Tutorial_Jump", roomTag:"tutorial_jump"},//48068
             {weight:1, roomName: "Mine_Small_Tutorial_Attack", roomTag:"tutorial_attack"},//50086
             {weight:1, roomName: "Mine_Small_Tutorial_Bomb", roomTag:"tutorial_bomb"},//48852
             {weight:1, roomName: "Mine_Small_Tutorial_Relic", roomTag:"tutorial_relic"},//52632
             {weight:1, roomName: "Mine_Small_Tutorial_Begin", roomTag:"begin_tutorial"},//50679
-            {weight:1, roomName: "Mine_Small_Tutorial_Secret", roomTag:"tutorial_secret"}//51526
+            {weight:1, roomName: "Mine_Small_Tutorial_Secret", roomTag:"tutorial_secret", doorType:"secret"}//51526
         ]
     },
     "mineLarge": {
@@ -316,48 +311,70 @@ const mineEncounterGroups =  Object.freeze({
             {weight:2, roomName: "Mine_Large_Normal_RailIslands"},//52027
             {weight:1, roomName: "Mine_Large_Normal_MushroomGrowOp"}//47982
         ],
-        "special_encounters"://48631
-        [
-            {weight:5, roomName: "Mine_Large_Special_RockMimic", roomTag:"RockMimicEncounter", requirement:"noDodsonKey"},//49967
-            {weight:5, roomName: "Mine_Large_Special_MushroomDarkness", roomTag: "mushroom", requirement:"noPurpleShroom"},//52130
-            {weight:5, roomName: "Mine_Large_Special_AlchemistApprentice0", roomTag:"mushroom_apprentice", requirement: "apprenticeNotMet"},//45519
-            {weight:5, roomName: "Mine_Large_Special_AlchemistApprentice3", roomTag:"mushroom_apprentice", requirement: "haveAllShrooms"},//47191
-            {weight:5, roomName: "Mine_Large_Special_RelicAltar", roomTag:"relic_altar", requrement: "thisRunAltarNotFound"}//51857
-        ],
         "secret"://51980
 		[
-            {weight:5, roomName: "Mine_Large_Secret_GrassChests"},//52629
-			{weight:1, roomName: "Mine_Large_Secret_Altar"},//46957
-			{weight:5, roomName: "Mine_Large_Secret_Blessing"},//49475
-			{weight:5, roomName: "Mine_Large_Secret_BasicItems"},//48084
-			{weight:5, roomName: "Mine_Large_Secret_Gold"},//52676
-			{weight:3, roomName: "Mine_Large_Secret_BlackRabbitShop", requirement:"blackRabbitMet"},//51362
-			{weight:5, roomName: "Mine_Large_Secret_Potion"},//48736
-			{weight:5, roomName: "Mine_Large_Secret_Chest"},//48431
-			{weight:3, roomName: "Mine_Large_Secret_CursedTorch"},//51146
-			{weight:1, roomName: "Mine_Large_Secret_DangerousToGo", requirement:"devleCount8+"},//50072
-			{weight:5, roomName: "Mine_Large_Secret_SpikedFood"},//46384
-			{weight:3, roomName: "Mine_Large_Secret_DoubleLockBlock"},//52336
-			{weight:4, roomName: "Mine_Large_Secret_StatueBombPuzzle"},//50401
-			{weight:1, roomName: "Mine_Large_Secret_Pillars"},//52007
-			{weight:1, roomName: "Mine_Large_Secret_OilyBridge"}//50959
+            {weight:5, roomName: "Mine_Large_Secret_GrassChests", doorType:"secret", sequence://52629
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            },
+			{weight:1, roomName: "Mine_Large_Secret_Altar", doorType:"secret", sequence://46957
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            },
+			{weight:5, roomName: "Mine_Large_Secret_Blessing", doorType:"secret", sequence://49475
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            },
+			{weight:5, roomName: "Mine_Large_Secret_BasicItems", doorType:"secret", sequence://48084
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            },
+			{weight:5, roomName: "Mine_Large_Secret_Gold", doorType:"secret", sequence://52676
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            },
+			{weight:3, roomName: "Mine_Large_Secret_BlackRabbitShop", doorType:"secret", requirement:"blackRabbitMet", sequence://51362
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            },
+			{weight:5, roomName: "Mine_Large_Secret_Potion", doorType:"secret", sequence://48736
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            },
+			{weight:5, roomName: "Mine_Large_Secret_Chest", doorType:"secret", sequence://48431
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            },
+			{weight:3, roomName: "Mine_Large_Secret_CursedTorch", doorType:"secret", sequence://51146
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            },
+			{weight:1, roomName: "Mine_Large_Secret_DangerousToGo", doorType:"secret", requirement:"devleCount8+", sequence://50072
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            },
+			{weight:5, roomName: "Mine_Large_Secret_SpikedFood", doorType:"secret", sequence://46384
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            },
+			{weight:3, roomName: "Mine_Large_Secret_DoubleLockBlock", doorType:"secret", sequence://52336
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            },
+			{weight:4, roomName: "Mine_Large_Secret_StatueBombPuzzle", doorType:"secret", sequence://50401
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            },
+			{weight:1, roomName: "Mine_Large_Secret_Pillars", doorType:"secret", sequence://52007
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            },
+			{weight:1, roomName: "Mine_Large_Secret_OilyBridge", doorType:"secret", sequence://50959
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            }
         ],
         "hidden"://45511
         [
-            {weight:2, roomName: "Mine_Large_Hidden_LeverBlocks"},//48755
-			{weight:2, roomName: "Mine_Large_Hidden_GrassChests"},//52761
-			{weight:2, roomName: "Mine_Large_Hidden_TorchPuzzle"},//51360
-			{weight:2, roomName: "Mine_Large_Hidden_Keys"},//47958
-			{weight:2, roomName: "Mine_Large_Hidden_Potions"},//50067
-			{weight:1, roomName: "Mine_Large_Hidden_Blessing"},//51985
-			{weight:1, roomName: "Mine_Large_Hidden_Blessing02"},//52737
-			{weight:1, roomName: "Mine_Large_Hidden_CursedRelics"},//51942
-			{weight:1, roomName: "Mine_Large_Hidden_Altar"},//50337
-			{weight:2, roomName: "Mine_Large_Hidden_PressureTrap"},//46151
-			{weight:2, roomName: "Mine_Large_Hidden_ChooseBlessing"},//49643
-			{weight:2, roomName: "Mine_Large_Hidden_BobosLair"},//51313
-			{weight:2, roomName: "Mine_Large_Hidden_CaveIn"},//51959
-			{weight:1, roomName: "Mine_Large_Hidden_Gap"}//51202
+            {weight:2, roomName: "Mine_Large_Hidden_LeverBlocks", doorType:"hidden"},//48755
+			{weight:2, roomName: "Mine_Large_Hidden_GrassChests", doorType:"hidden"},//52761
+			{weight:2, roomName: "Mine_Large_Hidden_TorchPuzzle", doorType:"hidden"},//51360
+			{weight:2, roomName: "Mine_Large_Hidden_Keys", doorType:"hidden"},//47958
+			{weight:2, roomName: "Mine_Large_Hidden_Potions", doorType:"hidden"},//50067
+			{weight:1, roomName: "Mine_Large_Hidden_Blessing", doorType:"hidden"},//51985
+			{weight:1, roomName: "Mine_Large_Hidden_Blessing02", doorType:"hidden"},//52737
+			{weight:1, roomName: "Mine_Large_Hidden_CursedRelics", doorType:"hidden"},//51942
+			{weight:1, roomName: "Mine_Large_Hidden_Altar", doorType:"hidden"},//50337
+			{weight:2, roomName: "Mine_Large_Hidden_PressureTrap", doorType:"hidden"},//46151
+			{weight:2, roomName: "Mine_Large_Hidden_ChooseBlessing", doorType:"hidden"},//49643
+			{weight:2, roomName: "Mine_Large_Hidden_BobosLair", doorType:"hidden"},//51313
+			{weight:2, roomName: "Mine_Large_Hidden_CaveIn", doorType:"hidden"},//51959
+			{weight:1, roomName: "Mine_Large_Hidden_Gap", doorType:"hidden"}//51202
         ],
         "treasure_encounters"://49071
         [
@@ -373,7 +390,7 @@ const mineEncounterGroups =  Object.freeze({
             {weight:3, roomName: "Mine_Large_Treasure_VerticalBridge"},//48326
             {weight:4, roomName: "Mine_Large_Treasure_Decision"},//49405
             {weight:3, roomName: "Mine_Large_Treasure_HealthLever"},//52472
-            {weight:5, roomName: "Mine_Large_Treasure_SecretShop", requirement:"dibbleNotComplete"},//49970
+            {weight:5, roomName: "Mine_Large_Treasure_SecretShop", doorType:"crystal", requirement:"dibbleNotComplete"},//49970
             {weight:2, roomName: "Mine_Large_Treasure_OilChest"},//45893
             {weight:2, roomName: "Mine_Large_Treasure_FireyChest"},//46302
             {weight:2, roomName: "Mine_Large_Treasure_ElectrifiedChest"},//45324
@@ -385,15 +402,29 @@ const mineEncounterGroups =  Object.freeze({
             {weight:2, roomName: "Mine_Large_Treasure_DoubleRail"},//48698
             {weight:1, roomName: "Mine_Large_Treasure_RockLock"}//52486
         ],
-        "tutorial"://50221
-        [
-            {weight:1, roomName: "Mine_Large_Tutorial_Throw", roomTag:"tutorial_throw"},//45817
-            {weight:1, roomName: "Mine_Large_Tutorial_Pilfer", roomTag:"tutorial_pilfer"}//48606
-        ],
         "challange"://50721
         [
             {weight:1, roomName: "Mine_Large_Challenge_GamblingRoom"},//51338
             {weight:1, roomName: "Mine_Large_Challenge_Combat"}//49339
+        ],
+        "direct":
+        [
+            //special_encounters - 48631
+            {weight:5, roomName: "Mine_Large_Special_RockMimic", roomTag:"RockMimicEncounter", requirement:"noDodsonKey"},//49967
+            {weight:5, roomName: "Mine_Large_Special_MushroomDarkness", roomTag: "mushroom", doorType:"rock", requirement:"noPurpleShroom"},//52130
+            {weight:5, roomName: "Mine_Large_Special_AlchemistApprentice0", roomTag:"mushroom_apprentice", requirement: "apprenticeNotMet"},//45519
+            {weight:5, roomName: "Mine_Large_Special_AlchemistApprentice3", roomTag:"mushroom_apprentice", requirement: "haveAllShrooms"},//47191
+            {weight:5, roomName: "Mine_Large_Special_RelicAltar", roomTag:"relic_altar", requrement: "thisRunAltarNotFound"},//51857
+            //tutorial - 50221
+            {weight:1, roomName: "Mine_Large_Tutorial_Throw", doorType:"locked", roomTag:"tutorial_throw"},//45817
+            {weight:1, roomName: "Mine_Large_Tutorial_Pilfer", roomTag:"tutorial_pilfer"},//48606
+            //shop
+            {weight:1, roomName: "Encounter_Shop", roomTag:"shop",//3101 (EncounterShop)
+                weightedDoorTypes: [
+                    {weight:10, doorType:"open"},
+                    {weight:7, doorType:"locked"}
+                ],
+            }
         ]
     },
     "SleepyHoodyRoom": {
@@ -401,22 +432,5 @@ const mineEncounterGroups =  Object.freeze({
 		[
             {weight:1, roomName: "SleepyHoodyRoom", requirement:false, roomTag: "hoodie_entrance"}//
         ]
-    },
-    "direct":
-	[
-        {weight:1, roomName: "Mine_Small_Special_DodsonCage", requirement:"peasant1_unlocked == 0", roomTag: "DodsonCageEncounter"},//
-        {weight:1, roomName: "Mine_Small_Special_WaylandShop", requirement:"blacksmith_rescued == 0", roomTag: "waylandshop"},//
-        {weight:1, roomName: "Mine_Small_Special_WaylandShopHallway", requirement:"blacksmith_rescued == 0", roomTag: "waylandshophallway"},//
-        {weight:1, roomName: "Mine_Small_Special_MushroomFamily", requirement:"mushroom_green == 0, apprentice_met > 0", roomTag: "mushroom"},//
-        {weight:1, roomName: "Mine_Small_Special_MushroomFarm", requirement:"mushroom_blue == 0, apprentice_met > 0", roomTag: "mushroom"},//
-        {weight:1, roomName: "Mine_Small_Special_BlackRabbit", requirement:true, roomTag: "black_rabbit_first"},//
-        {weight:1, roomName: "Mine_Small_Special_Hoodie_Locked", requirement:false, roomTag: "hoodie_entrance"},//
-        {weight:1, roomName: "Mine_Small_Special_Hoodie_Unlocked", requirement:false, roomTag: "hoodie_entrance"},//
-        {weight:1, roomName: "Mine_Small_Special_TributeFountain", requirement:false, roomTag: "tribute_fountain"},//
-        {weight:1, roomName: "Mine_Small_End_Normal", roomTag: "end"},//
-		{weight:1, roomName: "Mine_Small_End_Worm", requirement:"end_worm", roomTag: "end_worm"},//
-		{weight:1, roomName: "Mine_Small_End_Tutorial", roomTag: "end_tutorial"},//
-		{weight:1, roomName: "Mine_Small_End_Boss", roomTag: "end_boss"}//
-    ]
-
+    }
 });
