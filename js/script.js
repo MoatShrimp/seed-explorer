@@ -69,7 +69,7 @@ class Random {
         if (max < min) {
             [min, max] = [max, min];
         }
-        return (max - min) * (toUInt32(this.nextUInt << 9) / 0xFFFFFFFF) + min;
+        return (max - min) * (1 - (toUInt32(this.nextUInt << 9) / 0xFFFFFFFF)) + min;
     }
     rangeInclusive(min, max) {
         return this.range(min, max + 1);
@@ -134,6 +134,7 @@ function loadSave(radio, file) {
             "altar_encountered": 0,
             "haveWhip": 0,
             "haveHat": 0,
+            "haveCircinus": 0,
             "bog_unlocked": 0
         }
     };
@@ -158,7 +159,7 @@ function loadSave(radio, file) {
             settingsOut.flags['secret_treasure_note'] = 0;
             settingsOut.flags['foundRatBond'] = 1;
             settingsOut.flags['priestess_met'] = 3;
-            settingsOut.flags['haveGuacamole'] = 1;
+            settingsOut.flags['haveGuacamole'] = 0;
             settingsOut.flags['peasant1_unlocked'] = 1;
             settingsOut.flags['blacksmith_rescued'] = 1;
             settingsOut.flags['foundWaylandsBoots'] = 1;
@@ -176,6 +177,7 @@ function loadSave(radio, file) {
             settingsOut.flags['prisoner_key'] = 1;
             settingsOut.flags['altar_encountered'] = 0;
             settingsOut.flags['haveWhip'] = 0;
+            settingsOut.flags['haveCircinus'] = 0;
             settingsOut.flags['haveHat'] = 0;
             settingsOut.flags['bog_unlocked'] = 1;
             break;
@@ -5468,43 +5470,43 @@ const mineEncounterGroups = Object.freeze({
             { weight: 4, roomName: "Mine_Small_Relic_Locked_Statues", doorType: "locked", requirement: "noRelicHex" }
         ],
         "secret": [
-            { weight: 4, roomName: "Mine_Small_Secret_WaterChest", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 4, roomName: "Mine_Small_Secret_WaterChest", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 4, roomName: "Mine_Small_Secret_Carts", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 4, roomName: "Mine_Small_Secret_Carts", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 1, roomName: "Mine_Small_Secret_Altar", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 1, roomName: "Mine_Small_Secret_Altar", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 3, roomName: "Mine_Small_Secret_CursedTorch", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 3, roomName: "Mine_Small_Secret_CursedTorch", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 3, roomName: "Mine_Small_Secret_Crystals", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 3, roomName: "Mine_Small_Secret_Crystals", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 4, roomName: "Mine_Small_Secret_Chest", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 4, roomName: "Mine_Small_Secret_Chest", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 3, roomName: "Mine_Small_Secret_SpikeSacrifice", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 3, roomName: "Mine_Small_Secret_SpikeSacrifice", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 1, roomName: "Mine_Small_Secret_Blessing", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 1, roomName: "Mine_Small_Secret_Blessing", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 3, roomName: "Mine_Small_Secret_Items", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 3, roomName: "Mine_Small_Secret_Items", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 3, roomName: "Mine_Small_Secret_Chest", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 3, roomName: "Mine_Small_Secret_Chest", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 3, roomName: "Mine_Small_Secret_ChestCommon", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 3, roomName: "Mine_Small_Secret_ChestCommon", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 3, roomName: "Mine_Small_Secret_KeyBlock", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 3, roomName: "Mine_Small_Secret_KeyBlock", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 3, roomName: "Mine_Small_Secret_Bombs", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 3, roomName: "Mine_Small_Secret_Bombs", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 10, roomName: "Mine_Small_Secret_DogShadow", doorType: "secret", requirement: "dogShadowNotFound", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 10, roomName: "Mine_Small_Secret_DogShadow", doorType: "secret", requirement: "dogShadowNotFound", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 2, roomName: "Mine_Small_Secret_LeverBlocks", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 2, roomName: "Mine_Small_Secret_LeverBlocks", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 1, roomName: "Mine_Small_Secret_Tent", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 1, roomName: "Mine_Small_Secret_Tent", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 2, roomName: "Mine_Small_Secret_Nugg", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 2, roomName: "Mine_Small_Secret_Nugg", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 3, roomName: "Mine_Small_Secret_Bard", doorType: "secret", requirement: "thisRunBardNotMet", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 3, roomName: "Mine_Small_Secret_Bard", doorType: "secret", requirement: "thisRunBardNotMet", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 3, roomName: "Mine_Small_Secret_TributeFountain", doorType: "secret", requirement: "bogUnlocked", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 3, roomName: "Mine_Small_Secret_TributeFountain", doorType: "secret", requirement: "bogUnlocked", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             }
         ],
         "hidden": [
@@ -5674,35 +5676,35 @@ const mineEncounterGroups = Object.freeze({
             { weight: 1, roomName: "Mine_Large_Normal_MushroomGrowOp" }
         ],
         "secret": [
-            { weight: 5, roomName: "Mine_Large_Secret_GrassChests", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 5, roomName: "Mine_Large_Secret_GrassChests", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 1, roomName: "Mine_Large_Secret_Altar", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 1, roomName: "Mine_Large_Secret_Altar", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 5, roomName: "Mine_Large_Secret_Blessing", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 5, roomName: "Mine_Large_Secret_Blessing", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 5, roomName: "Mine_Large_Secret_BasicItems", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 5, roomName: "Mine_Large_Secret_BasicItems", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 5, roomName: "Mine_Large_Secret_Gold", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 5, roomName: "Mine_Large_Secret_Gold", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 3, roomName: "Mine_Large_Secret_BlackRabbitShop", doorType: "secret", requirement: "blackRabbitMet", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 3, roomName: "Mine_Large_Secret_BlackRabbitShop", doorType: "secret", requirement: "blackRabbitMet", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 5, roomName: "Mine_Large_Secret_Potion", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 5, roomName: "Mine_Large_Secret_Potion", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 5, roomName: "Mine_Large_Secret_Chest", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 5, roomName: "Mine_Large_Secret_Chest", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 3, roomName: "Mine_Large_Secret_CursedTorch", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 3, roomName: "Mine_Large_Secret_CursedTorch", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 1, roomName: "Mine_Large_Secret_DangerousToGo", doorType: "secret", requirement: "devleCount8+", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 1, roomName: "Mine_Large_Secret_DangerousToGo", doorType: "secret", requirement: "devleCount8+", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 5, roomName: "Mine_Large_Secret_SpikedFood", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 5, roomName: "Mine_Large_Secret_SpikedFood", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 3, roomName: "Mine_Large_Secret_DoubleLockBlock", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 3, roomName: "Mine_Large_Secret_DoubleLockBlock", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 4, roomName: "Mine_Large_Secret_StatueBombPuzzle", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 4, roomName: "Mine_Large_Secret_StatueBombPuzzle", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 1, roomName: "Mine_Large_Secret_Pillars", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 1, roomName: "Mine_Large_Secret_Pillars", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             },
-            { weight: 1, roomName: "Mine_Large_Secret_OilyBridge", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true }
+            { weight: 1, roomName: "Mine_Large_Secret_OilyBridge", doorType: "secret", sequence: { roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement: "circinus" }
             }
         ],
         "hidden": [
@@ -5750,6 +5752,14 @@ const mineEncounterGroups = Object.freeze({
             { weight: 1, roomName: "Mine_Large_Challenge_GamblingRoom" },
             { weight: 1, roomName: "Mine_Large_Challenge_Combat" }
         ],
+        "shop": [
+            { weight: 1, roomName: "Encounter_Shop", roomTag: "shop",
+                weightedDoorTypes: [
+                    { weight: 10, doorType: "open" },
+                    { weight: 7, doorType: "locked" }
+                ],
+            }
+        ],
         "direct": [
             { weight: 5, roomName: "Mine_Large_Special_RockMimic", roomTag: "RockMimicEncounter", requirement: "noDodsonKey" },
             { weight: 5, roomName: "Mine_Large_Special_MushroomDarkness", roomTag: "mushroom", doorType: "rock", requirement: "noPurpleShroom" },
@@ -5758,17 +5768,12 @@ const mineEncounterGroups = Object.freeze({
             { weight: 5, roomName: "Mine_Large_Special_RelicAltar", roomTag: "relic_altar", requrement: "thisRunAltarNotFound" },
             { weight: 1, roomName: "Mine_Large_Tutorial_Throw", doorType: "locked", roomTag: "tutorial_throw" },
             { weight: 1, roomName: "Mine_Large_Tutorial_Pilfer", roomTag: "tutorial_pilfer" },
-            { weight: 1, roomName: "Encounter_Shop", roomTag: "shop",
-                weightedDoorTypes: [
-                    { weight: 10, doorType: "open" },
-                    { weight: 7, doorType: "locked" }
-                ],
-            }
+            { weight: 1, roomName: "Encounter_BR_TreasureGame", roomTag: "black_rabbit" }
         ]
     },
     "SleepyHoodyRoom": {
         "hoody": [
-            { weight: 1, roomName: "SleepyHoodyRoom", requirement: false, roomTag: "hoodie_entrance" }
+            { weight: 1, roomName: "SleepyHoodyRoom", roomTag: "hoodie_entrance" }
         ]
     }
 });
@@ -5980,7 +5985,12 @@ const maps = {
         ]
     ]
 };
-function getRooms(floor, seed) {
+function getRooms(zone, floor, seed) {
+    seed = (seed ?? parseInt(e$('seed-input').value)) + floor;
+    const randLayout = new Random(seed);
+    let count = 0;
+    const seenRooms = [];
+    const zeroPad = (num, places) => String(num).padStart(places, '0');
     function requirements(check) {
         if (check == undefined) {
             return true;
@@ -5990,7 +6000,7 @@ function getRooms(floor, seed) {
             case "noRelicHex":
                 return !s$.relicHex;
             case "dogShadowNotFound":
-                return s$.dog_shadow_found && (s$.delve_count > 5);
+                return !s$.dog_shadow_found && (s$.delve_count > 5);
             case "thisRunBardNotMet":
                 return !s$.bard_met;
             case "bogUnlocked":
@@ -6014,9 +6024,9 @@ function getRooms(floor, seed) {
             case "blackRabbitNotMet":
                 return !s$.black_rabbit_met;
             case "hoodieNotMet":
-                return !!s$.rockmimic_defeated && !s$.hoodie_met_mine;
+                return (floor === 1) && !!s$.rockmimic_defeated && !s$.hoodie_met_mine;
             case "hoodieMet":
-                return !!s$.rockmimic_defeated && !!s$.hoodie_met_mine;
+                return (floor === 1) && !!s$.rockmimic_defeated && !!s$.hoodie_met_mine;
             case "thisRunFountainNotFound":
                 return !!s$.bog_unlocked && !s$.tribute_fountain_encountered;
             case "blackRabbitMet":
@@ -6036,15 +6046,9 @@ function getRooms(floor, seed) {
             case "whip":
                 return !!s$.haveWhip;
             case "hat":
-                return !s$.haveHat;
-            case "thisRunAltarNotFound":
-                return !s$.altar_encountered;
-            case "thisRunAltarNotFound":
-                return !s$.altar_encountered;
-            case "thisRunAltarNotFound":
-                return !s$.altar_encountered;
-            case "thisRunAltarNotFound":
-                return !s$.altar_encountered;
+                return !!s$.haveHat;
+            case "circinus":
+                return !!s$.haveCircinus;
             case "thisRunAltarNotFound":
                 return !s$.altar_encountered;
             default:
@@ -6052,48 +6056,71 @@ function getRooms(floor, seed) {
         }
     }
     function getRoom(room) {
-        if ((room.chance ?? 1) < 1 && room.chance < randLayout.value) {
-            console.log(`Skipping room: ${room.tag} due to low chance`);
+        let value = null;
+        if ((room.chance ?? 1) < 1 && (room.chance < (value = randLayout.value))) {
+            console.log(`%cSkipping room ${room.tag}: Chance failed`, "color:#a09;");
             return false;
         }
         if (!requirements(room.requirement)) {
-            console.log(`Skipping room: ${room.tag} due to invalid requirements`);
+            console.log(`%cSkipping room ${room.tag}: Requirements not met`, "color:#a00;");
             return false;
         }
+        if (room.tag == "mushroom") {
+            randLayout.value;
+        }
         const type = room.roomTypes[randLayout.range(0, room.roomTypes.length)];
-        if (mineEncounterGroups[type][room.tag]) {
-            return randLayout.getWeightedTable(mineEncounterGroups[type][room.tag]);
+        const tags = room.tag.split(",");
+        let roomOut = null;
+        for (const tag of tags) {
+            const encounterGroup = mineEncounterGroups[type][tag];
+            if (encounterGroup) {
+                const filteredRooms = encounterGroup.filter(current => !seenRooms.includes(current.roomName) && requirements(current.requirement));
+                if (filteredRooms.length) {
+                    roomOut = randLayout.getWeightedTable(filteredRooms);
+                    if (roomOut.weightedDoorTypes) {
+                        roomOut.doorType = randLayout.getWeightedTable(roomOut.weightedDoorTypes).doorType;
+                    }
+                    break;
+                }
+                else {
+                    console.log(`%cSkipping encounter ${tag}: Requirements not met`, "color:#a00;");
+                }
+            }
+            else {
+                roomOut = mineEncounterGroups[type].direct.find(encounter => (encounter.roomTag === tag) && requirements(encounter.requirement)) ?? false;
+                if (roomOut) {
+                    if (roomOut.weightedDoorTypes) {
+                        roomOut.doorType = randLayout.getWeightedTable(roomOut.weightedDoorTypes).doorType;
+                    }
+                    break;
+                }
+                else {
+                    console.log(`%cSkipping encounter ${tag}: Requirements not met`, "color:#a00;");
+                }
+            }
         }
-        else {
-            console.log(type);
-            return mineEncounterGroups[type].direct.find(encounter => encounter.roomTag === room.tag);
-        }
+        return roomOut;
     }
-    seed = seed ?? parseInt(e$('seed-input').value) + 1;
-    const randLayout = new Random(seed);
-    for (const roomGroup of floor) {
+    for (const roomGroup of zone[floor - 1]) {
         for (const room of roomGroup) {
             const currentRoom = getRoom(room);
             if (currentRoom) {
-                if (!requirements(currentRoom.requirement)) {
-                    console.log(`Skipping room: ${currentRoom.roomName} due to internal requirements`);
-                    continue;
+                seenRooms.push(currentRoom.roomName);
+                if (currentRoom.doorType) {
+                    console.log(`${zeroPad(++count, 2)}: ${currentRoom.roomName}, %cDoor: ${currentRoom.doorType}`, "color:#a70;");
                 }
                 else {
-                    currentRoom.weight = 0;
-                    console.log(currentRoom.roomName);
+                    console.log(`${zeroPad(++count, 2)}: ${currentRoom.roomName}`);
                 }
-                let nextRoom = null;
                 if (currentRoom.sequence) {
                     const nextRoom = getRoom(currentRoom.sequence);
                     if (nextRoom) {
-                        if (!nextRoom.requirements) {
-                            console.log(`Skipping sub-room: ${nextRoom.roomName} due to internal requirements`);
-                            continue;
+                        seenRooms.push(nextRoom.roomName);
+                        if (nextRoom.doorType) {
+                            console.log(`${zeroPad(++count, 2)}: ${nextRoom.roomName}, Door: ${nextRoom.doorType}`);
                         }
                         else {
-                            nextRoom.weight = 0;
-                            console.log(nextRoom.roomName);
+                            console.log(`${zeroPad(++count, 2)}: ${nextRoom.roomName}`);
                         }
                     }
                 }
@@ -6219,6 +6246,7 @@ let settings = {
         "altar_encountered": 0,
         "haveWhip": 0,
         "haveHat": 0,
+        "haveCircinus": 0,
         "bog_unlocked": 0
     }
 };
@@ -6411,7 +6439,6 @@ listCraftable('potion');
 populateAltar();
 loadLootTables();
 randomSeed();
-newRadio.checked = true;
 const radioEvent = new Event("change");
 e$("menu-options").addEventListener("change", () => loadSeed());
 e$("save-radio-selecion").addEventListener("change", (event) => {
@@ -6430,8 +6457,13 @@ e$("save-radio-selecion").addEventListener("change", (event) => {
             loadInput.click();
         }
     }
+    else if (fullRadio.checked) {
+        settings = loadSave(fullRadio);
+        applySettings(settings);
+        loadSeed();
+    }
     else {
-        settings = loadSave(event.target);
+        settings = loadSave(newRadio);
         applySettings(settings);
         loadSeed();
     }
@@ -6442,3 +6474,5 @@ loadInput.addEventListener('change', () => {
 });
 randomSeedButton.addEventListener('click', randomSeed);
 loadSeedButton.addEventListener('click', loadSeed);
+fullRadio.checked = true;
+e$("save-radio-selecion").dispatchEvent(radioEvent);
