@@ -127,7 +127,7 @@ const maps = {
 				{roomTypes:["mineSmall"], tag:"end", branch:1}
 			],
 			[	{roomTypes:["mineSmall"], tag:"relic_encounters_unlocked", branch:1}],
-			[	{roomTypes:["mineSmall"], tag:"black_rabbit_first", branch:1}],
+			[	{roomTypes:["mineSmall"], tag:"black_rabbit_first",  branch:1}],
 			[	{roomTypes:["mineSmall", "mineLarge"], tag:"treasure_encounters", branch:1}],
 			[	{roomTypes:["mineSmall", "mineLarge"], tag:"treasure_encounters", "chance":0.5, requirement:"whip"}],
 			[	{roomTypes:["mineSmall"], tag:"altar", branch:1}],
