@@ -80,7 +80,7 @@ class Random {
 		if (max < min){
 			[min, max] = [max, min];
 		}
-		return (max - min) * (toUInt32(this.nextUInt << 9) / 0xFFFFFFFF) + min;
+		return (max - min) * (1 - (toUInt32(this.nextUInt << 9) / 0xFFFFFFFF)) + min;
 	}
 
 	//Copy of rangeInclusive from Undermine
