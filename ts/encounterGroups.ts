@@ -68,61 +68,61 @@ const mineEncounterGroups =  Object.freeze({
         "secret"://45085
 		[
             {weight:4, roomName: "Mine_Small_Secret_WaterChest", doorType:"secret", sequence://47448
-            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
             {weight:4, roomName: "Mine_Small_Secret_Carts", doorType:"secret", sequence://51587
-            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
             {weight:1, roomName: "Mine_Small_Secret_Altar", doorType:"secret", sequence://51761
-            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
             {weight:3, roomName: "Mine_Small_Secret_CursedTorch", doorType:"secret", sequence://46662
-				{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+				{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
             {weight:3, roomName: "Mine_Small_Secret_Crystals", doorType:"secret", sequence://49012
-            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
             {weight:4, roomName: "Mine_Small_Secret_Chest", doorType:"secret", sequence://45847
-            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
             {weight:3, roomName: "Mine_Small_Secret_SpikeSacrifice", doorType:"secret", sequence://46575
-            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
             {weight:1, roomName: "Mine_Small_Secret_Blessing", doorType:"secret", sequence://47495
-            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
             {weight:3, roomName: "Mine_Small_Secret_Items", doorType:"secret", sequence://49928
-            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
             {weight:3, roomName: "Mine_Small_Secret_Chest", doorType:"secret", sequence://46401
-            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+            	{roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
             {weight:3, roomName: "Mine_Small_Secret_ChestCommon", doorType:"secret", sequence://46634
-            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
+            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  requirement:"circinus"}
             },
             {weight:3, roomName: "Mine_Small_Secret_KeyBlock", doorType:"secret", sequence://50112
-            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
+            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  requirement:"circinus"}
             },
             {weight:3, roomName: "Mine_Small_Secret_Bombs", doorType:"secret", sequence://46616
-            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
+            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  requirement:"circinus"}
             },
             {weight:10, roomName: "Mine_Small_Secret_DogShadow", doorType:"secret", requirement: "dogShadowNotFound", sequence://46497
-            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
+            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  requirement:"circinus"}
             },
             {weight:2, roomName: "Mine_Small_Secret_LeverBlocks", doorType:"secret", sequence://45540
-            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
+            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  requirement:"circinus"}
             },
             {weight:1, roomName: "Mine_Small_Secret_Tent", doorType:"secret", sequence://50488
-            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
+            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  requirement:"circinus"}
             },
             {weight:2, roomName: "Mine_Small_Secret_Nugg", doorType:"secret", sequence://53023
-            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
+            	{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  requirement:"circinus"}
             },
             {weight:3, roomName: "Mine_Small_Secret_Bard", doorType:"secret", requirement: "thisRunBardNotMet", sequence://48615
-				{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
+				{roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  requirement:"circinus"}
             },
             {weight:3, roomName: "Mine_Small_Secret_TributeFountain", doorType:"secret", requirement:"bogUnlocked", sequence://48501
-                {roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  "skip": true}
+                {roomTypes: ["mineSmall", "mineLarge"],tag: "secret", chance: 0.25,  requirement:"circinus"}
             }
         ],
         "hidden"://46542
@@ -314,49 +314,49 @@ const mineEncounterGroups =  Object.freeze({
         "secret"://51980
 		[
             {weight:5, roomName: "Mine_Large_Secret_GrassChests", doorType:"secret", sequence://52629
-                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
 			{weight:1, roomName: "Mine_Large_Secret_Altar", doorType:"secret", sequence://46957
-                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
 			{weight:5, roomName: "Mine_Large_Secret_Blessing", doorType:"secret", sequence://49475
-                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
 			{weight:5, roomName: "Mine_Large_Secret_BasicItems", doorType:"secret", sequence://48084
-                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
 			{weight:5, roomName: "Mine_Large_Secret_Gold", doorType:"secret", sequence://52676
-                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
 			{weight:3, roomName: "Mine_Large_Secret_BlackRabbitShop", doorType:"secret", requirement:"blackRabbitMet", sequence://51362
-                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
 			{weight:5, roomName: "Mine_Large_Secret_Potion", doorType:"secret", sequence://48736
-                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
 			{weight:5, roomName: "Mine_Large_Secret_Chest", doorType:"secret", sequence://48431
-                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
 			{weight:3, roomName: "Mine_Large_Secret_CursedTorch", doorType:"secret", sequence://51146
-                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
 			{weight:1, roomName: "Mine_Large_Secret_DangerousToGo", doorType:"secret", requirement:"devleCount8+", sequence://50072
-                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
 			{weight:5, roomName: "Mine_Large_Secret_SpikedFood", doorType:"secret", sequence://46384
-                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
 			{weight:3, roomName: "Mine_Large_Secret_DoubleLockBlock", doorType:"secret", sequence://52336
-                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
 			{weight:4, roomName: "Mine_Large_Secret_StatueBombPuzzle", doorType:"secret", sequence://50401
-                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
 			{weight:1, roomName: "Mine_Large_Secret_Pillars", doorType:"secret", sequence://52007
-                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             },
 			{weight:1, roomName: "Mine_Large_Secret_OilyBridge", doorType:"secret", sequence://50959
-                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, "skip": true}
+                {roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.25, requirement:"circinus"}
             }
         ],
         "hidden"://45511
@@ -407,6 +407,15 @@ const mineEncounterGroups =  Object.freeze({
             {weight:1, roomName: "Mine_Large_Challenge_GamblingRoom"},//51338
             {weight:1, roomName: "Mine_Large_Challenge_Combat"}//49339
         ],
+        "shop": //3101 (EncounterShop)
+        [
+            {weight:1, roomName: "Encounter_Shop", roomTag:"shop",//3101 (EncounterShop)
+                weightedDoorTypes: [
+                    {weight:10, doorType:"open"},
+                    {weight:7, doorType:"locked"}
+                ],
+            }
+        ],
         "direct":
         [
             //special_encounters - 48631
@@ -418,19 +427,21 @@ const mineEncounterGroups =  Object.freeze({
             //tutorial - 50221
             {weight:1, roomName: "Mine_Large_Tutorial_Throw", doorType:"locked", roomTag:"tutorial_throw"},//45817
             {weight:1, roomName: "Mine_Large_Tutorial_Pilfer", roomTag:"tutorial_pilfer"},//48606
+            //black_rabbit// Encounter_BR_TreasureGame
+            {weight:1, roomName: "Encounter_BR_TreasureGame", roomTag:"black_rabbit"}//219
             //shop
-            {weight:1, roomName: "Encounter_Shop", roomTag:"shop",//3101 (EncounterShop)
+            /*{weight:1, roomName: "Encounter_Shop", roomTag:"shop",//3101 (EncounterShop)
                 weightedDoorTypes: [
                     {weight:10, doorType:"open"},
                     {weight:7, doorType:"locked"}
                 ],
-            }
+            }*/
         ]
     },
     "SleepyHoodyRoom": {
         "hoody":
 		[
-            {weight:1, roomName: "SleepyHoodyRoom", requirement:false, roomTag: "hoodie_entrance"}//
+            {weight:1, roomName: "SleepyHoodyRoom", roomTag: "hoodie_entrance"}//
         ]
     }
 });
