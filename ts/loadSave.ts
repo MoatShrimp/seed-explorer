@@ -39,6 +39,7 @@ function loadSave(radio:HTMLInputElement, file?:string) {
 			"altar_encountered": 0,
 			"haveWhip": 0,
 			"haveHat": 0,
+			"haveCircinus": 0,
 			"bog_unlocked": 0			
 		}
 	}
@@ -68,7 +69,7 @@ function loadSave(radio:HTMLInputElement, file?:string) {
 			settingsOut.flags['secret_treasure_note'] = 0;
 			settingsOut.flags['foundRatBond'] = 1;
 			settingsOut.flags['priestess_met'] = 3;
-			settingsOut.flags['haveGuacamole'] = 1;
+			settingsOut.flags['haveGuacamole'] = 0;
 			settingsOut.flags['peasant1_unlocked'] = 1;
 			settingsOut.flags['blacksmith_rescued'] = 1;
 			settingsOut.flags['foundWaylandsBoots'] = 1;
@@ -86,6 +87,7 @@ function loadSave(radio:HTMLInputElement, file?:string) {
 			settingsOut.flags['prisoner_key'] = 1;
 			settingsOut.flags['altar_encountered'] = 0;
 			settingsOut.flags['haveWhip'] = 0;
+			settingsOut.flags['haveCircinus'] = 0;
 			settingsOut.flags['haveHat'] = 0;
 			settingsOut.flags['bog_unlocked'] = 1;			
 			break;
