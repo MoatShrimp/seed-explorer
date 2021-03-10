@@ -1,5 +1,12 @@
-function getRooms(floor, seed?) {
+function getRooms(zone, floor, seed?) {
 
+    seed = (seed ?? parseInt(e$('seed-input').value)) + floor;
+    const randLayout = new Random(seed);
+    let count = 0;
+    const seenRooms = [];
+
+    const zeroPad = (num, places) => String(num).padStart(places, '0')
+    
     function requirements(check:string):boolean{
         if(check == undefined){
             return true;
@@ -10,7 +17,7 @@ function getRooms(floor, seed?) {
             case "noRelicHex":
                 return !s$.relicHex;
             case "dogShadowNotFound":
-                return s$.dog_shadow_found && (s$.delve_count > 5);
+                return !s$.dog_shadow_found && (s$.delve_count > 5);
             case "thisRunBardNotMet":
                 return !s$.bard_met;
             case "bogUnlocked":
@@ -34,9 +41,9 @@ function getRooms(floor, seed?) {
             case "blackRabbitNotMet":
                 return !s$.black_rabbit_met;
             case "hoodieNotMet":
-                return !!s$.rockmimic_defeated && !s$.hoodie_met_mine;
+                return (floor === 1) && !!s$.rockmimic_defeated && !s$.hoodie_met_mine;
             case "hoodieMet":
-                return !!s$.rockmimic_defeated && !!s$.hoodie_met_mine;
+                return (floor === 1) && !!s$.rockmimic_defeated && !!s$.hoodie_met_mine;
             case "thisRunFountainNotFound":
                 return !!s$.bog_unlocked && !s$.tribute_fountain_encountered;
             case "blackRabbitMet":
@@ -56,15 +63,9 @@ function getRooms(floor, seed?) {
             case "whip":
                 return !!s$.haveWhip;
             case "hat":
-                return !s$.haveHat;
-            case "thisRunAltarNotFound":
-                return !s$.altar_encountered;
-            case "thisRunAltarNotFound":
-                return !s$.altar_encountered;
-            case "thisRunAltarNotFound":
-                return !s$.altar_encountered;
-            case "thisRunAltarNotFound":
-                return !s$.altar_encountered;
+                return !!s$.haveHat;
+            case "circinus":
+                return !!s$.haveCircinus;
             case "thisRunAltarNotFound":
                 return !s$.altar_encountered;
             default:
@@ -73,60 +74,88 @@ function getRooms(floor, seed?) {
     }
 
     function getRoom (room){
-        if ((room.chance ?? 1) < 1 && room.chance < randLayout.value) {
-            console.log(`Skipping room: ${room.tag} due to low chance`)
+        let value = null;
+        //console.log(room)
+        //console.log(randLayout.seed)
+        if ((room.chance ?? 1) < 1 && (room.chance < (value = randLayout.value))) {
+            //console.log(value)
+            console.log(`%cSkipping room ${room.tag}: Chance failed`, "color:#a09;")
             return false;
         }
         if (!requirements(room.requirement)) {
-            console.log(`Skipping room: ${room.tag} due to invalid requirements`)
+            console.log(`%cSkipping room ${room.tag}: Requirements not met`, "color:#a00;")
             return false;
         }
+        //console.log(value)
+        if (room.tag == "mushroom") {
+            randLayout.value;
+        }
+        
         const type = room.roomTypes[randLayout.range(0, room.roomTypes.length)];
-        if(mineEncounterGroups[type][room.tag]) {
-            return randLayout.getWeightedTable(mineEncounterGroups[type][room.tag]);
+
+
+        const tags = room.tag.split(",");
+        let roomOut = null;
+       
+        for (const tag of tags) {
+            const encounterGroup = mineEncounterGroups[type][tag];
+            if(encounterGroup) {
+
+                const filteredRooms = encounterGroup.filter(current => !seenRooms.includes(current.roomName) && requirements(current.requirement));
+                
+                if (filteredRooms.length){
+
+                    roomOut = randLayout.getWeightedTable(filteredRooms);
+                    //console.log(seed + ' gives ' + roomOut.roomName)
+                    if (roomOut.weightedDoorTypes) {
+                        roomOut.doorType = randLayout.getWeightedTable(roomOut.weightedDoorTypes).doorType;
+                    }
+                    break;
+                }
+                else {
+                    console.log(`%cSkipping encounter ${tag}: Requirements not met`, "color:#a00;")
+                }
+            }
+            else {
+                roomOut =  mineEncounterGroups[type].direct.find( encounter => (encounter.roomTag === tag) && requirements(encounter.requirement)) ?? false;
+
+                if (roomOut) {
+                    if (roomOut.weightedDoorTypes){
+                        roomOut.doorType = randLayout.getWeightedTable(roomOut.weightedDoorTypes).doorType;
+                    }
+                    break;
+                }
+                else {
+                    console.log(`%cSkipping encounter ${tag}: Requirements not met`, "color:#a00;")
+                }
+            }
         }
-        else {
-             console.log(type)
-            return mineEncounterGroups[type].direct.find( encounter => encounter.roomTag === room.tag);
-        }
+        return roomOut;
     }
-
-
-    seed = seed ?? parseInt(e$('seed-input').value) + 1;
-    const randLayout = new Random(seed);
-
-    for (const roomGroup of floor) {
+    for (const roomGroup of zone[floor - 1]) {
         for (const room of roomGroup) {
 
             const currentRoom = getRoom(room);
 
             if (currentRoom) {
-
-                if (!requirements(currentRoom.requirement)) {
-                    console.log(`Skipping room: ${currentRoom.roomName} due to internal requirements`)
-                    continue;
+                seenRooms.push(currentRoom.roomName);
+                if (currentRoom.doorType){
+                    console.log(`${zeroPad(++count,2)}: ${currentRoom.roomName}, %cDoor: ${currentRoom.doorType}`, "color:#a70;")
                 }
-
                 else {
-                    currentRoom.weight = 0;
-                    console.log(currentRoom.roomName)
+                    console.log(`${zeroPad(++count,2)}: ${currentRoom.roomName}`)
                 }
-
-                let nextRoom = null;
-            
                 if (currentRoom.sequence) {
 
                     const nextRoom = getRoom(currentRoom.sequence);
 
                     if (nextRoom) {
-
-                        if (!nextRoom.requirements) {
-                            console.log(`Skipping sub-room: ${nextRoom.roomName} due to internal requirements`)
-                            continue;
+                        seenRooms.push(nextRoom.roomName);
+                        if (nextRoom.doorType){
+                            console.log(`${zeroPad(++count,2)}: ${nextRoom.roomName}, Door: ${nextRoom.doorType}`)
                         }
                         else {
-                            nextRoom.weight = 0;
-                            console.log(nextRoom.roomName)
+                            console.log(`${zeroPad(++count,2)}: ${nextRoom.roomName}`)
                         }
                     }
                 }
