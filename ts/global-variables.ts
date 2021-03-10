@@ -82,6 +82,7 @@ let settings = {
 		"altar_encountered": 0,
 		"haveWhip": 0,
 		"haveHat": 0,
+		"haveCircinus": 0,
 		"bog_unlocked": 0
 	}
 }
