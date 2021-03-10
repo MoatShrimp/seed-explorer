@@ -15,7 +15,7 @@ loadLootTables ();
 
 //set initial values
 randomSeed();
-newRadio.checked = true;
+
 const radioEvent = new Event("change");
 
 e$("menu-options").addEventListener("change", () => loadSeed());
@@ -40,8 +40,13 @@ e$("save-radio-selecion").addEventListener("change", (event) => {
 			loadInput.click();
 		}
 	}
+	else if (fullRadio.checked) {
+		settings = loadSave(fullRadio);
+		applySettings(settings);
+		loadSeed();
+	}
 	else {
-		settings = loadSave(event.target);
+		settings = loadSave(newRadio);
 		applySettings(settings);
 		loadSeed();
 	}
@@ -56,3 +61,6 @@ loadInput.addEventListener('change', () => {
 //random seed-button
 randomSeedButton.addEventListener('click', randomSeed);	
 loadSeedButton.addEventListener('click', loadSeed);	 
+
+fullRadio.checked = true;
+e$("save-radio-selecion").dispatchEvent(radioEvent)
