@@ -81,7 +81,7 @@ function loadSave(radio:HTMLInputElement, file?:string) {
 			settingsOut.flags['rockmimic_defeated'] = 1;
 			settingsOut.flags['hoodie_met'] = 1;
 			settingsOut.flags['hoodie_met_mine'] = 1;
-			settingsOut.flags['tribute_fountain_encountered'] = 1;
+			settingsOut.flags['tribute_fountain_encountered'] = 0;
 			settingsOut.flags['peasant2_unlocked'] = 1;
 			settingsOut.flags['dibble_upgrade_count'] = 4;
 			settingsOut.flags['prisoner_key'] = 1;

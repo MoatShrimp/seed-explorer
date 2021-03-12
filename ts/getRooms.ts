@@ -1,9 +1,8 @@
-function getRooms(zone, floor, seed?) {
+function getRooms(zone, floor, seed?, seenRooms = []) {
 
     seed = (seed ?? parseInt(e$('seed-input').value)) + floor;
     const randLayout = new Random(seed);
     let count = 0;
-    const seenRooms = [];
 
     const zeroPad = (num, places) => String(num).padStart(places, '0')
     
@@ -47,7 +46,7 @@ function getRooms(zone, floor, seed?) {
             case "thisRunFountainNotFound":
                 return !!s$.bog_unlocked && !s$.tribute_fountain_encountered;
             case "blackRabbitMet":
-                return !s$.black_rabbit_met;
+                return !!s$.black_rabbit_met;
             case "devleCount8+":
                 return s$.delve_count > 8;
             case "dibbleNotComplete":
@@ -87,8 +86,8 @@ function getRooms(zone, floor, seed?) {
             return false;
         }
         //console.log(value)
-        if (room.tag == "mushroom") {
-            randLayout.value;
+        if (room.tag == "secret") {
+            //randLayout.value;
         }
         
         const type = room.roomTypes[randLayout.range(0, room.roomTypes.length)];
@@ -101,8 +100,8 @@ function getRooms(zone, floor, seed?) {
             const encounterGroup = mineEncounterGroups[type][tag];
             if(encounterGroup) {
 
-                const filteredRooms = encounterGroup.filter(current => !seenRooms.includes(current.roomName) && requirements(current.requirement));
-                
+                const filteredRooms = encounterGroup.filter(current => !seenRooms.includes(current) && requirements(current.requirement));
+                //console.log(filteredRooms)
                 if (filteredRooms.length){
 
                     roomOut = randLayout.getWeightedTable(filteredRooms);
@@ -113,7 +112,8 @@ function getRooms(zone, floor, seed?) {
                     break;
                 }
                 else {
-                    console.log(`%cSkipping encounter ${tag}: Requirements not met`, "color:#a00;")
+                    console.log(`%cSkipping encounter ${tag}: Requirements not met`, "color:#a00;");
+                    roomOut = false;
                 }
             }
             else {
@@ -126,7 +126,8 @@ function getRooms(zone, floor, seed?) {
                     break;
                 }
                 else {
-                    console.log(`%cSkipping encounter ${tag}: Requirements not met`, "color:#a00;")
+                    console.log(`%cSkipping encounter ${tag}: Requirements not met`, "color:#a00;");
+                    roomOut = false;
                 }
             }
         }
@@ -134,11 +135,16 @@ function getRooms(zone, floor, seed?) {
     }
     for (const roomGroup of zone[floor - 1]) {
         for (const room of roomGroup) {
+            
 
             const currentRoom = getRoom(room);
 
+            if (currentRoom === false){
+                break;
+            }
+
             if (currentRoom) {
-                seenRooms.push(currentRoom.roomName);
+                seenRooms.push(currentRoom);
                 if (currentRoom.doorType){
                     console.log(`${zeroPad(++count,2)}: ${currentRoom.roomName}, %cDoor: ${currentRoom.doorType}`, "color:#a70;")
                 }
@@ -150,7 +156,7 @@ function getRooms(zone, floor, seed?) {
                     const nextRoom = getRoom(currentRoom.sequence);
 
                     if (nextRoom) {
-                        seenRooms.push(nextRoom.roomName);
+                        seenRooms.push(nextRoom);
                         if (nextRoom.doorType){
                             console.log(`${zeroPad(++count,2)}: ${nextRoom.roomName}, Door: ${nextRoom.doorType}`)
                         }
@@ -162,5 +168,6 @@ function getRooms(zone, floor, seed?) {
             }
         }
     }
+    return seenRooms;
 }
         

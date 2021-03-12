@@ -137,7 +137,7 @@ const maps = {
 			[	{roomTypes:["SleepyHoodyRoom"], tag:"hoody"}],
 			[	{roomTypes:["mineSmall", "mineLarge"], tag:"hidden"}],
 			[	{roomTypes:["mineLarge"], tag:"relic_altar", "chance":0.0625}],
-			[	{roomTypes:["mineLarge"], tag:"tribute_fountain", "chance":0.0625}]
+			[	{roomTypes:["mineSmall"], tag:"tribute_fountain", "chance":0.0625}]
 		],
 		[//floor 2
 			[
@@ -163,7 +163,7 @@ const maps = {
 			[	{roomTypes:["mineSmall", "mineLarge"], tag:"secret", "chance":0.5, requirement:"hat"}],
 			[	{roomTypes:["mineSmall", "mineLarge"], tag:"hidden"}],
 			[	{roomTypes:["mineLarge"], tag:"relic_altar", "chance":0.125}],
-			[	{roomTypes:["mineLarge"], tag:"tribute_fountain", "chance":0.125}]
+			[	{roomTypes:["mineSmall"], tag:"tribute_fountain", "chance":0.125}]
 		],
 		[//floor 3
 			[
@@ -189,7 +189,7 @@ const maps = {
 			[	{roomTypes:["mineSmall", "mineLarge"], tag:"secret", "chance":0.5, requirement:"hat"}],
 			[	{roomTypes:["mineSmall", "mineLarge"], tag:"hidden"}],
 			[	{roomTypes:["mineLarge"], tag:"relic_altar", "chance":0.1875}],
-			[	{roomTypes:["mineLarge"], tag:"tribute_fountain", "chance":0.1875}]
+			[	{roomTypes:["mineSmall"], tag:"tribute_fountain", "chance":0.1875}]
 		],
 		[//floor 4
 			[	{roomTypes:["mineSmall"], tag:"begin", branch:1}],
@@ -216,7 +216,7 @@ const maps = {
 			[	{roomTypes:["SandRoom"], tag:"hidden"}],
 			[	{roomTypes:["dungeonSmall", "dungeonLarge"], tag:"hidden"}],
 			[	{roomTypes:["mineLarge"], tag:"relic_altar", "chance":0.25}],
-			[	{roomTypes:["mineLarge"], tag:"tribute_fountain", "chance":0.25}]
+			[	{roomTypes:["mineSmall"], tag:"tribute_fountain", "chance":0.25}]
 		]
 	]
 };

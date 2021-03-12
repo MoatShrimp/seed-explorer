@@ -171,7 +171,7 @@ function loadSave(radio, file) {
             settingsOut.flags['rockmimic_defeated'] = 1;
             settingsOut.flags['hoodie_met'] = 1;
             settingsOut.flags['hoodie_met_mine'] = 1;
-            settingsOut.flags['tribute_fountain_encountered'] = 1;
+            settingsOut.flags['tribute_fountain_encountered'] = 0;
             settingsOut.flags['peasant2_unlocked'] = 1;
             settingsOut.flags['dibble_upgrade_count'] = 4;
             settingsOut.flags['prisoner_key'] = 1;
@@ -5902,7 +5902,7 @@ const maps = {
             [{ roomTypes: ["SleepyHoodyRoom"], tag: "hoody" }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "hidden" }],
             [{ roomTypes: ["mineLarge"], tag: "relic_altar", "chance": 0.0625 }],
-            [{ roomTypes: ["mineLarge"], tag: "tribute_fountain", "chance": 0.0625 }]
+            [{ roomTypes: ["mineSmall"], tag: "tribute_fountain", "chance": 0.0625 }]
         ],
         [
             [
@@ -5928,7 +5928,7 @@ const maps = {
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret", "chance": 0.5, requirement: "hat" }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "hidden" }],
             [{ roomTypes: ["mineLarge"], tag: "relic_altar", "chance": 0.125 }],
-            [{ roomTypes: ["mineLarge"], tag: "tribute_fountain", "chance": 0.125 }]
+            [{ roomTypes: ["mineSmall"], tag: "tribute_fountain", "chance": 0.125 }]
         ],
         [
             [
@@ -5954,7 +5954,7 @@ const maps = {
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret", "chance": 0.5, requirement: "hat" }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "hidden" }],
             [{ roomTypes: ["mineLarge"], tag: "relic_altar", "chance": 0.1875 }],
-            [{ roomTypes: ["mineLarge"], tag: "tribute_fountain", "chance": 0.1875 }]
+            [{ roomTypes: ["mineSmall"], tag: "tribute_fountain", "chance": 0.1875 }]
         ],
         [
             [{ roomTypes: ["mineSmall"], tag: "begin", branch: 1 }],
@@ -5981,15 +5981,14 @@ const maps = {
             [{ roomTypes: ["SandRoom"], tag: "hidden" }],
             [{ roomTypes: ["dungeonSmall", "dungeonLarge"], tag: "hidden" }],
             [{ roomTypes: ["mineLarge"], tag: "relic_altar", "chance": 0.25 }],
-            [{ roomTypes: ["mineLarge"], tag: "tribute_fountain", "chance": 0.25 }]
+            [{ roomTypes: ["mineSmall"], tag: "tribute_fountain", "chance": 0.25 }]
         ]
     ]
 };
-function getRooms(zone, floor, seed) {
+function getRooms(zone, floor, seed, seenRooms = []) {
     seed = (seed ?? parseInt(e$('seed-input').value)) + floor;
     const randLayout = new Random(seed);
     let count = 0;
-    const seenRooms = [];
     const zeroPad = (num, places) => String(num).padStart(places, '0');
     function requirements(check) {
         if (check == undefined) {
@@ -6030,7 +6029,7 @@ function getRooms(zone, floor, seed) {
             case "thisRunFountainNotFound":
                 return !!s$.bog_unlocked && !s$.tribute_fountain_encountered;
             case "blackRabbitMet":
-                return !s$.black_rabbit_met;
+                return !!s$.black_rabbit_met;
             case "devleCount8+":
                 return s$.delve_count > 8;
             case "dibbleNotComplete":
@@ -6065,8 +6064,7 @@ function getRooms(zone, floor, seed) {
             console.log(`%cSkipping room ${room.tag}: Requirements not met`, "color:#a00;");
             return false;
         }
-        if (room.tag == "mushroom") {
-            randLayout.value;
+        if (room.tag == "secret") {
         }
         const type = room.roomTypes[randLayout.range(0, room.roomTypes.length)];
         const tags = room.tag.split(",");
@@ -6074,7 +6072,7 @@ function getRooms(zone, floor, seed) {
         for (const tag of tags) {
             const encounterGroup = mineEncounterGroups[type][tag];
             if (encounterGroup) {
-                const filteredRooms = encounterGroup.filter(current => !seenRooms.includes(current.roomName) && requirements(current.requirement));
+                const filteredRooms = encounterGroup.filter(current => !seenRooms.includes(current) && requirements(current.requirement));
                 if (filteredRooms.length) {
                     roomOut = randLayout.getWeightedTable(filteredRooms);
                     if (roomOut.weightedDoorTypes) {
@@ -6084,6 +6082,7 @@ function getRooms(zone, floor, seed) {
                 }
                 else {
                     console.log(`%cSkipping encounter ${tag}: Requirements not met`, "color:#a00;");
+                    roomOut = false;
                 }
             }
             else {
@@ -6096,6 +6095,7 @@ function getRooms(zone, floor, seed) {
                 }
                 else {
                     console.log(`%cSkipping encounter ${tag}: Requirements not met`, "color:#a00;");
+                    roomOut = false;
                 }
             }
         }
@@ -6104,8 +6104,11 @@ function getRooms(zone, floor, seed) {
     for (const roomGroup of zone[floor - 1]) {
         for (const room of roomGroup) {
             const currentRoom = getRoom(room);
+            if (currentRoom === false) {
+                break;
+            }
             if (currentRoom) {
-                seenRooms.push(currentRoom.roomName);
+                seenRooms.push(currentRoom);
                 if (currentRoom.doorType) {
                     console.log(`${zeroPad(++count, 2)}: ${currentRoom.roomName}, %cDoor: ${currentRoom.doorType}`, "color:#a70;");
                 }
@@ -6115,7 +6118,7 @@ function getRooms(zone, floor, seed) {
                 if (currentRoom.sequence) {
                     const nextRoom = getRoom(currentRoom.sequence);
                     if (nextRoom) {
-                        seenRooms.push(nextRoom.roomName);
+                        seenRooms.push(nextRoom);
                         if (nextRoom.doorType) {
                             console.log(`${zeroPad(++count, 2)}: ${nextRoom.roomName}, Door: ${nextRoom.doorType}`);
                         }
@@ -6127,6 +6130,7 @@ function getRooms(zone, floor, seed) {
             }
         }
     }
+    return seenRooms;
 }
 function listCraftable(table) {
     const selection = document.getElementById(`${table}-selection`);
