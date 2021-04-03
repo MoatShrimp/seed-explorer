@@ -16,7 +16,6 @@
     "./loadSave.ts",
     "./applySettings.ts",
     "./master-table.ts",
-    "./floor.ts",
     "./encounterGroups.ts",
     "./maps.ts",
     "./getRooms.ts",

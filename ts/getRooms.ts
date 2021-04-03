@@ -3,6 +3,7 @@ function getRooms(zone, floor, seed?, seenRooms = []) {
     seed = (seed ?? parseInt(e$('seed-input').value)) + floor;
     const randLayout = new Random(seed);
     let count = 0;
+    let previousRoom = null;
 
     const zeroPad = (num, places) => String(num).padStart(places, '0')
     
@@ -11,7 +12,7 @@ function getRooms(zone, floor, seed?, seenRooms = []) {
             return true;
         }
 
-        const s$ = settings.flags;
+        const s$ = settings.flags; //shorthand for each check
         switch (check) {
             case "noRelicHex":
                 return !s$.relicHex;
@@ -95,7 +96,6 @@ function getRooms(zone, floor, seed?, seenRooms = []) {
 
         const tags = room.tag.split(",");
         let roomOut = null;
-       
         for (const tag of tags) {
             const encounterGroup = mineEncounterGroups[type][tag];
             if(encounterGroup) {
@@ -131,9 +131,14 @@ function getRooms(zone, floor, seed?, seenRooms = []) {
                 }
             }
         }
+        if (previousRoom && roomOut) {
+            roomOut.previousRoom = previousRoom;
+        }
+        previousRoom = roomOut;
         return roomOut;
     }
     for (const roomGroup of zone[floor - 1]) {
+        previousRoom = null;
         for (const room of roomGroup) {
             
 
@@ -154,9 +159,10 @@ function getRooms(zone, floor, seed?, seenRooms = []) {
                 if (currentRoom.sequence) {
 
                     const nextRoom = getRoom(currentRoom.sequence);
-
+                    
                     if (nextRoom) {
                         seenRooms.push(nextRoom);
+                        previousRoom = currentRoom;
                         if (nextRoom.doorType){
                             console.log(`${zeroPad(++count,2)}: ${nextRoom.roomName}, Door: ${nextRoom.doorType}`)
                         }

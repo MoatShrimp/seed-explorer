@@ -62,7 +62,7 @@ let settings = {
 		"bard_met": 0,
 		"secret_treasure_note": 0,
 		"foundRatBond": 0,
-		"priestess_met": 0,
+		priestess_met: 0,
 		"haveGuacamole": 0,
 		"peasant1_unlocked": 0,
 		"blacksmith_rescued": 0,
