@@ -8,7 +8,7 @@ interface encounterGroups {
     }
 }
 
-const mineEncounterGroups =  Object.freeze({
+const mineEncounterGroups =  {
     "mineSmall": {
         "begin"://46741
 		[ 
@@ -444,4 +444,4 @@ const mineEncounterGroups =  Object.freeze({
             {weight:1, roomName: "SleepyHoodyRoom", roomTag: "hoodie_entrance"}//
         ]
     }
-});
+};
