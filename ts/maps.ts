@@ -1,15 +1,9 @@
 interface maps {
 	[zoneName: string]:
-	[//array of floors
-		[//array of roomGroups
-			[//array of rooms
-				{roomTypes:string[], tag:string, branch?:number, chance?:number, requirement?:string, direction?:number}
-			]
-		]
-	]
+		{roomTypes:string[], tag:string, branch?:number, chance?:number, requirement?:string, direction?:number}[][][]
 }
 
-const maps = {
+const maps:maps = {
 	mineTutorial ://tutorial floor for new save
 	[
 		[//floor 1

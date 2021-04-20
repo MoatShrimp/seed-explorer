@@ -1,7 +1,7 @@
 "use strict";
 function e$(name, parent = document) {
     switch (name.charAt(0)) {
-        case '.':
+        case ".":
             return parent.getElementsByClassName(name.slice(1));
         default:
             return parent.getElementById(name);
@@ -17,15 +17,14 @@ function e$c(type, options) {
 }
 function toUInt32(floatVar) { return floatVar >>> 0; }
 class Random {
-    constructor(firstSeed = 51113926) {
-        firstSeed = toUInt32(firstSeed);
+    constructor(initSeed = 51113926) {
         const nextSeed = (seed) => toUInt32(1289 * toUInt32(1406077 * seed) + 1);
-        const secondSeed = nextSeed(firstSeed), thirdSeed = nextSeed(secondSeed);
+        const firstSeed = toUInt32(initSeed), secondSeed = nextSeed(firstSeed), thirdSeed = nextSeed(secondSeed), fourthSeed = nextSeed(thirdSeed);
         this.seed = [
             firstSeed,
             secondSeed,
             thirdSeed,
-            nextSeed(thirdSeed)
+            fourthSeed
         ];
     }
     get state() {
@@ -101,41 +100,41 @@ function loadSave(radio, file) {
             relic: null,
             potion: null
         },
-        "altarRelic": -1,
+        altarRelic: -1,
         flags: {
-            "shop_basic_item": 1,
-            "shop_food": 1,
-            "shop_potion_relic": 1,
-            "dibble_extra_item": 0,
-            "dibble_relic": 0,
-            "relicHex": 0,
-            "dog_shadow_found": 0,
-            "delve_count": 0,
-            "bard_met": 0,
-            "secret_treasure_note": 0,
-            "foundRatBond": 0,
-            "priestess_met": 0,
-            "haveGuacamole": 0,
-            "peasant1_unlocked": 0,
-            "blacksmith_rescued": 0,
-            "foundWaylandsBoots": 0,
-            "mushroom_green": 0,
-            "mushroom_blue": 0,
-            "mushroom_purple": 0,
-            "apprentice_met": 0,
-            "black_rabbit_met": 0,
-            "rockmimic_defeated": 0,
-            "hoodie_met": 0,
-            "hoodie_met_mine": 0,
-            "tribute_fountain_encountered": 0,
-            "peasant2_unlocked": 0,
-            "dibble_upgrade_count": 0,
-            "prisoner_key": 0,
-            "altar_encountered": 0,
-            "haveWhip": 0,
-            "haveHat": 0,
-            "haveCircinus": 0,
-            "bog_unlocked": 0
+            shop_basic_item: 1,
+            shop_food: 1,
+            shop_potion_relic: 1,
+            dibble_extra_item: 0,
+            dibble_relic: 0,
+            relicHex: 0,
+            dog_shadow_found: 0,
+            delve_count: 0,
+            bard_met: 0,
+            secret_treasure_note: 0,
+            foundRatBond: 0,
+            priestess_met: 0,
+            haveGuacamole: 0,
+            peasant1_unlocked: 0,
+            blacksmith_rescued: 0,
+            foundWaylandsBoots: 0,
+            mushroom_green: 0,
+            mushroom_blue: 0,
+            mushroom_purple: 0,
+            apprentice_met: 0,
+            black_rabbit_met: 0,
+            rockmimic_defeated: 0,
+            hoodie_met: 0,
+            hoodie_met_mine: 0,
+            tribute_fountain_encountered: 0,
+            peasant2_unlocked: 0,
+            dibble_upgrade_count: 0,
+            prisoner_key: 0,
+            altar_encountered: 0,
+            haveWhip: 0,
+            haveHat: 0,
+            haveCircinus: 0,
+            bog_unlocked: 0
         }
     };
     const CBRelic = Object.values(e$("relic-selection").getElementsByTagName("input"));
@@ -143,51 +142,51 @@ function loadSave(radio, file) {
     switch (radio.value) {
         case "0":
             break;
-        case '100':
+        case "100":
             settingsOut.checkboxes.relic = CBRelic;
             settingsOut.checkboxes.potion = CBPotion;
             settingsOut.altarRelic = 149;
-            settingsOut.flags['shop_basic_item'] = 2;
-            settingsOut.flags['shop_food'] = 3;
-            settingsOut.flags['shop_potion_relic'] = 3;
-            settingsOut.flags['dibble_extra_item'] = 1;
-            settingsOut.flags['dibble_relic'] = 1;
-            settingsOut.flags['relicHex'] = 0;
-            settingsOut.flags['dog_shadow_found'] = 1;
-            settingsOut.flags['delve_count'] = 100;
-            settingsOut.flags['bard_met'] = 0;
-            settingsOut.flags['secret_treasure_note'] = 0;
-            settingsOut.flags['foundRatBond'] = 1;
-            settingsOut.flags['priestess_met'] = 3;
-            settingsOut.flags['haveGuacamole'] = 0;
-            settingsOut.flags['peasant1_unlocked'] = 1;
-            settingsOut.flags['blacksmith_rescued'] = 1;
-            settingsOut.flags['foundWaylandsBoots'] = 1;
-            settingsOut.flags['mushroom_green'] = 1;
-            settingsOut.flags['mushroom_blue'] = 1;
-            settingsOut.flags['mushroom_purple'] = 1;
-            settingsOut.flags['apprentice_met'] = 7;
-            settingsOut.flags['black_rabbit_met'] = 1;
-            settingsOut.flags['rockmimic_defeated'] = 1;
-            settingsOut.flags['hoodie_met'] = 1;
-            settingsOut.flags['hoodie_met_mine'] = 1;
-            settingsOut.flags['tribute_fountain_encountered'] = 0;
-            settingsOut.flags['peasant2_unlocked'] = 1;
-            settingsOut.flags['dibble_upgrade_count'] = 4;
-            settingsOut.flags['prisoner_key'] = 1;
-            settingsOut.flags['altar_encountered'] = 0;
-            settingsOut.flags['haveWhip'] = 0;
-            settingsOut.flags['haveCircinus'] = 0;
-            settingsOut.flags['haveHat'] = 0;
-            settingsOut.flags['bog_unlocked'] = 1;
+            settingsOut.flags.shop_basic_item = 2;
+            settingsOut.flags.shop_food = 3;
+            settingsOut.flags.shop_potion_relic = 3;
+            settingsOut.flags.dibble_extra_item = 1;
+            settingsOut.flags.dibble_relic = 1;
+            settingsOut.flags.relicHex = 0;
+            settingsOut.flags.dog_shadow_found = 1;
+            settingsOut.flags.delve_count = 100;
+            settingsOut.flags.bard_met = 0;
+            settingsOut.flags.secret_treasure_note = 0;
+            settingsOut.flags.foundRatBond = 1;
+            settingsOut.flags.priestess_met = 3;
+            settingsOut.flags.haveGuacamole = 0;
+            settingsOut.flags.peasant1_unlocked = 1;
+            settingsOut.flags.blacksmith_rescued = 1;
+            settingsOut.flags.foundWaylandsBoots = 1;
+            settingsOut.flags.mushroom_green = 1;
+            settingsOut.flags.mushroom_blue = 1;
+            settingsOut.flags.mushroom_purple = 1;
+            settingsOut.flags.apprentice_met = 7;
+            settingsOut.flags.black_rabbit_met = 1;
+            settingsOut.flags.rockmimic_defeated = 1;
+            settingsOut.flags.hoodie_met = 1;
+            settingsOut.flags.hoodie_met_mine = 1;
+            settingsOut.flags.tribute_fountain_encountered = 0;
+            settingsOut.flags.peasant2_unlocked = 1;
+            settingsOut.flags.dibble_upgrade_count = 4;
+            settingsOut.flags.prisoner_key = 1;
+            settingsOut.flags.altar_encountered = 0;
+            settingsOut.flags.haveWhip = 0;
+            settingsOut.flags.haveCircinus = 0;
+            settingsOut.flags.haveHat = 0;
+            settingsOut.flags.bog_unlocked = 1;
             break;
-        case 'own':
+        case "own":
             const saveData = JSON.parse(file);
             settingsOut.checkboxes.relic = saveData.unlocked.flatMap(craftedGUID => CBRelic.find(box => parseInt(box.value) === masterTable.relic.findIndex(relic => relic.guid === craftedGUID)) ?? []);
             settingsOut.checkboxes.potion = saveData.unlocked.flatMap(craftedGUID => CBPotion.find(box => parseInt(box.value) === masterTable.potion.findIndex(potion => potion.guid === craftedGUID)) ?? []);
             settingsOut.altarRelic = masterTable.relic.findIndex(relic => relic.guid === saveData.altarItemID);
-            saveData.upgradeString.split(',').forEach(item => {
-                const [key, value] = item.split(':');
+            saveData.upgradeString.split(",").forEach(item => {
+                const [key, value] = item.split(":");
                 settingsOut.flags[key] = parseInt(value);
             });
             break;
@@ -195,17 +194,18 @@ function loadSave(radio, file) {
     return settingsOut;
 }
 function applySettings(settings) {
-    checkAll(e$('relic-selection').getElementsByTagName('input'), false);
+    checkAll(e$("relic-selection").getElementsByTagName("input"), false);
     if (settings.checkboxes.relic) {
         checkAll(settings.checkboxes.relic, true);
     }
-    checkAll(e$('potion-selection').getElementsByTagName('input'), false);
+    checkAll(e$("potion-selection").getElementsByTagName("input"), false);
     if (settings.checkboxes.potion) {
         checkAll(settings.checkboxes.potion, true);
     }
-    e$('altar').value = settings.altarRelic;
+    e$("altar").value = settings.altarRelic;
 }
-const masterTable = Object.freeze({
+;
+const masterTable = {
     relic: [
         {
             guid: "1981b4af04434077afafc78691056387",
@@ -233,7 +233,7 @@ const masterTable = Object.freeze({
             display: "Galoshes",
             details: "Walk and jump on oil and poison",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 275,
             extra: "",
             tables: {
@@ -257,7 +257,7 @@ const masterTable = Object.freeze({
             display: "Float Boots",
             details: "Walk on air",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 450,
             extra: "",
             tables: {
@@ -305,7 +305,7 @@ const masterTable = Object.freeze({
             display: "Helios Boots",
             details: "Oil + Fire",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 550,
             extra: "Combined from Galoshes & Lava Walkers",
             tables: {}
@@ -340,7 +340,7 @@ const masterTable = Object.freeze({
             display: "Butcher's Cleaver",
             details: "Sometimes drop meat from your enemies",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 525,
             extra: "",
             tables: {
@@ -364,7 +364,7 @@ const masterTable = Object.freeze({
             display: "Key Blade",
             details: "Increases swing damage for each key you have",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 375,
             extra: "",
             tables: {
@@ -408,7 +408,7 @@ const masterTable = Object.freeze({
             display: "Mjölnir",
             details: "Thrown pickaxe summons lightning on hit",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 850,
             extra: "",
             tables: {
@@ -424,7 +424,7 @@ const masterTable = Object.freeze({
             display: "Doom Blade",
             details: "Gain damage for each carried curse",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 1000,
             extra: "",
             tables: {
@@ -440,7 +440,7 @@ const masterTable = Object.freeze({
             display: "Battle Axe",
             details: "Increases swing size,but slightly decreases swing damage",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 450,
             extra: "",
             tables: {
@@ -488,7 +488,7 @@ const masterTable = Object.freeze({
             display: "Masa",
             details: "Reduces throw damage and increases swing damage",
             rarity: "Rare",
-            crafting: "-",
+            crafting: 0,
             cost: 410,
             extra: "",
             tables: {
@@ -528,7 +528,7 @@ const masterTable = Object.freeze({
             display: "Masamune",
             details: "Instantly kills enemies sometimes",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 900,
             extra: "Combined from Masa & Mune",
             tables: {}
@@ -539,7 +539,7 @@ const masterTable = Object.freeze({
             display: "Suneater",
             details: "Consumes all current and future blessings and converts them to swing damage",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 900,
             extra: "",
             tables: {
@@ -599,7 +599,7 @@ const masterTable = Object.freeze({
             display: "Obsidian Knife",
             details: "Dramatically increases damage,but breaks when hit",
             rarity: "Rare",
-            crafting: "-",
+            crafting: 0,
             cost: 650,
             extra: "",
             tables: {
@@ -719,7 +719,7 @@ const masterTable = Object.freeze({
             display: "Pauldron",
             details: "",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 450,
             extra: "",
             tables: {
@@ -763,7 +763,7 @@ const masterTable = Object.freeze({
             display: "Greaves",
             details: "Adds a point of armor to the health bar",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 450,
             extra: "",
             tables: {
@@ -787,7 +787,7 @@ const masterTable = Object.freeze({
             display: "Shield of Quills",
             details: "Gain two points of armor,armor increases damage",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 770,
             extra: "",
             tables: {
@@ -851,7 +851,7 @@ const masterTable = Object.freeze({
             display: "Soul Guard",
             details: "Reduces and redirects damage to your max HP",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 850,
             extra: "",
             tables: {
@@ -867,7 +867,7 @@ const masterTable = Object.freeze({
             display: "Wet Blanket",
             details: "Puts out fires immediately,but requires water charges",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 275,
             extra: "",
             tables: {
@@ -887,7 +887,7 @@ const masterTable = Object.freeze({
             display: "War Paint",
             details: "Increase attack damage and speed when killing enemies",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 480,
             extra: "",
             tables: {
@@ -907,7 +907,7 @@ const masterTable = Object.freeze({
             display: "Battle Standard",
             details: "Increases move,attack,and throw speed at the beginning of battle",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 450,
             extra: "",
             tables: {
@@ -1107,7 +1107,7 @@ const masterTable = Object.freeze({
             display: "Sonic Boom",
             details: "Throw really fast",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 280,
             extra: "",
             tables: {
@@ -1127,7 +1127,7 @@ const masterTable = Object.freeze({
             display: "Sewing Kit",
             details: "Keep all your gold when you die",
             rarity: "Rare",
-            crafting: "-",
+            crafting: 0,
             cost: 750,
             extra: "",
             tables: {
@@ -1151,7 +1151,7 @@ const masterTable = Object.freeze({
             display: "Simple Chest",
             details: "Overstocks the shop",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 250,
             extra: "",
             tables: {
@@ -1175,7 +1175,7 @@ const masterTable = Object.freeze({
             display: "Meal Ticket",
             details: "Free food at the shop,right now!",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 300,
             extra: "",
             tables: {
@@ -1223,7 +1223,7 @@ const masterTable = Object.freeze({
             display: "Adventurer's Whip",
             details: "",
             rarity: "Rare",
-            crafting: "-",
+            crafting: 0,
             cost: 475,
             extra: "",
             tables: {
@@ -1243,7 +1243,7 @@ const masterTable = Object.freeze({
             display: "Golden Idol",
             details: "Discover more rooms and get rich",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 725,
             extra: "Combined from Adventurer's Hat & Adventurer's Whip",
             tables: {}
@@ -1254,7 +1254,7 @@ const masterTable = Object.freeze({
             display: "Totem of Life",
             details: "Sustain yourself through adventure",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 550,
             extra: "",
             tables: {
@@ -1274,7 +1274,7 @@ const masterTable = Object.freeze({
             display: "Aphotic Charm",
             details: "Heal in each new room for each curse",
             rarity: "Common",
-            crafting: "18",
+            crafting: 18,
             cost: 0,
             extra: "",
             tables: {
@@ -1298,7 +1298,7 @@ const masterTable = Object.freeze({
             display: "Dillon's Claw",
             details: "Deal even more damage when you critical strike",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 350,
             extra: "",
             tables: {
@@ -1346,7 +1346,7 @@ const masterTable = Object.freeze({
             display: "Bramble Vest",
             details: "Return damage but amplified",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 200,
             extra: "",
             tables: {
@@ -1418,7 +1418,7 @@ const masterTable = Object.freeze({
             display: "Miner's Flask",
             details: "Feel the effects of a potion for longer",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 375,
             extra: "",
             tables: {
@@ -1442,7 +1442,7 @@ const masterTable = Object.freeze({
             display: "Lunchbox",
             details: "Store a piece of food for later",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 380,
             extra: "",
             tables: {
@@ -1506,7 +1506,7 @@ const masterTable = Object.freeze({
             display: "Golden Popcorn",
             details: "Gold will sometimes duplicate itself",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 550,
             extra: "",
             tables: {
@@ -1534,7 +1534,7 @@ const masterTable = Object.freeze({
             display: "Seasoned Popcorn",
             details: "Food will sometimes duplicate itself",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 500,
             extra: "",
             tables: {
@@ -1554,7 +1554,7 @@ const masterTable = Object.freeze({
             display: "Caramel Popcorn",
             details: "Duplicated food packs a surprise",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 1100,
             extra: "Combined from Golden Popcorn & Seasoned Popcorn",
             tables: {}
@@ -1565,7 +1565,7 @@ const masterTable = Object.freeze({
             display: "Pocket Grill",
             details: "Cooks all your food",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 500,
             extra: "",
             tables: {
@@ -1585,7 +1585,7 @@ const masterTable = Object.freeze({
             display: "Leftovers",
             details: "Find old, gross food in chests",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 475,
             extra: "",
             tables: {
@@ -1609,7 +1609,7 @@ const masterTable = Object.freeze({
             display: "Spare Ordnance",
             details: "Discover a bomb in every chest",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 450,
             extra: "",
             tables: {
@@ -1633,7 +1633,7 @@ const masterTable = Object.freeze({
             display: "Miniaturizer",
             details: "Find small boxes in big boxes",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 850,
             extra: "",
             tables: {
@@ -1649,7 +1649,7 @@ const masterTable = Object.freeze({
             display: "Key Doubler",
             details: "Sometimes drop a new key when using an old key",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 480,
             extra: "",
             tables: {
@@ -1689,7 +1689,7 @@ const masterTable = Object.freeze({
             display: "Double Doubler",
             details: "Chance to drop a key and bomb when using either",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 980,
             extra: "Combined from Key Doubler & Bomb Doubler",
             tables: {}
@@ -1740,7 +1740,7 @@ const masterTable = Object.freeze({
             display: "Bombushka",
             details: "Bombs, in bombs, in bombs",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 400,
             extra: "Unique Bomb",
             tables: {
@@ -1764,7 +1764,7 @@ const masterTable = Object.freeze({
             display: "Seer's Blood",
             details: "Bombs explode in a shower of fire",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 350,
             extra: "Unique Bomb",
             tables: {
@@ -1784,7 +1784,7 @@ const masterTable = Object.freeze({
             display: "Rook's Bomb",
             details: "Death at ninety degrees",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 480,
             extra: "Unique Bomb",
             tables: {
@@ -1824,7 +1824,7 @@ const masterTable = Object.freeze({
             display: "Queen's Bomb",
             details: "Death in all directions",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 950,
             extra: "Unique Bomb\nCombined from Rook's Bomb & Bishop's Bomb",
             tables: {}
@@ -1835,7 +1835,7 @@ const masterTable = Object.freeze({
             display: "Transmutagen Blast",
             details: "Transforms items",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 1111,
             extra: "Unique Bomb",
             tables: {
@@ -1851,7 +1851,7 @@ const masterTable = Object.freeze({
             display: "Branding Bomb",
             details: "Bombs brand enemies for sacrifice, +10 bombs",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 666,
             extra: "Unique Bomb",
             tables: {
@@ -1867,7 +1867,7 @@ const masterTable = Object.freeze({
             display: "Lightning Bomb",
             details: "Bomb explosions chain lightning",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 350,
             extra: "Unique Bomb",
             tables: {
@@ -1887,7 +1887,7 @@ const masterTable = Object.freeze({
             display: "M.E.G.A. Bomb",
             details: "A mess of electrified gold",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 0,
             extra: "Combined from Lightning Bomb & Golden Powder",
             tables: {}
@@ -1918,7 +1918,7 @@ const masterTable = Object.freeze({
             display: "Tsar Bomba",
             details: "Killing enemies with a bomb spawns a new bomb. Carried bombs decrease swing and throw damage.",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 875,
             extra: "",
             tables: {
@@ -1954,7 +1954,7 @@ const masterTable = Object.freeze({
             display: "Shrapnel",
             details: "Friendly bomb blasts fire projectiles",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 310,
             extra: "",
             tables: {
@@ -1978,7 +1978,7 @@ const masterTable = Object.freeze({
             display: "Gecko Blast",
             details: "Bomb blasts attract items",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 500,
             extra: "",
             tables: {
@@ -2002,7 +2002,7 @@ const masterTable = Object.freeze({
             display: "Capture Sphere",
             details: "Bomb kills permanently increase bomb damage",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 285,
             extra: "",
             tables: {
@@ -2126,7 +2126,7 @@ const masterTable = Object.freeze({
             display: "Guidance",
             details: "400",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 400,
             extra: "Unique Throw",
             tables: {
@@ -2154,7 +2154,7 @@ const masterTable = Object.freeze({
             display: "Phantasmal Axe",
             details: "Thrown pickaxes duplicate themselves",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 400,
             extra: "",
             tables: {
@@ -2178,7 +2178,7 @@ const masterTable = Object.freeze({
             display: "Chakram",
             details: "Throw a whirling blade of death",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 800,
             extra: "Unique Throw",
             tables: {
@@ -2194,7 +2194,7 @@ const masterTable = Object.freeze({
             display: "Fork",
             details: "Splits your ranged attacks",
             rarity: "Rare",
-            crafting: "-",
+            crafting: 0,
             cost: 400,
             extra: "",
             tables: {
@@ -2218,7 +2218,7 @@ const masterTable = Object.freeze({
             display: "Bottled Lightning",
             details: "Chance on hit to chain lightning",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 400,
             extra: "",
             tables: {
@@ -2246,7 +2246,7 @@ const masterTable = Object.freeze({
             display: "Salamander Tail",
             details: "Chance on hit to ignite your enemies",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 400,
             extra: "",
             tables: {
@@ -2310,7 +2310,7 @@ const masterTable = Object.freeze({
             display: "Cracked Orb",
             details: "Curse enemies with increased damage",
             rarity: "Rare",
-            crafting: "-",
+            crafting: 0,
             cost: 460,
             extra: "",
             tables: {
@@ -2334,7 +2334,7 @@ const masterTable = Object.freeze({
             display: "Ursine Ring",
             details: "Increase health",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 500,
             extra: "",
             tables: {
@@ -2358,7 +2358,7 @@ const masterTable = Object.freeze({
             display: "Demon Ring",
             details: "Increase swing damage",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 500,
             extra: "",
             tables: {
@@ -2430,7 +2430,7 @@ const masterTable = Object.freeze({
             display: "Axe Thrower's Pendant",
             details: "Deal more throw damage at low health",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 400,
             extra: "",
             tables: {
@@ -2454,7 +2454,7 @@ const masterTable = Object.freeze({
             display: "Knight's Pendant",
             details: "Deal more swing damage at high health",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 420,
             extra: "",
             tables: {
@@ -2502,7 +2502,7 @@ const masterTable = Object.freeze({
             display: "Iron Branch",
             details: "Increase health, swing damage, and attack speed",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 400,
             extra: "",
             tables: {
@@ -2526,7 +2526,7 @@ const masterTable = Object.freeze({
             display: "Queen's Crown",
             details: "Increase throw damage, swing size, and swing speed",
             rarity: "Rare",
-            crafting: "-",
+            crafting: 0,
             cost: 550,
             extra: "",
             tables: {
@@ -2570,7 +2570,7 @@ const masterTable = Object.freeze({
             display: "Emperor's Crown",
             details: "Increases stats and receive a blessing",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 1100,
             extra: "Combined from Queen's Crown & King's Crown",
             tables: {}
@@ -2581,7 +2581,7 @@ const masterTable = Object.freeze({
             display: "Pilfer Ring",
             details: "Soak up gold and get a discount at the shop",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 800,
             extra: "",
             tables: {
@@ -2601,7 +2601,7 @@ const masterTable = Object.freeze({
             display: "Unstable Concoction",
             details: "Gold hits the floor with explosive force",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 420,
             extra: "",
             tables: {
@@ -2661,7 +2661,7 @@ const masterTable = Object.freeze({
             display: "Conductor",
             details: "Electrify your enemies when picking up gold",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 550,
             extra: "",
             tables: {
@@ -2681,7 +2681,7 @@ const masterTable = Object.freeze({
             display: "Gold Frenzy",
             details: "Gain temporary damage when picking up gold",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 400,
             extra: "",
             tables: {
@@ -2701,7 +2701,7 @@ const masterTable = Object.freeze({
             display: "Intensifier",
             details: "Increases damage when killing enemies",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 500,
             extra: "",
             tables: {
@@ -2721,7 +2721,7 @@ const masterTable = Object.freeze({
             display: "Floating Skull",
             details: "A shield that blocks projectiles, most of the time",
             rarity: "Rare",
-            crafting: "-",
+            crafting: 0,
             cost: 400,
             extra: "",
             tables: {
@@ -2745,7 +2745,7 @@ const masterTable = Object.freeze({
             display: "Grimhilde's Mirror",
             details: "Return projectiles with an attack",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 350,
             extra: "",
             tables: {
@@ -2765,7 +2765,7 @@ const masterTable = Object.freeze({
             display: "Mirror Shield",
             details: "Automatically reflect projectiles",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 750,
             extra: "Combined from Floating Skull & Grimhilde's Mirror",
             tables: {}
@@ -2796,7 +2796,7 @@ const masterTable = Object.freeze({
             display: "Nullstone",
             details: "Block a hit once in a while",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 650,
             extra: "",
             tables: {
@@ -2812,7 +2812,7 @@ const masterTable = Object.freeze({
             display: "Mushroom",
             details: "Gain maximum health when killing enemies",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 540,
             extra: "",
             tables: {
@@ -2852,7 +2852,7 @@ const masterTable = Object.freeze({
             display: "Tent",
             details: "Adds a tent to the starting room of a floor, one use only",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 300,
             extra: "",
             tables: {
@@ -2876,7 +2876,7 @@ const masterTable = Object.freeze({
             display: "Aegis",
             details: "Increase defense at critical health",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 350,
             extra: "",
             tables: {
@@ -2928,7 +2928,7 @@ const masterTable = Object.freeze({
             display: "Petrified Rock",
             details: "Increase drop rate of items from rocks",
             rarity: "Rare",
-            crafting: "-",
+            crafting: 0,
             cost: 999,
             extra: "",
             tables: {}
@@ -2959,7 +2959,7 @@ const masterTable = Object.freeze({
             display: "Cosmic Egg",
             details: "Increases experience gain for a familiar",
             rarity: "Rare",
-            crafting: "-",
+            crafting: 0,
             cost: 750,
             extra: "",
             tables: {
@@ -3007,7 +3007,7 @@ const masterTable = Object.freeze({
             display: "Pilfer Credit Card Silver",
             details: "A Gold10.png 2,500 limit at 0% interest",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 1,
             extra: "",
             tables: {
@@ -3027,7 +3027,7 @@ const masterTable = Object.freeze({
             display: "Pilfer Credit Card Gold",
             details: "A Gold10.png 5,000 limit at 0% interest",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 1,
             extra: "",
             tables: {
@@ -3047,7 +3047,7 @@ const masterTable = Object.freeze({
             display: "Pilfer Credit Card Black Edition",
             details: "7,500 limit and 5% cash back",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 0,
             extra: "Combined from Pilfer Credit Card Silver & Pilfer Credit Card Gold",
             tables: {}
@@ -3058,7 +3058,7 @@ const masterTable = Object.freeze({
             display: "Four Leaf Cleaver",
             details: "Sometimes drop golden meat from your enemies",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 1050,
             extra: "Combined from Butcher's Cleaver & Four Leaf Clover",
             tables: {}
@@ -3069,7 +3069,7 @@ const masterTable = Object.freeze({
             display: "Rabbit Gloves",
             details: "Get a free item in every shop",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 1200,
             extra: "",
             tables: {
@@ -3085,7 +3085,7 @@ const masterTable = Object.freeze({
             display: "Karmic Scale",
             details: "Health, damage, and healing become small and even",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 1100,
             extra: "",
             tables: {
@@ -3101,7 +3101,7 @@ const masterTable = Object.freeze({
             display: "Pocket of Holding",
             details: "Get some temporary bombs each room",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 550,
             extra: "",
             tables: {
@@ -3117,7 +3117,7 @@ const masterTable = Object.freeze({
             display: "Lockpick",
             details: "Open locks for free, but for how long?",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 900,
             extra: "",
             tables: {
@@ -3161,7 +3161,7 @@ const masterTable = Object.freeze({
             display: "Lucky Lockpick",
             details: "A chance to not die, and no chance to break",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 1300,
             extra: "Combined from Lockpick & Lucky Charm",
             tables: {}
@@ -3236,7 +3236,7 @@ const masterTable = Object.freeze({
             display: "Kurtz' Stache",
             details: "tablesA mysterious box that invites calamity",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 200,
             extra: "",
             tables: {
@@ -3260,7 +3260,7 @@ const masterTable = Object.freeze({
             display: "Glass Cannon",
             details: "Increases damage, but decreases maximum health",
             rarity: "Legendary",
-            crafting: "-",
+            crafting: 0,
             cost: 775,
             extra: "",
             tables: {
@@ -3276,7 +3276,7 @@ const masterTable = Object.freeze({
             display: "Soul Cannon",
             details: "Fire a projectile while swinging",
             rarity: "Rare",
-            crafting: "-",
+            crafting: 0,
             cost: 550,
             extra: "",
             tables: {
@@ -3324,7 +3324,7 @@ const masterTable = Object.freeze({
             display: "Ursa Major",
             details: "Increases max health after eating food",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 400,
             extra: "",
             tables: {
@@ -3344,7 +3344,7 @@ const masterTable = Object.freeze({
             display: "Canis Major",
             details: "Crits temporarily increase crit chance",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 300,
             extra: "",
             tables: {
@@ -3368,7 +3368,7 @@ const masterTable = Object.freeze({
             display: "Sagitta",
             details: "Enemies explode in arrows after a critical strike",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 325,
             extra: "",
             tables: {
@@ -3388,7 +3388,7 @@ const masterTable = Object.freeze({
             display: "Circinus",
             details: "Temporarily reveals secret rooms, secret rooms can have secret rooms",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 380,
             extra: "",
             tables: {
@@ -3412,7 +3412,7 @@ const masterTable = Object.freeze({
             display: "Siegfried's Aegis",
             details: "Inflicts pain on the bearer",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 1,
             extra: "",
             tables: {}
@@ -3447,7 +3447,7 @@ const masterTable = Object.freeze({
             display: "Hot Cross Bun",
             details: "Increases maximum health, very slightly",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 5,
             extra: "",
             tables: {}
@@ -3458,7 +3458,7 @@ const masterTable = Object.freeze({
             display: "Pilfer Credit Card Silver",
             details: "A Gold10.png 2,500 limit at 0% interest",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 1,
             extra: "",
             tables: {
@@ -3476,7 +3476,7 @@ const masterTable = Object.freeze({
             display: "Tincture",
             details: "Recovers health",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 150,
             extra: "",
             tables: {
@@ -3552,7 +3552,7 @@ const masterTable = Object.freeze({
             display: "Troll Sweat",
             details: "Regenerate health over time",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 200,
             extra: "",
             tables: {
@@ -3724,7 +3724,7 @@ const masterTable = Object.freeze({
             display: "Popcorn Kernels",
             details: "Duplicate all basic items in the room",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 150,
             extra: "",
             tables: {
@@ -3768,7 +3768,7 @@ const masterTable = Object.freeze({
             display: "Whiplash Serum",
             details: "Temporarily increases throw damage",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 175,
             extra: "",
             tables: {
@@ -3796,7 +3796,7 @@ const masterTable = Object.freeze({
             display: "Strength Serum",
             details: "Temporarily increases swing damage",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 175,
             extra: "",
             tables: {
@@ -3824,7 +3824,7 @@ const masterTable = Object.freeze({
             display: "Savagery Serum",
             details: "Temporarily increases critical chance",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 175,
             extra: "",
             tables: {
@@ -3852,7 +3852,7 @@ const masterTable = Object.freeze({
             display: "Alacrity Serum",
             details: "Temporarily increases attack speed",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 175,
             extra: "",
             tables: {
@@ -3880,7 +3880,7 @@ const masterTable = Object.freeze({
             display: "Sundering Serum",
             details: "Temporarily increases swing size",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 200,
             extra: "",
             tables: {
@@ -3908,7 +3908,7 @@ const masterTable = Object.freeze({
             display: "Cyclonic Serum",
             details: "Temporarily increases throw size",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 200,
             extra: "",
             tables: {
@@ -3936,7 +3936,7 @@ const masterTable = Object.freeze({
             display: "Durability Serum",
             details: "",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 150,
             extra: "",
             tables: {
@@ -3964,7 +3964,7 @@ const masterTable = Object.freeze({
             display: "Holy Water",
             details: "Remove a curse",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 325,
             extra: "",
             tables: {
@@ -3988,7 +3988,7 @@ const masterTable = Object.freeze({
             display: "Purge Potion",
             details: "Removes a curse and deals 75 damage.",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 150,
             extra: "",
             tables: {
@@ -4012,7 +4012,7 @@ const masterTable = Object.freeze({
             display: "Purification Potion",
             details: "Removes all curses, bombs, keys, and sets health to 1",
             rarity: "Rare",
-            crafting: "-",
+            crafting: 0,
             cost: 1000,
             extra: "",
             tables: {
@@ -4052,7 +4052,7 @@ const masterTable = Object.freeze({
             display: "Absolution",
             details: "If you have exactly 5 curses, removes 5 curses",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 800,
             extra: "",
             tables: {
@@ -4076,7 +4076,7 @@ const masterTable = Object.freeze({
             display: "Doubling Saison",
             details: "Double your bombs",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 220,
             extra: "",
             tables: {
@@ -4100,7 +4100,7 @@ const masterTable = Object.freeze({
             display: "Impish Key Bomb",
             details: "Swap your items around",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 240,
             extra: "",
             tables: {
@@ -4188,7 +4188,7 @@ const masterTable = Object.freeze({
             display: "Nitroglycerin",
             details: "Drop bombs continuously",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 220,
             extra: "",
             tables: {
@@ -4212,7 +4212,7 @@ const masterTable = Object.freeze({
             display: "Auglycerin",
             details: "Drop gold continuously",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 150,
             extra: "",
             tables: {
@@ -4260,7 +4260,7 @@ const masterTable = Object.freeze({
             display: "Float Potion",
             details: "Avoid falling into holes",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 150,
             extra: "",
             tables: {
@@ -4328,7 +4328,7 @@ const masterTable = Object.freeze({
             display: "Fury Potion",
             details: "Fire some fireballs",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 100,
             extra: "",
             tables: {
@@ -4352,7 +4352,7 @@ const masterTable = Object.freeze({
             display: "Antimatter",
             details: "The next time you would take damage, gain that much health instead",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 150,
             extra: "",
             tables: {
@@ -4400,7 +4400,7 @@ const masterTable = Object.freeze({
             display: "Shop in a Bottle",
             details: "Discover the secret shop",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 150,
             extra: "",
             tables: {
@@ -4420,7 +4420,7 @@ const masterTable = Object.freeze({
             display: "Bottles in a Bottle",
             details: "Drop two potions",
             rarity: "Rare",
-            crafting: "-",
+            crafting: 0,
             cost: 300,
             extra: "",
             tables: {
@@ -4440,7 +4440,7 @@ const masterTable = Object.freeze({
             display: "Chest in a Bottle",
             details: "Drop a random chest",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 150,
             extra: "",
             tables: {
@@ -4496,7 +4496,7 @@ const masterTable = Object.freeze({
             display: "Doppelbock",
             details: "Summon a doppelganger to work alongside you",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 300,
             extra: "",
             tables: {
@@ -4524,7 +4524,7 @@ const masterTable = Object.freeze({
             display: "Transmutagen",
             details: "Transforms all relics in the room",
             rarity: "Rare",
-            crafting: "-",
+            crafting: 0,
             cost: 150,
             extra: "",
             tables: {
@@ -4548,7 +4548,7 @@ const masterTable = Object.freeze({
             display: "Metamorphim",
             details: "Transmute a carried relic",
             rarity: "Rare",
-            crafting: "-",
+            crafting: 0,
             cost: 500,
             extra: "",
             tables: {
@@ -4608,7 +4608,7 @@ const masterTable = Object.freeze({
             display: "Berserker's Brew",
             details: "Deal and take more damage",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 175,
             extra: "",
             tables: {
@@ -4732,7 +4732,7 @@ const masterTable = Object.freeze({
             display: "Potion of Plenty",
             details: "Drop some useful things",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 210,
             extra: "",
             tables: {
@@ -4756,7 +4756,7 @@ const masterTable = Object.freeze({
             display: "Protein Shake",
             details: "Drop some protein",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 150,
             extra: "",
             tables: {
@@ -4804,7 +4804,7 @@ const masterTable = Object.freeze({
             display: "Toxin",
             details: "Coat your weapon with poison",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 175,
             extra: "",
             tables: {
@@ -4828,7 +4828,7 @@ const masterTable = Object.freeze({
             display: "Witch's Brew",
             details: "Become cursed",
             rarity: "Rare",
-            crafting: "-",
+            crafting: 0,
             cost: 500,
             extra: "",
             tables: {
@@ -4844,7 +4844,7 @@ const masterTable = Object.freeze({
             display: "Freeloader Draught",
             details: "Get something for nothing",
             rarity: "Rare",
-            crafting: "-",
+            crafting: 0,
             cost: 400,
             extra: "",
             tables: {
@@ -4864,7 +4864,7 @@ const masterTable = Object.freeze({
             display: "Biscuits",
             details: "Increse experience gain for a familiar.",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 300,
             extra: "",
             tables: {
@@ -5012,7 +5012,7 @@ const masterTable = Object.freeze({
             display: "Pangolin Potion",
             details: "Refills four armor points",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 450,
             extra: "",
             tables: {
@@ -5034,7 +5034,7 @@ const masterTable = Object.freeze({
             display: "Bomb",
             details: "Deals damage and destroys rocks, as well as other objects",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 50,
             extra: "",
             tables: {
@@ -5058,7 +5058,7 @@ const masterTable = Object.freeze({
             display: "Bag O' Bombs",
             details: "Full of bombs",
             rarity: "Common",
-            crafting: "-",
+            crafting: 0,
             cost: 150,
             extra: "",
             tables: {
@@ -5082,7 +5082,7 @@ const masterTable = Object.freeze({
             display: "Key",
             details: "Unlocks chests, doors and other locked objects",
             rarity: "Common",
-            crafting: "",
+            crafting: 0,
             cost: 120,
             extra: "",
             tables: {
@@ -5106,7 +5106,7 @@ const masterTable = Object.freeze({
             display: "Key Ring",
             details: "Full of keys",
             rarity: "Common",
-            crafting: "",
+            crafting: 0,
             cost: 240,
             extra: "",
             tables: {
@@ -5130,7 +5130,7 @@ const masterTable = Object.freeze({
             display: "Talisman",
             details: "Removes a curse",
             rarity: "Common",
-            crafting: "",
+            crafting: 0,
             cost: 300,
             extra: "",
             tables: {
@@ -5152,7 +5152,7 @@ const masterTable = Object.freeze({
             display: "Medium Rare Steak",
             details: "Restores a small amount of health",
             rarity: "Common",
-            crafting: "",
+            crafting: 0,
             cost: 50,
             extra: "",
             tables: {
@@ -5168,7 +5168,7 @@ const masterTable = Object.freeze({
             display: "Fish Kebab",
             details: "Restores a moderate amount of health",
             rarity: "Common",
-            crafting: "",
+            crafting: 0,
             cost: 200,
             extra: "",
             tables: {
@@ -5184,7 +5184,7 @@ const masterTable = Object.freeze({
             display: "Ham Shank",
             details: "Restores a large amount of health",
             rarity: "Common",
-            crafting: "",
+            crafting: 0,
             cost: 300,
             extra: "",
             tables: {
@@ -5200,7 +5200,7 @@ const masterTable = Object.freeze({
             display: "Armor Shard",
             details: "Refills a point of armor",
             rarity: "Common",
-            crafting: "",
+            crafting: 0,
             cost: 150,
             extra: "",
             tables: {
@@ -5276,11 +5276,11 @@ const masterTable = Object.freeze({
             }
         }
     ]
-});
+};
 const mineEncounterGroups = Object.freeze({
     "mineSmall": {
         "begin": [
-            { weight: 4, roomName: "Mine_Small_Begin_Plain", sequence: { roomTypes: ["mineSmall"], tag: "hoodie_entrance", "branch": 1 }
+            { weight: 4, roomName: "Mine_Small_Begin_Plain", sequence: { roomTypes: ["mineSmall"], tag: "hoodie_entrance", branch: 1 }
             }
         ],
         "normal_encounters": [
@@ -5846,11 +5846,11 @@ const maps = {
     ]
 };
 function getRooms(zone, floor, seed, seenRooms = []) {
-    seed = (seed ?? parseInt(e$('seed-input').value)) + floor;
+    seed = (seed ?? parseInt(e$("seed-input").value)) + floor;
     const randLayout = new Random(seed);
     let count = 0;
     let previousRoom = null;
-    const zeroPad = (num, places) => String(num).padStart(places, '0');
+    const zeroPad = (num, places) => String(num).padStart(places, "0");
     function requirements(check) {
         if (check == undefined) {
             return true;
@@ -6003,11 +6003,11 @@ function listCraftable(table) {
     const selection = document.getElementById(`${table}-selection`);
     selection.innerHTML = `<legend>Crafted ${table}s</legend>`;
     masterTable[table].forEach((item, index) => {
-        if (item.crafting != '-') {
-            const itemCheckbox = document.createElement('input');
-            itemCheckbox.type = 'checkbox';
-            itemCheckbox.value = index;
-            const itemLable = document.createElement('label');
+        if (item.crafting != 0) {
+            const itemCheckbox = document.createElement("input");
+            itemCheckbox.type = "checkbox";
+            itemCheckbox.value = String(index);
+            const itemLable = document.createElement("label");
             itemLable.appendChild(itemCheckbox);
             itemLable.innerHTML += item.display;
             selection.appendChild(itemLable);
@@ -6021,7 +6021,7 @@ function checkAll(boxCollaction, toggle) {
 }
 function populateAltar() {
     const relics = [];
-    const altarSelection = document.getElementById('altar');
+    const altarSelection = document.getElementById("altar");
     masterTable.relic.forEach((relic, index) => {
         relics.push([relic.display, index]);
     });
@@ -6033,26 +6033,26 @@ function populateAltar() {
         selection.text = display;
         altarSelection.add(selection);
     }
-    altarSelection.value = '';
+    altarSelection.value = "";
 }
 const lootTables = {
-    "relic": [],
-    "relicAll": [],
-    "relicShop": [],
-    "relicFinal": [],
-    "relicStarter": [],
-    "relicLegendary": [],
-    "potion": [],
-    "potionShop": [],
-    "potionDibble": [],
-    "potionFinal": [],
-    "food": [],
-    "item": [],
-    "itemShop": [],
-    "itemDibble": [],
-    "dibble": [],
-    "dibbleRelic": [],
-    "potionOrRelic": []
+    relic: [],
+    relicAll: [],
+    relicShop: [],
+    relicFinal: [],
+    relicStarter: [],
+    relicLegendary: [],
+    potion: [],
+    potionShop: [],
+    potionDibble: [],
+    potionFinal: [],
+    food: [],
+    item: [],
+    itemShop: [],
+    itemDibble: [],
+    dibble: [],
+    dibbleRelic: [],
+    potionOrRelic: []
 };
 const rand = {
     default: null,
@@ -6084,60 +6084,60 @@ let settings = {
         relic: null,
         potion: null
     },
-    "altarRelic": -1,
+    altarRelic: -1,
     flags: {
-        "shop_basic_item": 1,
-        "shop_food": 1,
-        "shop_potion_relic": 1,
-        "dibble_extra_item": 0,
-        "dibble_relic": 0,
-        "relicHex": 0,
-        "dog_shadow_found": 0,
-        "delve_count": 0,
-        "bard_met": 0,
-        "secret_treasure_note": 0,
-        "foundRatBond": 0,
+        shop_basic_item: 1,
+        shop_food: 1,
+        shop_potion_relic: 1,
+        dibble_extra_item: 0,
+        dibble_relic: 0,
+        relicHex: 0,
+        dog_shadow_found: 0,
+        delve_count: 0,
+        bard_met: 0,
+        secret_treasure_note: 0,
+        foundRatBond: 0,
         priestess_met: 0,
-        "haveGuacamole": 0,
-        "peasant1_unlocked": 0,
-        "blacksmith_rescued": 0,
-        "foundWaylandsBoots": 0,
-        "mushroom_green": 0,
-        "mushroom_blue": 0,
-        "mushroom_purple": 0,
-        "apprentice_met": 0,
-        "black_rabbit_met": 0,
-        "rockmimic_defeated": 0,
-        "hoodie_met": 0,
-        "hoodie_met_mine": 0,
-        "tribute_fountain_encountered": 0,
-        "peasant2_unlocked": 0,
-        "dibble_upgrade_count": 0,
-        "prisoner_key": 0,
-        "altar_encountered": 0,
-        "haveWhip": 0,
-        "haveHat": 0,
-        "haveCircinus": 0,
-        "bog_unlocked": 0
+        haveGuacamole: 0,
+        peasant1_unlocked: 0,
+        blacksmith_rescued: 0,
+        foundWaylandsBoots: 0,
+        mushroom_green: 0,
+        mushroom_blue: 0,
+        mushroom_purple: 0,
+        apprentice_met: 0,
+        black_rabbit_met: 0,
+        rockmimic_defeated: 0,
+        hoodie_met: 0,
+        hoodie_met_mine: 0,
+        tribute_fountain_encountered: 0,
+        peasant2_unlocked: 0,
+        dibble_upgrade_count: 0,
+        prisoner_key: 0,
+        altar_encountered: 0,
+        haveWhip: 0,
+        haveHat: 0,
+        haveCircinus: 0,
+        bog_unlocked: 0
     }
 };
 const seedRand = new Random(Date.now());
 function loadLootTables() {
     Object.values(masterTable).forEach((subTable) => {
-        subTable.forEach((item, masterIndex) => {
+        subTable.forEach((item, mIndex) => {
             Object.entries(item.tables).forEach(([key, table]) => {
                 const tableB = table;
-                lootTables[key][tableB.index] = { "weight": tableB.weight, "masterIndex": masterIndex };
+                lootTables[key][tableB.index] = { weight: tableB.weight, masterIndex: mIndex };
             });
         });
     });
 }
-function nextItem(table = 'relic', randState = 'relic') {
+function nextItem(table = "relic", randState = "relic") {
     table = lootTables[table];
     const itemID = rand[randState].getWeightedElement(table);
-    return { "relic": masterTable.relic[itemID], "masterIndex": itemID };
+    return { relic: masterTable.relic[itemID], masterIndex: itemID };
 }
-function toggleWeight(indices = 157, subTable = 'relic', isZero = true) {
+function toggleWeight(indices = 157, subTable = "relic", isZero = true) {
     if (!Array.isArray(indices)) {
         indices = [indices];
     }
@@ -6149,7 +6149,7 @@ function toggleWeight(indices = 157, subTable = 'relic', isZero = true) {
     });
 }
 function toggleOthermine(on = false) {
-    toggleWeight([133, 134, 157], 'relic', !on);
+    toggleWeight([133, 134, 157], "relic", !on);
 }
 function toggleUncheckedItems() {
     const CBRelic = Object.values(e$("relic-selection").getElementsByTagName("input"));
@@ -6177,13 +6177,13 @@ function dibble(seed) {
     const field = e$c("fieldset", { id: "hub", classList: "zone" });
     const legend = e$c("legend", { textContent: "Hub" });
     field.appendChild(legend);
-    e$('levels').appendChild(field);
+    e$("levels").appendChild(field);
     const subfield = e$c("fieldset", { id: "dibble", classList: "level" });
     const sublegend = e$c("legend", { textContent: "Dibble" });
     subfield.appendChild(sublegend);
-    e$('hub').appendChild(subfield);
+    e$("hub").appendChild(subfield);
     items.forEach((item, i) => {
-        e$('dibble').appendChild(e$c("div", { classList: `icon-${item.type}`, innerText: item.display }));
+        e$("dibble").appendChild(e$c("div", { classList: `icon-${item.type}`, innerText: item.display }));
     });
 }
 function shop(zone, level) {
@@ -6206,10 +6206,10 @@ function shop(zone, level) {
         }
     }
     for (let i = 0; i < totalFood; ++i) {
-        table.push({ "key": "food", "type": "food", "randState": "shopHealth" });
+        table.push({ key: "food", type: "food", randState: "shopHealth" });
     }
     for (let i = 0; i < totalBasic; ++i) {
-        table.push({ "key": "item", "type": "item", "randState": "shopBasicItem" });
+        table.push({ key: "item", type: "item", randState: "shopBasicItem" });
     }
     for (let i = totalPoR; i < totalItems; ++i) {
         index.push(rand[table[i].randState].loot(lootTables[table[i].key]));
@@ -6237,61 +6237,61 @@ let loadSeed = () => {
     start(parseInt((e$("seed-input").value)));
 };
 function start(seed) {
-    e$('levels').innerHTML = '';
+    e$("levels").innerHTML = "";
     loadLootTables();
     nextRand(seed);
     toggleUncheckedItems();
     let currentRelics;
     let relicText;
-    toggleWeight(3, 'food');
-    toggleWeight(66, 'potion');
+    toggleWeight(3, "food");
+    toggleWeight(66, "potion");
     toggleWeight(133);
     toggleWeight(134);
     toggleWeight(157);
     dibble(seed);
-    if (e$('altar').value) {
-        toggleWeight(e$('altar').value);
+    if (e$("altar").value) {
+        toggleWeight(e$("altar").value);
     }
-    nextZone('mine', 0, 'The Goldmines', seed);
-    nextZone('dungeon', 1, 'Delvemore Dungeon', seed);
-    nextZone('halls', 2, 'Halls of Din', seed);
-    nextZone('caverns', 3, 'The Shimmering Caverns', seed);
-    nextZone('core', 4, 'Golden Core', seed);
+    nextZone("mine", 0, "The Goldmines", seed);
+    nextZone("dungeon", 1, "Delvemore Dungeon", seed);
+    nextZone("halls", 2, "Halls of Din", seed);
+    nextZone("caverns", 3, "The Shimmering Caverns", seed);
+    nextZone("core", 4, "Golden Core", seed);
     function nextZone(zone, zoneID, title, seed) {
         seed += zoneID * 5;
         let field = document.createElement("fieldset");
         field.id = zone;
-        field.classList.add('zone');
+        field.classList.add("zone");
         let legend = document.createElement("legend");
         legend.textContent = title;
         field.appendChild(legend);
-        e$('levels').appendChild(field);
+        e$("levels").appendChild(field);
         for (let i = 1; i <= 4; ++i) {
             nextRand(seed + i);
             let subfield = document.createElement("fieldset");
             subfield.id = zone + i;
-            subfield.classList.add('level');
+            subfield.classList.add("level");
             let sublegend = document.createElement("legend");
-            sublegend.textContent = 'Level ' + i;
+            sublegend.textContent = "Level " + i;
             subfield.appendChild(sublegend);
             e$(zone).appendChild(subfield);
             let relicRoom = document.createElement("div");
-            relicRoom.id = 'relic' + zone + i;
-            relicRoom.classList.add('icon-relicOn');
+            relicRoom.id = "relic" + zone + i;
+            relicRoom.classList.add("icon-relicOn");
             e$(zone + i).appendChild(relicRoom);
             let relic;
-            if (((zoneID + i) === 1) && e$('new-save-radio').checked) {
+            if (((zoneID + i) === 1) && e$("new-save-radio").checked) {
                 toggleWeight(146, "relic");
-                relic = nextItem('relicStarter');
+                relic = nextItem("relicStarter");
             }
             else {
-                relic = nextItem('relic');
+                relic = nextItem("relic");
             }
             toggleWeight(relic.masterIndex);
             relicText = document.createElement("div");
-            relicText.classList.add('icon-relic');
+            relicText.classList.add("icon-relic");
             relicText.innerHTML = relic.relic.display;
-            e$('relic' + zone + i).appendChild(relicText);
+            e$("relic" + zone + i).appendChild(relicText);
             if ((zoneID + i) > 1) {
                 shop(zone, i);
             }
@@ -6299,14 +6299,14 @@ function start(seed) {
     }
 }
 const saveSelection = e$("save-radio-selecion");
-const newRadio = e$('new-save-radio');
-const fullRadio = e$('100-save-radio');
-const loadRadio = e$('own-save-radio');
-const loadInput = e$('save-file-input');
-const randomSeedButton = e$('random-seed-button');
-const loadSeedButton = e$('load-seed-button');
-listCraftable('relic');
-listCraftable('potion');
+const newRadio = e$("new-save-radio");
+const fullRadio = e$("100-save-radio");
+const loadRadio = e$("own-save-radio");
+const loadInput = e$("save-file-input");
+const randomSeedButton = e$("random-seed-button");
+const loadSeedButton = e$("load-seed-button");
+listCraftable("relic");
+listCraftable("potion");
 populateAltar();
 loadLootTables();
 randomSeed();
@@ -6339,11 +6339,11 @@ e$("save-radio-selecion").addEventListener("change", (event) => {
         loadSeed();
     }
 });
-loadInput.addEventListener('change', () => {
+loadInput.addEventListener("change", () => {
     loadRadio.checked = true;
     e$("save-radio-selecion").dispatchEvent(radioEvent);
 });
-randomSeedButton.addEventListener('click', randomSeed);
-loadSeedButton.addEventListener('click', loadSeed);
+randomSeedButton.addEventListener("click", randomSeed);
+loadSeedButton.addEventListener("click", loadSeed);
 fullRadio.checked = true;
 e$("save-radio-selecion").dispatchEvent(radioEvent);

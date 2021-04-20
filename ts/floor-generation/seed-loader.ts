@@ -1,7 +1,7 @@
 //load new random seed
 function randomSeed(){
 	e$("seed-input").value  = <string><unknown>seedRand.rangeInclusive(1, 99999999);
-	//$('#seed-input').value = 68906772; // map at Diibble, sequence breaker in mine1
+	//$("#seed-input").value = 68906772; // map at Diibble, sequence breaker in mine1
 	loadSeed();
 }
 
@@ -17,30 +17,30 @@ let loadSeed = () => {
 }
 
 function start(seed){
-	e$('levels').innerHTML = '';
+	e$("levels").innerHTML = "";
 	loadLootTables ();
 	nextRand(seed);
 	toggleUncheckedItems();
 
 	let currentRelics;
 	let relicText;
-	toggleWeight(3, 'food');
-	toggleWeight(66, 'potion');
+	toggleWeight(3, "food");
+	toggleWeight(66, "potion");
 	toggleWeight(133);
 	toggleWeight(134);
 	toggleWeight(157);
 	dibble(seed);
 	
-	if (e$('altar').value) {
-		toggleWeight(e$('altar').value);
+	if (e$("altar").value) {
+		toggleWeight(e$("altar").value);
 	}
 
 	
-	nextZone('mine', 0, 'The Goldmines', seed);
-	nextZone('dungeon', 1, 'Delvemore Dungeon', seed);
-	nextZone('halls', 2, 'Halls of Din', seed);
-	nextZone('caverns', 3, 'The Shimmering Caverns', seed);
-	nextZone('core', 4, 'Golden Core', seed);
+	nextZone("mine", 0, "The Goldmines", seed);
+	nextZone("dungeon", 1, "Delvemore Dungeon", seed);
+	nextZone("halls", 2, "Halls of Din", seed);
+	nextZone("caverns", 3, "The Shimmering Caverns", seed);
+	nextZone("core", 4, "Golden Core", seed);
 	   
 	   
 
@@ -51,43 +51,43 @@ function start(seed){
 		
 		let field = document.createElement("fieldset");
 		field.id = zone;
-		field.classList.add('zone');
+		field.classList.add("zone");
 		let legend = document.createElement("legend");
 		legend.textContent = title;
 		field.appendChild(legend);
-		e$('levels').appendChild(field);
+		e$("levels").appendChild(field);
 	
 		for (let i = 1; i <= 4; ++i) { 
 			nextRand(seed + i);
 			
 			let subfield = document.createElement("fieldset");
 			subfield.id = zone + i;
-			subfield.classList.add('level');
+			subfield.classList.add("level");
 			let sublegend = document.createElement("legend");
-			sublegend.textContent = 'Level ' + i;
+			sublegend.textContent = "Level " + i;
 			subfield.appendChild(sublegend);
 			e$(zone).appendChild(subfield);
 			 
 			let relicRoom = document.createElement("div");
-			relicRoom.id = 'relic' + zone + i;
-			relicRoom.classList.add('icon-relicOn');
+			relicRoom.id = "relic" + zone + i;
+			relicRoom.classList.add("icon-relicOn");
 			e$(zone + i).appendChild(relicRoom);
 
 			let relic:any; 
-			if (((zoneID + i) === 1) && e$('new-save-radio').checked) {
+			if (((zoneID + i) === 1) && e$("new-save-radio").checked) {
 				toggleWeight(146, "relic");
-				relic = nextItem('relicStarter');
+				relic = nextItem("relicStarter");
 			}
 			else {
-				relic = nextItem('relic');
+				relic = nextItem("relic");
 			}
 			toggleWeight(relic.masterIndex);		   
 			
 					  
 			relicText = document.createElement("div");
-			relicText.classList.add('icon-relic');
+			relicText.classList.add("icon-relic");
 			relicText.innerHTML = relic.relic.display;
-			e$('relic' + zone + i).appendChild(relicText);		   
+			e$("relic" + zone + i).appendChild(relicText);		   
 			
 			if ((zoneID + i) > 1){
 				shop (zone, i);

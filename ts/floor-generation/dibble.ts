@@ -25,15 +25,15 @@ function dibble(seed) {
 	const field = e$c("fieldset", {id:"hub", classList:"zone"})
 	const legend = e$c("legend", {textContent: "Hub"});
 	field.appendChild(legend);
-	e$('levels').appendChild(field);
+	e$("levels").appendChild(field);
 
 	const subfield = e$c("fieldset", {id:"dibble", classList:"level"})
 	const sublegend = e$c("legend", {textContent:"Dibble"});
 	subfield.appendChild(sublegend);
-	e$('hub').appendChild(subfield);
+	e$("hub").appendChild(subfield);
 
 	//apend each item to the list
 	items.forEach((item, i) => {
-		e$('dibble').appendChild(e$c("div", {classList:`icon-${item.type}`, innerText:item.display}));
+		e$("dibble").appendChild(e$c("div", {classList:`icon-${item.type}`, innerText:item.display}));
 	});
 }

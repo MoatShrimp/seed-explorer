@@ -9,13 +9,13 @@ function listCraftable (table) {
 	
 	masterTable[table].forEach((item, index) => {
 		
-		if (item.crafting != '-') {
+		if (item.crafting != 0) {
 			
-			const itemCheckbox = document.createElement('input');			
-			itemCheckbox.type = 'checkbox';
-			itemCheckbox.value = index;
+			const itemCheckbox = document.createElement("input");			
+			itemCheckbox.type = "checkbox";
+			itemCheckbox.value = String(index);
 			
-			const itemLable = document.createElement('label');
+			const itemLable = document.createElement("label");
 			itemLable.appendChild(itemCheckbox);
 			itemLable.innerHTML += item.display;
 			
@@ -34,7 +34,7 @@ function checkAll(boxCollaction, toggle) {
 function populateAltar() {
 	
 	const relics = [];
-	const altarSelection = <HTMLSelectElement>document.getElementById('altar');
+	const altarSelection = <HTMLSelectElement>document.getElementById("altar");
 	masterTable.relic.forEach((relic, index) => {
 		relics.push([relic.display, index]);
 	});
@@ -49,6 +49,6 @@ function populateAltar() {
 		altarSelection.add(selection);
 	}
 
-	altarSelection.value = '';
+	altarSelection.value = "";
 	
 }

@@ -26,6 +26,6 @@
 	"./floor-generation/dibble.ts",
 	"./floor-generation/shop.ts",
     "./floor-generation/seed-loader.ts",
-    "./scripts.ts"
+    "./userInterface.ts"
 ]
 }

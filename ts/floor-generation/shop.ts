@@ -33,12 +33,12 @@ function shop(zone, level) {
 
 	//load all food
 	for (let i = 0; i < totalFood; ++i) {
-		table.push({ "key": "food", "type": "food", "randState": "shopHealth" });
+		table.push({ key: "food", type: "food", randState: "shopHealth" });
 	}
 
 	//load all basic items such as bombs and keys
 	for (let i = 0; i < totalBasic; ++i) {
-		table.push({ "key": "item", "type": "item", "randState": "shopBasicItem" });
+		table.push({ key: "item", type: "item", randState: "shopBasicItem" });
 	}
 
 	//get index for each found item, skip relics since they have already been added

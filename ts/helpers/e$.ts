@@ -2,7 +2,7 @@
 function e$(name: string, parent = document): any {
 	
 	switch (name.charAt(0)) {
-		case '.':
+		case ".":
 			return parent.getElementsByClassName(name.slice(1));
 		default:
 			return parent.getElementById(name);

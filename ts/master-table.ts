@@ -1,5 +1,27 @@
+interface masterTable {
+    [item: string]: {
+		guid?:string,
+		name?:string,
+		display?:string,
+		details?:string,
+		rarity?:string,
+		crafting?:number,
+		cost?:number,
+		extra?:string,
+		key?:string,
+		type?:string,
+		randState?:string,
+		tables:{
+			[table: string]: {
+				index:number,
+				weight:number
+			}
+		}
+	}[]
+};
+
 //Database for all enumerable items
-const masterTable = Object.freeze({
+const masterTable:masterTable = {
 	relic: [
 		{
 			guid: "1981b4af04434077afafc78691056387",
@@ -27,7 +49,7 @@ const masterTable = Object.freeze({
 			display: "Galoshes",
 			details: "Walk and jump on oil and poison",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 275,
 			extra: "",
 			tables: {
@@ -51,7 +73,7 @@ const masterTable = Object.freeze({
 			display: "Float Boots",
 			details: "Walk on air",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 450,
 			extra: "",
 			tables: {
@@ -99,7 +121,7 @@ const masterTable = Object.freeze({
 			display: "Helios Boots",
 			details: "Oil + Fire",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 550,
 			extra: "Combined from Galoshes & Lava Walkers",
 			tables: {}
@@ -134,7 +156,7 @@ const masterTable = Object.freeze({
 			display: "Butcher's Cleaver",
 			details: "Sometimes drop meat from your enemies",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 525,
 			extra: "",
 			tables: {
@@ -158,7 +180,7 @@ const masterTable = Object.freeze({
 			display: "Key Blade",
 			details: "Increases swing damage for each key you have",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 375,
 			extra: "",
 			tables: {
@@ -202,7 +224,7 @@ const masterTable = Object.freeze({
 			display: "Mjölnir",
 			details: "Thrown pickaxe summons lightning on hit",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 850,
 			extra: "",
 			tables: {
@@ -218,7 +240,7 @@ const masterTable = Object.freeze({
 			display: "Doom Blade",
 			details: "Gain damage for each carried curse",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 1000,
 			extra: "",
 			tables: {
@@ -234,7 +256,7 @@ const masterTable = Object.freeze({
 			display: "Battle Axe",
 			details: "Increases swing size,but slightly decreases swing damage",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 450,
 			extra: "",
 			tables: {
@@ -282,7 +304,7 @@ const masterTable = Object.freeze({
 			display: "Masa",
 			details: "Reduces throw damage and increases swing damage",
 			rarity: "Rare",
-			crafting: "-",
+			crafting: 0,
 			cost: 410,
 			extra: "",
 			tables: {
@@ -322,7 +344,7 @@ const masterTable = Object.freeze({
 			display: "Masamune",
 			details: "Instantly kills enemies sometimes",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 900,
 			extra: "Combined from Masa & Mune",
 			tables: {}
@@ -333,7 +355,7 @@ const masterTable = Object.freeze({
 			display: "Suneater",
 			details: "Consumes all current and future blessings and converts them to swing damage",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 900,
 			extra: "",
 			tables: {
@@ -393,7 +415,7 @@ const masterTable = Object.freeze({
 			display: "Obsidian Knife",
 			details: "Dramatically increases damage,but breaks when hit",
 			rarity: "Rare",
-			crafting: "-",
+			crafting: 0,
 			cost: 650,
 			extra: "",
 			tables: {
@@ -513,7 +535,7 @@ const masterTable = Object.freeze({
 			display: "Pauldron",
 			details: "",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 450,
 			extra: "",
 			tables: {
@@ -557,7 +579,7 @@ const masterTable = Object.freeze({
 			display: "Greaves",
 			details: "Adds a point of armor to the health bar",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 450,
 			extra: "",
 			tables: {
@@ -581,7 +603,7 @@ const masterTable = Object.freeze({
 			display: "Shield of Quills",
 			details: "Gain two points of armor,armor increases damage",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 770,
 			extra: "",
 			tables: {
@@ -645,7 +667,7 @@ const masterTable = Object.freeze({
 			display: "Soul Guard",
 			details: "Reduces and redirects damage to your max HP",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 850,
 			extra: "",
 			tables: {
@@ -661,7 +683,7 @@ const masterTable = Object.freeze({
 			display: "Wet Blanket",
 			details: "Puts out fires immediately,but requires water charges",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 275,
 			extra: "",
 			tables: {
@@ -681,7 +703,7 @@ const masterTable = Object.freeze({
 			display: "War Paint",
 			details: "Increase attack damage and speed when killing enemies",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 480,
 			extra: "",
 			tables: {
@@ -701,7 +723,7 @@ const masterTable = Object.freeze({
 			display: "Battle Standard",
 			details: "Increases move,attack,and throw speed at the beginning of battle",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 450,
 			extra: "",
 			tables: {
@@ -901,7 +923,7 @@ const masterTable = Object.freeze({
 			display: "Sonic Boom",
 			details: "Throw really fast",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 280,
 			extra: "",
 			tables: {
@@ -921,7 +943,7 @@ const masterTable = Object.freeze({
 			display: "Sewing Kit",
 			details: "Keep all your gold when you die",
 			rarity: "Rare",
-			crafting: "-",
+			crafting: 0,
 			cost: 750,
 			extra: "",
 			tables: {
@@ -945,7 +967,7 @@ const masterTable = Object.freeze({
 			display: "Simple Chest",
 			details: "Overstocks the shop",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 250,
 			extra: "",
 			tables: {
@@ -969,7 +991,7 @@ const masterTable = Object.freeze({
 			display: "Meal Ticket",
 			details: "Free food at the shop,right now!",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 300,
 			extra: "",
 			tables: {
@@ -1017,7 +1039,7 @@ const masterTable = Object.freeze({
 			display: "Adventurer's Whip",
 			details: "",
 			rarity: "Rare",
-			crafting: "-",
+			crafting: 0,
 			cost: 475,
 			extra: "",
 			tables: {
@@ -1037,7 +1059,7 @@ const masterTable = Object.freeze({
 			display: "Golden Idol",
 			details: "Discover more rooms and get rich",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 725,
 			extra: "Combined from Adventurer's Hat & Adventurer's Whip",
 			tables: {}
@@ -1048,7 +1070,7 @@ const masterTable = Object.freeze({
 			display: "Totem of Life",
 			details: "Sustain yourself through adventure",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 550,
 			extra: "",
 			tables: {
@@ -1068,7 +1090,7 @@ const masterTable = Object.freeze({
 			display: "Aphotic Charm",
 			details: "Heal in each new room for each curse",
 			rarity: "Common",
-			crafting: "18",
+			crafting: 18,
 			cost: 0,
 			extra: "",
 			tables: {
@@ -1092,7 +1114,7 @@ const masterTable = Object.freeze({
 			display: "Dillon's Claw",
 			details: "Deal even more damage when you critical strike",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 350,
 			extra: "",
 			tables: {
@@ -1140,7 +1162,7 @@ const masterTable = Object.freeze({
 			display: "Bramble Vest",
 			details: "Return damage but amplified",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 200,
 			extra: "",
 			tables: {
@@ -1212,7 +1234,7 @@ const masterTable = Object.freeze({
 			display: "Miner's Flask",
 			details: "Feel the effects of a potion for longer",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 375,
 			extra: "",
 			tables: {
@@ -1236,7 +1258,7 @@ const masterTable = Object.freeze({
 			display: "Lunchbox",
 			details: "Store a piece of food for later",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 380,
 			extra: "",
 			tables: {
@@ -1300,7 +1322,7 @@ const masterTable = Object.freeze({
 			display: "Golden Popcorn",
 			details: "Gold will sometimes duplicate itself",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 550,
 			extra: "",
 			tables: {
@@ -1328,7 +1350,7 @@ const masterTable = Object.freeze({
 			display: "Seasoned Popcorn",
 			details: "Food will sometimes duplicate itself",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 500,
 			extra: "",
 			tables: {
@@ -1348,7 +1370,7 @@ const masterTable = Object.freeze({
 			display: "Caramel Popcorn",
 			details: "Duplicated food packs a surprise",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 1100,
 			extra: "Combined from Golden Popcorn & Seasoned Popcorn",
 			tables: {}
@@ -1359,7 +1381,7 @@ const masterTable = Object.freeze({
 			display: "Pocket Grill",
 			details: "Cooks all your food",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 500,
 			extra: "",
 			tables: {
@@ -1379,7 +1401,7 @@ const masterTable = Object.freeze({
 			display: "Leftovers",
 			details: "Find old, gross food in chests",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 475,
 			extra: "",
 			tables: {
@@ -1403,7 +1425,7 @@ const masterTable = Object.freeze({
 			display: "Spare Ordnance",
 			details: "Discover a bomb in every chest",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 450,
 			extra: "",
 			tables: {
@@ -1427,7 +1449,7 @@ const masterTable = Object.freeze({
 			display: "Miniaturizer",
 			details: "Find small boxes in big boxes",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 850,
 			extra: "",
 			tables: {
@@ -1443,7 +1465,7 @@ const masterTable = Object.freeze({
 			display: "Key Doubler",
 			details: "Sometimes drop a new key when using an old key",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 480,
 			extra: "",
 			tables: {
@@ -1483,7 +1505,7 @@ const masterTable = Object.freeze({
 			display: "Double Doubler",
 			details: "Chance to drop a key and bomb when using either",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 980,
 			extra: "Combined from Key Doubler & Bomb Doubler",
 			tables: {}
@@ -1534,7 +1556,7 @@ const masterTable = Object.freeze({
 			display: "Bombushka",
 			details: "Bombs, in bombs, in bombs",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 400,
 			extra: "Unique Bomb",
 			tables: {
@@ -1558,7 +1580,7 @@ const masterTable = Object.freeze({
 			display: "Seer's Blood",
 			details: "Bombs explode in a shower of fire",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 350,
 			extra: "Unique Bomb",
 			tables: {
@@ -1578,7 +1600,7 @@ const masterTable = Object.freeze({
 			display: "Rook's Bomb",
 			details: "Death at ninety degrees",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 480,
 			extra: "Unique Bomb",
 			tables: {
@@ -1618,7 +1640,7 @@ const masterTable = Object.freeze({
 			display: "Queen's Bomb",
 			details: "Death in all directions",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 950,
 			extra: "Unique Bomb\nCombined from Rook's Bomb & Bishop's Bomb",
 			tables: {}
@@ -1629,7 +1651,7 @@ const masterTable = Object.freeze({
 			display: "Transmutagen Blast",
 			details: "Transforms items",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 1111,
 			extra: "Unique Bomb",
 			tables: {
@@ -1645,7 +1667,7 @@ const masterTable = Object.freeze({
 			display: "Branding Bomb",
 			details: "Bombs brand enemies for sacrifice, +10 bombs",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 666,
 			extra: "Unique Bomb",
 			tables: {
@@ -1661,7 +1683,7 @@ const masterTable = Object.freeze({
 			display: "Lightning Bomb",
 			details: "Bomb explosions chain lightning",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 350,
 			extra: "Unique Bomb",
 			tables: {
@@ -1681,7 +1703,7 @@ const masterTable = Object.freeze({
 			display: "M.E.G.A. Bomb",
 			details: "A mess of electrified gold",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 0,
 			extra: "Combined from Lightning Bomb & Golden Powder",
 			tables: {}
@@ -1712,7 +1734,7 @@ const masterTable = Object.freeze({
 			display: "Tsar Bomba",
 			details: "Killing enemies with a bomb spawns a new bomb. Carried bombs decrease swing and throw damage.",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 875,
 			extra: "",
 			tables: {
@@ -1748,7 +1770,7 @@ const masterTable = Object.freeze({
 			display: "Shrapnel",
 			details: "Friendly bomb blasts fire projectiles",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 310,
 			extra: "",
 			tables: {
@@ -1772,7 +1794,7 @@ const masterTable = Object.freeze({
 			display: "Gecko Blast",
 			details: "Bomb blasts attract items",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 500,
 			extra: "",
 			tables: {
@@ -1796,7 +1818,7 @@ const masterTable = Object.freeze({
 			display: "Capture Sphere",
 			details: "Bomb kills permanently increase bomb damage",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 285,
 			extra: "",
 			tables: {
@@ -1920,7 +1942,7 @@ const masterTable = Object.freeze({
 			display: "Guidance",
 			details: "400",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 400,
 			extra: "Unique Throw",
 			tables: {
@@ -1948,7 +1970,7 @@ const masterTable = Object.freeze({
 			display: "Phantasmal Axe",
 			details: "Thrown pickaxes duplicate themselves",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 400,
 			extra: "",
 			tables: {
@@ -1972,7 +1994,7 @@ const masterTable = Object.freeze({
 			display: "Chakram",
 			details: "Throw a whirling blade of death",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 800,
 			extra: "Unique Throw",
 			tables: {
@@ -1988,7 +2010,7 @@ const masterTable = Object.freeze({
 			display: "Fork",
 			details: "Splits your ranged attacks",
 			rarity: "Rare",
-			crafting: "-",
+			crafting: 0,
 			cost: 400,
 			extra: "",
 			tables: {
@@ -2012,7 +2034,7 @@ const masterTable = Object.freeze({
 			display: "Bottled Lightning",
 			details: "Chance on hit to chain lightning",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 400,
 			extra: "",
 			tables: {
@@ -2040,7 +2062,7 @@ const masterTable = Object.freeze({
 			display: "Salamander Tail",
 			details: "Chance on hit to ignite your enemies",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 400,
 			extra: "",
 			tables: {
@@ -2104,7 +2126,7 @@ const masterTable = Object.freeze({
 			display: "Cracked Orb",
 			details: "Curse enemies with increased damage",
 			rarity: "Rare",
-			crafting: "-",
+			crafting: 0,
 			cost: 460,
 			extra: "",
 			tables: {
@@ -2128,7 +2150,7 @@ const masterTable = Object.freeze({
 			display: "Ursine Ring",
 			details: "Increase health",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 500,
 			extra: "",
 			tables: {
@@ -2152,7 +2174,7 @@ const masterTable = Object.freeze({
 			display: "Demon Ring",
 			details: "Increase swing damage",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 500,
 			extra: "",
 			tables: {
@@ -2224,7 +2246,7 @@ const masterTable = Object.freeze({
 			display: "Axe Thrower's Pendant",
 			details: "Deal more throw damage at low health",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 400,
 			extra: "",
 			tables: {
@@ -2248,7 +2270,7 @@ const masterTable = Object.freeze({
 			display: "Knight's Pendant",
 			details: "Deal more swing damage at high health",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 420,
 			extra: "",
 			tables: {
@@ -2296,7 +2318,7 @@ const masterTable = Object.freeze({
 			display: "Iron Branch",
 			details: "Increase health, swing damage, and attack speed",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 400,
 			extra: "",
 			tables: {
@@ -2320,7 +2342,7 @@ const masterTable = Object.freeze({
 			display: "Queen's Crown",
 			details: "Increase throw damage, swing size, and swing speed",
 			rarity: "Rare",
-			crafting: "-",
+			crafting: 0,
 			cost: 550,
 			extra: "",
 			tables: {
@@ -2364,7 +2386,7 @@ const masterTable = Object.freeze({
 			display: "Emperor's Crown",
 			details: "Increases stats and receive a blessing",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 1100,
 			extra: "Combined from Queen's Crown & King's Crown",
 			tables: {}
@@ -2375,7 +2397,7 @@ const masterTable = Object.freeze({
 			display: "Pilfer Ring",
 			details: "Soak up gold and get a discount at the shop",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 800,
 			extra: "",
 			tables: {
@@ -2395,7 +2417,7 @@ const masterTable = Object.freeze({
 			display: "Unstable Concoction",
 			details: "Gold hits the floor with explosive force",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 420,
 			extra: "",
 			tables: {
@@ -2455,7 +2477,7 @@ const masterTable = Object.freeze({
 			display: "Conductor",
 			details: "Electrify your enemies when picking up gold",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 550,
 			extra: "",
 			tables: {
@@ -2475,7 +2497,7 @@ const masterTable = Object.freeze({
 			display: "Gold Frenzy",
 			details: "Gain temporary damage when picking up gold",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 400,
 			extra: "",
 			tables: {
@@ -2495,7 +2517,7 @@ const masterTable = Object.freeze({
 			display: "Intensifier",
 			details: "Increases damage when killing enemies",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 500,
 			extra: "",
 			tables: {
@@ -2515,7 +2537,7 @@ const masterTable = Object.freeze({
 			display: "Floating Skull",
 			details: "A shield that blocks projectiles, most of the time",
 			rarity: "Rare",
-			crafting: "-",
+			crafting: 0,
 			cost: 400,
 			extra: "",
 			tables: {
@@ -2539,7 +2561,7 @@ const masterTable = Object.freeze({
 			display: "Grimhilde's Mirror",
 			details: "Return projectiles with an attack",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 350,
 			extra: "",
 			tables: {
@@ -2559,7 +2581,7 @@ const masterTable = Object.freeze({
 			display: "Mirror Shield",
 			details: "Automatically reflect projectiles",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 750,
 			extra: "Combined from Floating Skull & Grimhilde's Mirror",
 			tables: {}
@@ -2590,7 +2612,7 @@ const masterTable = Object.freeze({
 			display: "Nullstone",
 			details: "Block a hit once in a while",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 650,
 			extra: "",
 			tables: {
@@ -2606,7 +2628,7 @@ const masterTable = Object.freeze({
 			display: "Mushroom",
 			details: "Gain maximum health when killing enemies",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 540,
 			extra: "",
 			tables: {
@@ -2646,7 +2668,7 @@ const masterTable = Object.freeze({
 			display: "Tent",
 			details: "Adds a tent to the starting room of a floor, one use only",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 300,
 			extra: "",
 			tables: {
@@ -2670,7 +2692,7 @@ const masterTable = Object.freeze({
 			display: "Aegis",
 			details: "Increase defense at critical health",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 350,
 			extra: "",
 			tables: {
@@ -2722,7 +2744,7 @@ const masterTable = Object.freeze({
 			display: "Petrified Rock",
 			details: "Increase drop rate of items from rocks",
 			rarity: "Rare",
-			crafting: "-",
+			crafting: 0,
 			cost: 999,
 			extra: "",
 			tables: {}
@@ -2753,7 +2775,7 @@ const masterTable = Object.freeze({
 			display: "Cosmic Egg",
 			details: "Increases experience gain for a familiar",
 			rarity: "Rare",
-			crafting: "-",
+			crafting: 0,
 			cost: 750,
 			extra: "",
 			tables: {
@@ -2801,7 +2823,7 @@ const masterTable = Object.freeze({
 			display: "Pilfer Credit Card Silver",
 			details: "A Gold10.png 2,500 limit at 0% interest",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 1,
 			extra: "",
 			tables: {
@@ -2821,7 +2843,7 @@ const masterTable = Object.freeze({
 			display: "Pilfer Credit Card Gold",
 			details: "A Gold10.png 5,000 limit at 0% interest",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 1,
 			extra: "",
 			tables: {
@@ -2841,7 +2863,7 @@ const masterTable = Object.freeze({
 			display: "Pilfer Credit Card Black Edition",
 			details: "7,500 limit and 5% cash back",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 0,
 			extra: "Combined from Pilfer Credit Card Silver & Pilfer Credit Card Gold",
 			tables: {}
@@ -2852,7 +2874,7 @@ const masterTable = Object.freeze({
 			display: "Four Leaf Cleaver",
 			details: "Sometimes drop golden meat from your enemies",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 1050,
 			extra: "Combined from Butcher's Cleaver & Four Leaf Clover",
 			tables: {}
@@ -2863,7 +2885,7 @@ const masterTable = Object.freeze({
 			display: "Rabbit Gloves",
 			details: "Get a free item in every shop",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 1200,
 			extra: "",
 			tables: {
@@ -2879,7 +2901,7 @@ const masterTable = Object.freeze({
 			display: "Karmic Scale",
 			details: "Health, damage, and healing become small and even",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 1100,
 			extra: "",
 			tables: {
@@ -2895,7 +2917,7 @@ const masterTable = Object.freeze({
 			display: "Pocket of Holding",
 			details: "Get some temporary bombs each room",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 550,
 			extra: "",
 			tables: {
@@ -2911,7 +2933,7 @@ const masterTable = Object.freeze({
 			display: "Lockpick",
 			details: "Open locks for free, but for how long?",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 900,
 			extra: "",
 			tables: {
@@ -2955,7 +2977,7 @@ const masterTable = Object.freeze({
 			display: "Lucky Lockpick",
 			details: "A chance to not die, and no chance to break",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 1300,
 			extra: "Combined from Lockpick & Lucky Charm",
 			tables: {}
@@ -3030,7 +3052,7 @@ const masterTable = Object.freeze({
 			display: "Kurtz' Stache",
 			details: "tablesA mysterious box that invites calamity",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 200,
 			extra: "",
 			tables: {
@@ -3054,7 +3076,7 @@ const masterTable = Object.freeze({
 			display: "Glass Cannon",
 			details: "Increases damage, but decreases maximum health",
 			rarity: "Legendary",
-			crafting: "-",
+			crafting: 0,
 			cost: 775,
 			extra: "",
 			tables: {
@@ -3070,7 +3092,7 @@ const masterTable = Object.freeze({
 			display: "Soul Cannon",
 			details: "Fire a projectile while swinging",
 			rarity: "Rare",
-			crafting: "-",
+			crafting: 0,
 			cost: 550,
 			extra: "",
 			tables: {
@@ -3118,7 +3140,7 @@ const masterTable = Object.freeze({
 			display: "Ursa Major",
 			details: "Increases max health after eating food",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 400,
 			extra: "",
 			tables: {
@@ -3138,7 +3160,7 @@ const masterTable = Object.freeze({
 			display: "Canis Major",
 			details: "Crits temporarily increase crit chance",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 300,
 			extra: "",
 			tables: {
@@ -3162,7 +3184,7 @@ const masterTable = Object.freeze({
 			display: "Sagitta",
 			details: "Enemies explode in arrows after a critical strike",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 325,
 			extra: "",
 			tables: {
@@ -3182,7 +3204,7 @@ const masterTable = Object.freeze({
 			display: "Circinus",
 			details: "Temporarily reveals secret rooms, secret rooms can have secret rooms",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 380,
 			extra: "",
 			tables: {
@@ -3206,7 +3228,7 @@ const masterTable = Object.freeze({
 			display: "Siegfried's Aegis",
 			details: "Inflicts pain on the bearer",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 1,
 			extra: "",
 			tables: {}
@@ -3241,7 +3263,7 @@ const masterTable = Object.freeze({
 			display: "Hot Cross Bun",
 			details: "Increases maximum health, very slightly",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 5,
 			extra: "",
 			tables: {}
@@ -3252,7 +3274,7 @@ const masterTable = Object.freeze({
 			display: "Pilfer Credit Card Silver",
 			details: "A Gold10.png 2,500 limit at 0% interest",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 1,
 			extra: "",
 			tables: {
@@ -3270,7 +3292,7 @@ const masterTable = Object.freeze({
 			display: "Tincture",
 			details: "Recovers health",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 150,
 			extra: "",
 			tables: {
@@ -3346,7 +3368,7 @@ const masterTable = Object.freeze({
 			display: "Troll Sweat",
 			details: "Regenerate health over time",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 200,
 			extra: "",
 			tables: {
@@ -3518,7 +3540,7 @@ const masterTable = Object.freeze({
 			display: "Popcorn Kernels",
 			details: "Duplicate all basic items in the room",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 150,
 			extra: "",
 			tables: {
@@ -3562,7 +3584,7 @@ const masterTable = Object.freeze({
 			display: "Whiplash Serum",
 			details: "Temporarily increases throw damage",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 175,
 			extra: "",
 			tables: {
@@ -3590,7 +3612,7 @@ const masterTable = Object.freeze({
 			display: "Strength Serum",
 			details: "Temporarily increases swing damage",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 175,
 			extra: "",
 			tables: {
@@ -3618,7 +3640,7 @@ const masterTable = Object.freeze({
 			display: "Savagery Serum",
 			details: "Temporarily increases critical chance",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 175,
 			extra: "",
 			tables: {
@@ -3646,7 +3668,7 @@ const masterTable = Object.freeze({
 			display: "Alacrity Serum",
 			details: "Temporarily increases attack speed",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 175,
 			extra: "",
 			tables: {
@@ -3674,7 +3696,7 @@ const masterTable = Object.freeze({
 			display: "Sundering Serum",
 			details: "Temporarily increases swing size",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 200,
 			extra: "",
 			tables: {
@@ -3702,7 +3724,7 @@ const masterTable = Object.freeze({
 			display: "Cyclonic Serum",
 			details: "Temporarily increases throw size",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 200,
 			extra: "",
 			tables: {
@@ -3730,7 +3752,7 @@ const masterTable = Object.freeze({
 			display: "Durability Serum",
 			details: "",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 150,
 			extra: "",
 			tables: {
@@ -3758,7 +3780,7 @@ const masterTable = Object.freeze({
 			display: "Holy Water",
 			details: "Remove a curse",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 325,
 			extra: "",
 			tables: {
@@ -3782,7 +3804,7 @@ const masterTable = Object.freeze({
 			display: "Purge Potion",
 			details: "Removes a curse and deals 75 damage.",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 150,
 			extra: "",
 			tables: {
@@ -3806,7 +3828,7 @@ const masterTable = Object.freeze({
 			display: "Purification Potion",
 			details: "Removes all curses, bombs, keys, and sets health to 1",
 			rarity: "Rare",
-			crafting: "-",
+			crafting: 0,
 			cost: 1000,
 			extra: "",
 			tables: {
@@ -3846,7 +3868,7 @@ const masterTable = Object.freeze({
 			display: "Absolution",
 			details: "If you have exactly 5 curses, removes 5 curses",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 800,
 			extra: "",
 			tables: {
@@ -3870,7 +3892,7 @@ const masterTable = Object.freeze({
 			display: "Doubling Saison",
 			details: "Double your bombs",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 220,
 			extra: "",
 			tables: {
@@ -3894,7 +3916,7 @@ const masterTable = Object.freeze({
 			display: "Impish Key Bomb",
 			details: "Swap your items around",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 240,
 			extra: "",
 			tables: {
@@ -3982,7 +4004,7 @@ const masterTable = Object.freeze({
 			display: "Nitroglycerin",
 			details: "Drop bombs continuously",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 220,
 			extra: "",
 			tables: {
@@ -4006,7 +4028,7 @@ const masterTable = Object.freeze({
 			display: "Auglycerin",
 			details: "Drop gold continuously",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 150,
 			extra: "",
 			tables: {
@@ -4054,7 +4076,7 @@ const masterTable = Object.freeze({
 			display: "Float Potion",
 			details: "Avoid falling into holes",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 150,
 			extra: "",
 			tables: {
@@ -4122,7 +4144,7 @@ const masterTable = Object.freeze({
 			display: "Fury Potion",
 			details: "Fire some fireballs",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 100,
 			extra: "",
 			tables: {
@@ -4146,7 +4168,7 @@ const masterTable = Object.freeze({
 			display: "Antimatter",
 			details: "The next time you would take damage, gain that much health instead",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 150,
 			extra: "",
 			tables: {
@@ -4194,7 +4216,7 @@ const masterTable = Object.freeze({
 			display: "Shop in a Bottle",
 			details: "Discover the secret shop",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 150,
 			extra: "",
 			tables: {
@@ -4214,7 +4236,7 @@ const masterTable = Object.freeze({
 			display: "Bottles in a Bottle",
 			details: "Drop two potions",
 			rarity: "Rare",
-			crafting: "-",
+			crafting: 0,
 			cost: 300,
 			extra: "",
 			tables: {
@@ -4234,7 +4256,7 @@ const masterTable = Object.freeze({
 			display: "Chest in a Bottle",
 			details: "Drop a random chest",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 150,
 			extra: "",
 			tables: {
@@ -4290,7 +4312,7 @@ const masterTable = Object.freeze({
 			display: "Doppelbock",
 			details: "Summon a doppelganger to work alongside you",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 300,
 			extra: "",
 			tables: {
@@ -4318,7 +4340,7 @@ const masterTable = Object.freeze({
 			display: "Transmutagen",
 			details: "Transforms all relics in the room",
 			rarity: "Rare",
-			crafting: "-",
+			crafting: 0,
 			cost: 150,
 			extra: "",
 			tables: {
@@ -4342,7 +4364,7 @@ const masterTable = Object.freeze({
 			display: "Metamorphim",
 			details: "Transmute a carried relic",
 			rarity: "Rare",
-			crafting: "-",
+			crafting: 0,
 			cost: 500,
 			extra: "",
 			tables: {
@@ -4402,7 +4424,7 @@ const masterTable = Object.freeze({
 			display: "Berserker's Brew",
 			details: "Deal and take more damage",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 175,
 			extra: "",
 			tables: {
@@ -4526,7 +4548,7 @@ const masterTable = Object.freeze({
 			display: "Potion of Plenty",
 			details: "Drop some useful things",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 210,
 			extra: "",
 			tables: {
@@ -4550,7 +4572,7 @@ const masterTable = Object.freeze({
 			display: "Protein Shake",
 			details: "Drop some protein",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 150,
 			extra: "",
 			tables: {
@@ -4598,7 +4620,7 @@ const masterTable = Object.freeze({
 			display: "Toxin",
 			details: "Coat your weapon with poison",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 175,
 			extra: "",
 			tables: {
@@ -4622,7 +4644,7 @@ const masterTable = Object.freeze({
 			display: "Witch's Brew",
 			details: "Become cursed",
 			rarity: "Rare",
-			crafting: "-",
+			crafting: 0,
 			cost: 500,
 			extra: "",
 			tables: {
@@ -4638,7 +4660,7 @@ const masterTable = Object.freeze({
 			display: "Freeloader Draught",
 			details: "Get something for nothing",
 			rarity: "Rare",
-			crafting: "-",
+			crafting: 0,
 			cost: 400,
 			extra: "",
 			tables: {
@@ -4658,7 +4680,7 @@ const masterTable = Object.freeze({
 			display: "Biscuits",
 			details: "Increse experience gain for a familiar.",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 300,
 			extra: "",
 			tables: {
@@ -4806,7 +4828,7 @@ const masterTable = Object.freeze({
 			display: "Pangolin Potion",
 			details: "Refills four armor points",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 450,
 			extra: "",
 			tables: {
@@ -4828,7 +4850,7 @@ const masterTable = Object.freeze({
 			display: "Bomb",
 			details: "Deals damage and destroys rocks, as well as other objects",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 50,
 			extra: "",
 			tables: {
@@ -4852,7 +4874,7 @@ const masterTable = Object.freeze({
 			display: "Bag O' Bombs",
 			details: "Full of bombs",
 			rarity: "Common",
-			crafting: "-",
+			crafting: 0,
 			cost: 150,
 			extra: "",
 			tables: {
@@ -4876,7 +4898,7 @@ const masterTable = Object.freeze({
 			display: "Key",
 			details: "Unlocks chests, doors and other locked objects",
 			rarity: "Common",
-			crafting: "",
+			crafting: 0,
 			cost: 120,
 			extra: "",
 			tables: {
@@ -4900,7 +4922,7 @@ const masterTable = Object.freeze({
 			display: "Key Ring",
 			details: "Full of keys",
 			rarity: "Common",
-			crafting: "",
+			crafting: 0,
 			cost: 240,
 			extra: "",
 			tables: {
@@ -4924,7 +4946,7 @@ const masterTable = Object.freeze({
 			display: "Talisman",
 			details: "Removes a curse",
 			rarity: "Common",
-			crafting: "",
+			crafting: 0,
 			cost: 300,
 			extra: "",
 			tables: {
@@ -4946,7 +4968,7 @@ const masterTable = Object.freeze({
 			display: "Medium Rare Steak",
 			details: "Restores a small amount of health",
 			rarity: "Common",
-			crafting: "",
+			crafting: 0,
 			cost: 50,
 			extra: "",
 			tables: {
@@ -4962,7 +4984,7 @@ const masterTable = Object.freeze({
 			display: "Fish Kebab",
 			details: "Restores a moderate amount of health",
 			rarity: "Common",
-			crafting: "",
+			crafting: 0,
 			cost: 200,
 			extra: "",
 			tables: {
@@ -4978,7 +5000,7 @@ const masterTable = Object.freeze({
 			display: "Ham Shank",
 			details: "Restores a large amount of health",
 			rarity: "Common",
-			crafting: "",
+			crafting: 0,
 			cost: 300,
 			extra: "",
 			tables: {
@@ -4994,7 +5016,7 @@ const masterTable = Object.freeze({
 			display: "Armor Shard",
 			details: "Refills a point of armor",
 			rarity: "Common",
-			crafting: "",
+			crafting: 0,
 			cost: 150,
 			extra: "",
 			tables: {
@@ -5070,4 +5092,4 @@ const masterTable = Object.freeze({
 			}
 		}
 	]	
-});
+};

@@ -1,11 +1,11 @@
 function getRooms(zone, floor, seed?, seenRooms = []) {
 
-    seed = (seed ?? parseInt(e$('seed-input').value)) + floor;
+    seed = (seed ?? parseInt(e$("seed-input").value)) + floor;
     const randLayout = new Random(seed);
     let count = 0;
     let previousRoom = null;
 
-    const zeroPad = (num, places) => String(num).padStart(places, '0')
+    const zeroPad = (num, places) => String(num).padStart(places, "0")
     
     function requirements(check:string):boolean{
         if(check == undefined){
@@ -105,7 +105,7 @@ function getRooms(zone, floor, seed?, seenRooms = []) {
                 if (filteredRooms.length){
 
                     roomOut = randLayout.getWeightedTable(filteredRooms);
-                    //console.log(seed + ' gives ' + roomOut.roomName)
+                    //console.log(seed + " gives " + roomOut.roomName)
                     if (roomOut.weightedDoorTypes) {
                         roomOut.doorType = randLayout.getWeightedTable(roomOut.weightedDoorTypes).doorType;
                     }

@@ -3,22 +3,23 @@ class Random {
 
 	seed: number[];
 
-	constructor(firstSeed = 51113926) {		
+	constructor(initSeed = 51113926) {		
 		/*Info: the three pseudo-seeds in Unity are generated from: 
 		  [uint seed = (uint)(1812433253 * (uint)previousSeed + 1)]*/
 		
 		//splitting 1812433253 into two factors to stay under Number.MAX_SAFE_INTEGER during multiplication
-		firstSeed = toUInt32(firstSeed);
-		const nextSeed = (seed:number):number => toUInt32(1289 * toUInt32(1406077 * seed) + 1);
+		const nextSeed = (seed:number) => toUInt32(1289 * toUInt32(1406077 * seed) + 1);
 		
-		const secondSeed = nextSeed(firstSeed),
-			  thirdSeed = nextSeed(secondSeed);
+		const firstSeed = toUInt32(initSeed),
+			  secondSeed = nextSeed(firstSeed),
+			  thirdSeed = nextSeed(secondSeed),
+			  fourthSeed = nextSeed(thirdSeed);
 			
 		this.seed = [
 			firstSeed,
 			secondSeed,
 			thirdSeed,
-			nextSeed(thirdSeed)//fourthSeed
+			fourthSeed
 		];
 	}
 
@@ -63,7 +64,7 @@ class Random {
 		return table.reduce((totalWeight, currentItem:any) => totalWeight + currentItem.weight, 0);
 	}
 
-	getItem (table, masterTable, randomNum) {
+	getItem (table:any, masterTable:masterTable, randomNum):string {
 	   return masterTable.relic[(table.find((currentItem) => ((randomNum -= currentItem.weight) <= 0))).masterIndex].display
 	}
 
@@ -75,7 +76,7 @@ class Random {
 		return this.nextUInt % (max - min) + min;
 	}
 	
-	//return float between min and max, not matching Unity in output
+	//return float between min and max, not matching Unity in output but is close. Good enough for usage right now.
 	rangeFloat (min = 0, max = 1) {
 		if (max < min){
 			[min, max] = [max, min];

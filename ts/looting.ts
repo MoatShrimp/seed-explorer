@@ -4,23 +4,23 @@
 //setup weighted loot tables with each weighted position linking to an item inside the masterTable
 function loadLootTables () {
 	Object.values(masterTable).forEach((subTable) => {
-		subTable.forEach((item, masterIndex) => {		
+		subTable.forEach((item, mIndex) => {		
 			Object.entries(item.tables).forEach(([key, table]) => {
 				const tableB: any = table;
-				lootTables[key][tableB.index] = {"weight":tableB.weight, "masterIndex":masterIndex};
+				lootTables[key][tableB.index] = {weight:tableB.weight, masterIndex:mIndex};
 			});
 		});
 	});
 }
 
-function nextItem (table = 'relic', randState = 'relic') {
+function nextItem (table = "relic", randState = "relic") {
 	table = lootTables[table];
 	const itemID = rand[randState].getWeightedElement(table);
-	return {"relic":masterTable.relic[itemID], "masterIndex":itemID};
+	return {relic:masterTable.relic[itemID], masterIndex:itemID};
 }
 
 //toggling item weight
-function toggleWeight (indices:any = 157, subTable = 'relic', isZero = true) {
+function toggleWeight (indices:any = 157, subTable = "relic", isZero = true) {
 	
 	if (!Array.isArray(indices)) { 
 		indices = [indices];
@@ -38,5 +38,5 @@ function toggleWeight (indices:any = 157, subTable = 'relic', isZero = true) {
 
 //removing Othermine only items
 function toggleOthermine (on = false) {
-	toggleWeight([133, 134, 157], 'relic', !on);
+	toggleWeight([133, 134, 157], "relic", !on);
 }
