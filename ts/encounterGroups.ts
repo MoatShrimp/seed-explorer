@@ -8,6 +8,7 @@ interface encounterGroups {
     }
 }
 
+//Numbers represent the fileID in the Unity asset files
 const mineEncounterGroups =  {
     "mineSmall": {
         "begin"://46741

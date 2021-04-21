@@ -40,7 +40,7 @@ class Random {
 		return this.nextInt;
 	} 
 	
-	//return a float between 0.0 and 1.0, not matching Unity
+	//return a float between 0.0 and 1.0, not matching Unity exactly but is close enough for usage right now.
 	get value() {
 		return 1 - this.rangeFloat();
 	}	
@@ -60,12 +60,12 @@ class Random {
 		return y;
 	}
 	
-	getWeight (table:object[]):number {
+	getWeight (table):number {
 		return table.reduce((totalWeight, currentItem:any) => totalWeight + currentItem.weight, 0);
 	}
 
-	getItem (table:any, masterTable:masterTable, randomNum):string {
-	   return masterTable.relic[(table.find((currentItem) => ((randomNum -= currentItem.weight) <= 0))).masterIndex].display
+	getItem (table, masterTable:masterTable, randomNum:number):string {
+		return masterTable.relic[(table.find((currentItem) => ((randomNum -= currentItem.weight) <= 0))).masterIndex].display
 	}
 
 	//return uint between min and max
@@ -76,7 +76,7 @@ class Random {
 		return this.nextUInt % (max - min) + min;
 	}
 	
-	//return float between min and max, not matching Unity in output but is close. Good enough for usage right now.
+	//return float between min and max, not matching Unity exactly but is close enough for usage right now.
 	rangeFloat (min = 0, max = 1) {
 		if (max < min){
 			[min, max] = [max, min];
@@ -85,14 +85,14 @@ class Random {
 	}
 
 	//Copy of rangeInclusive from Undermine
-	rangeInclusive(min:number, max:number):number {
+	rangeInclusive(min:number, max:number) {
 		return this.range(min, max + 1);
 	}	 
 	
 	//Item picker based on Undermines thor.rand() class
-	getWeightedElement (table: Array<any>) {	 
+	getWeightedElement (table) {	 
 		let output = 0;
-		let totalWeight = table.reduce((totalWeight, currentItem) => totalWeight + currentItem.weight, 0);
+		const totalWeight = table.reduce((totalWeight, currentItem) => totalWeight + currentItem.weight, 0);
 		let randWeight = this.rangeInclusive(1, totalWeight);
 		try {output = table.find((currentItem) => ((randWeight -= currentItem.weight) <= 0)).masterIndex;}
 		catch {output = 156}
@@ -105,8 +105,8 @@ class Random {
 	}
 	
 	//Item picker based on Undermines thor.rand() class
-	getWeightedTable (table: Array<any>) {			
-		let totalWeight = table.reduce((totalWeight, currentItem) => totalWeight + currentItem.weight, 0);
+	getWeightedTable (table) {			
+		const totalWeight = table.reduce((totalWeight, currentItem) => totalWeight + currentItem.weight, 0);
 		let randWeight = this.rangeInclusive(1, totalWeight);
 		
 		return table.find((currentItem) => ((randWeight -= currentItem.weight) <= 0));
