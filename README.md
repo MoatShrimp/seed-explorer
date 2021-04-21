@@ -1,2 +1,2 @@
 # seed-explorer
-Web tool for dismantling and examininng seeds from the game Undermine
+Web tool for predicting generated relics and items for the game Undermine.
