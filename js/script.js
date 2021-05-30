@@ -75,7 +75,7 @@ class Random {
     }
     getWeightedElement(table) {
         let output = 0;
-        let totalWeight = table.reduce((totalWeight, currentItem) => totalWeight + currentItem.weight, 0);
+        const totalWeight = table.reduce((totalWeight, currentItem) => totalWeight + currentItem.weight, 0);
         let randWeight = this.rangeInclusive(1, totalWeight);
         try {
             output = table.find((currentItem) => ((randWeight -= currentItem.weight) <= 0)).masterIndex;
@@ -89,11 +89,98 @@ class Random {
         return this.getWeightedElement(table);
     }
     getWeightedTable(table) {
-        let totalWeight = table.reduce((totalWeight, currentItem) => totalWeight + currentItem.weight, 0);
+        const totalWeight = table.reduce((totalWeight, currentItem) => totalWeight + currentItem.weight, 0);
         let randWeight = this.rangeInclusive(1, totalWeight);
         return table.find((currentItem) => ((randWeight -= currentItem.weight) <= 0));
     }
 }
+const lootTables = {
+    relic: [],
+    relicAll: [],
+    relicShop: [],
+    relicFinal: [],
+    relicStarter: [],
+    relicLegendary: [],
+    potion: [],
+    potionShop: [],
+    potionDibble: [],
+    potionFinal: [],
+    food: [],
+    item: [],
+    itemShop: [],
+    itemDibble: [],
+    dibble: [],
+    dibbleRelic: [],
+    potionOrRelic: []
+};
+const rand = {
+    default: null,
+    layout: null,
+    relic: null,
+    blessing: null,
+    blueprint: null,
+    basicItem: null,
+    potion: null,
+    health: null,
+    resource: null,
+    shopRelic: null,
+    shopPotion: null,
+    shopHealth: null,
+    shopBasicItem: null,
+    Legendary: null,
+    dibble: null,
+    misc: null,
+    shop: null,
+    majorCurse: null,
+    minorCurse: null,
+    familiar: null,
+    upgrade: null,
+    chaos: null,
+    table: null
+};
+let settings = {
+    checkboxes: {
+        relic: null,
+        potion: null
+    },
+    altarRelic: -1,
+    flags: {
+        shop_basic_item: 1,
+        shop_food: 1,
+        shop_potion_relic: 1,
+        dibble_extra_item: 0,
+        dibble_relic: 0,
+        relicHex: 0,
+        dog_shadow_found: 0,
+        delve_count: 0,
+        bard_met: 0,
+        secret_treasure_note: 0,
+        foundRatBond: 0,
+        priestess_met: 0,
+        haveGuacamole: 0,
+        peasant1_unlocked: 0,
+        blacksmith_rescued: 0,
+        foundWaylandsBoots: 0,
+        mushroom_green: 0,
+        mushroom_blue: 0,
+        mushroom_purple: 0,
+        apprentice_met: 0,
+        black_rabbit_met: 0,
+        rockmimic_defeated: 0,
+        hoodie_met: 0,
+        hoodie_met_mine: 0,
+        tribute_fountain_encountered: 0,
+        peasant2_unlocked: 0,
+        dibble_upgrade_count: 0,
+        prisoner_key: 0,
+        altar_encountered: 0,
+        haveWhip: 0,
+        haveHat: 0,
+        haveCircinus: 0,
+        bog_unlocked: 0
+    }
+};
+const seedRand = new Random(Date.now());
 function loadSave(radio, file) {
     const settingsOut = {
         checkboxes: {
@@ -5277,10 +5364,10 @@ const masterTable = {
         }
     ]
 };
-const mineEncounterGroups = Object.freeze({
+const mineEncounterGroups = {
     "mineSmall": {
         "begin": [
-            { weight: 4, roomName: "Mine_Small_Begin_Plain", sequence: { roomTypes: ["mineSmall"], tag: "hoodie_entrance", branch: 1 }
+            { weight: 4, roomName: "Mine_Small_Begin_Plain", sequence: { roomTypes: ["mineSmall"], tag: "hoodie_entrance", branch: 1, direction: 1 }
             }
         ],
         "normal_encounters": [
@@ -5636,33 +5723,35 @@ const mineEncounterGroups = Object.freeze({
             { weight: 1, roomName: "SleepyHoodyRoom", roomTag: "hoodie_entrance" }
         ]
     }
-});
+};
+;
+;
 const maps = {
     mineTutorial: [
         [
             [
-                { roomTypes: ["mineSmall"], tag: "begin_tutorial", branch: 1, direction: 0 },
-                { roomTypes: ["mineSmall"], tag: "tutorial_jump", branch: 1, direction: 2 },
-                { roomTypes: ["mineSmall"], tag: "tutorial_attack", branch: 1, direction: 2 },
-                { roomTypes: ["mineSmall"], tag: "tutorial_bomb", branch: 1, direction: 4 },
-                { roomTypes: ["mineLarge"], tag: "tutorial_throw", branch: 1, direction: 1 },
-                { roomTypes: ["mineLarge"], tag: "tutorial_pilfer", branch: 1, direction: 4 },
-                { roomTypes: ["mineSmall"], tag: "tutorial_relic", branch: 1, direction: 1 },
-                { roomTypes: ["mineSmall"], tag: "end_tutorial", branch: 1, direction: 1 }
+                { roomTypes: ["mineSmall"], tag: "begin_tutorial", branchWeight: 1, direction: 0 },
+                { roomTypes: ["mineSmall"], tag: "tutorial_jump", branchWeight: 1, direction: 2 },
+                { roomTypes: ["mineSmall"], tag: "tutorial_attack", branchWeight: 1, direction: 2 },
+                { roomTypes: ["mineSmall"], tag: "tutorial_bomb", branchWeight: 1, direction: 4 },
+                { roomTypes: ["mineLarge"], tag: "tutorial_throw", branchWeight: 1, direction: 1 },
+                { roomTypes: ["mineLarge"], tag: "tutorial_pilfer", branchWeight: 1, direction: 4 },
+                { roomTypes: ["mineSmall"], tag: "tutorial_relic", branchWeight: 1, direction: 1 },
+                { roomTypes: ["mineSmall"], tag: "end_tutorial", branchWeight: 1, direction: 1 }
             ]
         ]
     ],
     mineEarly: [
         [
             [
-                { roomTypes: ["mineSmall"], tag: "begin", branch: 1 },
-                { roomTypes: ["mineSmall"], tag: "easiest_encounters", branch: 4 },
-                { roomTypes: ["mineSmall"], tag: "easiest_encounters", branch: 4 },
-                { roomTypes: ["mineSmall"], tag: "easiest_encounters", branch: 4 },
-                { roomTypes: ["mineSmall"], tag: "end", branch: 1 }
+                { roomTypes: ["mineSmall"], tag: "begin", branchWeight: 1 },
+                { roomTypes: ["mineSmall"], tag: "easiest_encounters", branchWeight: 4 },
+                { roomTypes: ["mineSmall"], tag: "easiest_encounters", branchWeight: 4 },
+                { roomTypes: ["mineSmall"], tag: "easiest_encounters", branchWeight: 4 },
+                { roomTypes: ["mineSmall"], tag: "end", branchWeight: 1 }
             ],
-            [{ roomTypes: ["mineSmall"], tag: "relic_encounters_unlocked", branch: 1 }],
-            [{ roomTypes: ["mineSmall"], tag: "treasure_basic_encounters", branch: 1 }],
+            [{ roomTypes: ["mineSmall"], tag: "relic_encounters_unlocked", branchWeight: 1 }],
+            [{ roomTypes: ["mineSmall"], tag: "treasure_basic_encounters", branchWeight: 1 }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_basic_encounters", chance: 0.5, requirement: "whip" }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret" }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret" }],
@@ -5673,21 +5762,21 @@ const maps = {
         ],
         [
             [
-                { roomTypes: ["mineSmall"], tag: "begin", branch: 1 },
-                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branch: 4 },
-                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branch: 4 },
-                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branch: 4 },
-                { roomTypes: ["mineSmall"], tag: "end", branch: 1 }
+                { roomTypes: ["mineSmall"], tag: "begin", branchWeight: 1 },
+                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branchWeight: 4 },
+                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branchWeight: 4 },
+                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branchWeight: 4 },
+                { roomTypes: ["mineSmall"], tag: "end", branchWeight: 1 }
             ],
             [
                 { roomTypes: ["mineSmall"], tag: "waylandshophallway" },
-                { roomTypes: ["mineSmall"], tag: "waylandshop" }
+                { roomTypes: ["mineSmall"], tag: "waylandshop", direction: 1 }
             ],
             [{ roomTypes: ["mineSmall"], tag: "relic_encounters" }],
             [{ roomTypes: ["mineSmall"], tag: "altar" }],
-            [{ roomTypes: ["mineSmall"], tag: "treasure_basic_encounters", branch: 1 }],
+            [{ roomTypes: ["mineSmall"], tag: "treasure_basic_encounters", branchWeight: 1 }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_basic_encounters", chance: 0.5, requirement: "whip" }],
-            [{ roomTypes: ["mineLarge"], tag: "shop", branch: 1 }],
+            [{ roomTypes: ["mineLarge"], tag: "shop", branchWeight: 1 }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret" }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret" }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.5, requirement: "hat" }],
@@ -5696,19 +5785,19 @@ const maps = {
         ],
         [
             [
-                { roomTypes: ["mineSmall"], tag: "begin", branch: 1 },
-                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branch: 4 },
-                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branch: 4 },
+                { roomTypes: ["mineSmall"], tag: "begin", branchWeight: 1 },
+                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branchWeight: 4 },
+                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branchWeight: 4 },
             ],
             [
-                { roomTypes: ["mineSmall"], tag: "DodsonCageEncounter,normal_encounters", branch: 4 },
+                { roomTypes: ["mineSmall"], tag: "DodsonCageEncounter,normal_encounters", branchWeight: 4 },
                 { roomTypes: ["mineLarge"], tag: "RockMimicEncounter,normal_encounters" },
-                { roomTypes: ["mineSmall"], tag: "end", branch: 1 }
+                { roomTypes: ["mineSmall"], tag: "end", branchWeight: 1 }
             ],
             [{ roomTypes: ["mineSmall"], tag: "relic_encounters" }],
-            [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_encounters", branch: 1 }],
+            [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_encounters", branchWeight: 1 }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_encounters", chance: 0.5, requirement: "whip" }],
-            [{ roomTypes: ["mineLarge"], tag: "shop", branch: 1 }],
+            [{ roomTypes: ["mineLarge"], tag: "shop", branchWeight: 1 }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret" }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret" }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.5, requirement: "hat" }],
@@ -5716,23 +5805,23 @@ const maps = {
             [{ roomTypes: ["mineLarge"], tag: "relic_altar", chance: 0.1875 }]
         ],
         [
-            [{ roomTypes: ["mineSmall"], tag: "begin", branch: 1 }],
+            [{ roomTypes: ["mineSmall"], tag: "begin", branchWeight: 1 }],
             [
-                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branch: 4 },
-                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branch: 4 },
-                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branch: 4 },
-                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branch: 4 },
+                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branchWeight: 4 },
+                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branchWeight: 4 },
+                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branchWeight: 4 },
+                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branchWeight: 4 },
                 { roomTypes: ["mineSmall"], tag: "end_worm" }
             ],
             [
-                { roomTypes: ["Mine_Dungeon_Room_Large"], tag: "", branch: 1 },
+                { roomTypes: ["Mine_Dungeon_Room_Large"], tag: "", branchWeight: 1 },
                 { roomTypes: ["dungeonSmall"], tag: "dungeon_entrance" }
             ],
             [{ roomTypes: ["mineSmall"], tag: "relic_encounters" }],
             [{ roomTypes: ["mineSmall"], tag: "altar" }],
-            [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_encounters", branch: 1 }],
+            [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_encounters", branchWeight: 1 }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_encounters", chance: 0.5, requirement: "whip" }],
-            [{ roomTypes: ["mineLarge"], tag: "shop", branch: 1 }],
+            [{ roomTypes: ["mineLarge"], tag: "shop", branchWeight: 1 }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret" }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret" }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.5, requirement: "hat" }],
@@ -5744,18 +5833,18 @@ const maps = {
     mine: [
         [
             [
-                { roomTypes: ["mineSmall"], tag: "begin", branch: 1 },
-                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branch: 4 },
-                { roomTypes: ["mineLarge"], tag: "normal_encounters", branch: 4 },
-                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branch: 4 },
-                { roomTypes: ["mineLarge"], tag: "normal_encounters", branch: 4 },
-                { roomTypes: ["mineSmall"], tag: "end", branch: 1 }
+                { roomTypes: ["mineSmall"], tag: "begin", branchWeight: 1 },
+                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branchWeight: 4 },
+                { roomTypes: ["mineLarge"], tag: "normal_encounters", branchWeight: 4 },
+                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branchWeight: 4 },
+                { roomTypes: ["mineLarge"], tag: "normal_encounters", branchWeight: 4 },
+                { roomTypes: ["mineSmall"], tag: "end", branchWeight: 1 }
             ],
-            [{ roomTypes: ["mineSmall"], tag: "relic_encounters_unlocked", branch: 1 }],
-            [{ roomTypes: ["mineSmall"], tag: "black_rabbit_first", branch: 1 }],
-            [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_encounters", branch: 1 }],
+            [{ roomTypes: ["mineSmall"], tag: "relic_encounters_unlocked", branchWeight: 1 }],
+            [{ roomTypes: ["mineSmall"], tag: "black_rabbit_first", branchWeight: 1 }],
+            [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_encounters", branchWeight: 1 }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_encounters", chance: 0.5, requirement: "whip" }],
-            [{ roomTypes: ["mineSmall"], tag: "altar", branch: 1 }],
+            [{ roomTypes: ["mineSmall"], tag: "altar", branchWeight: 1 }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret" }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret" }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.5, requirement: "hat" }],
@@ -5766,23 +5855,23 @@ const maps = {
         ],
         [
             [
-                { roomTypes: ["mineSmall"], tag: "begin", branch: 1 },
-                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branch: 4 },
-                { roomTypes: ["mineLarge"], tag: "normal_encounters", branch: 4 },
-                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branch: 4 },
-                { roomTypes: ["mineLarge"], tag: "normal_encounters", branch: 4 },
-                { roomTypes: ["mineSmall"], tag: "end", branch: 1 }
+                { roomTypes: ["mineSmall"], tag: "begin", branchWeight: 1 },
+                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branchWeight: 4 },
+                { roomTypes: ["mineLarge"], tag: "normal_encounters", branchWeight: 4 },
+                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branchWeight: 4 },
+                { roomTypes: ["mineLarge"], tag: "normal_encounters", branchWeight: 4 },
+                { roomTypes: ["mineSmall"], tag: "end", branchWeight: 1 }
             ],
             [
                 { roomTypes: ["mineSmall"], tag: "waylandshophallway" },
                 { roomTypes: ["mineSmall"], tag: "waylandshop" }
             ],
             [{ roomTypes: ["mineSmall"], tag: "relic_encounters" }],
-            [{ roomTypes: ["mineLarge"], tag: "mushroom_apprentice", branch: 1, chance: 0.5 }],
-            [{ roomTypes: ["mineSmall", "mineLarge"], tag: "mushroom", branch: 1, chance: 0.6 }],
-            [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_encounters", branch: 1 }],
+            [{ roomTypes: ["mineLarge"], tag: "mushroom_apprentice", branchWeight: 1, chance: 0.5 }],
+            [{ roomTypes: ["mineSmall", "mineLarge"], tag: "mushroom", branchWeight: 1, chance: 0.6 }],
+            [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_encounters", branchWeight: 1 }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_encounters", chance: 0.5, requirement: "whip" }],
-            [{ roomTypes: ["mineLarge"], tag: "shop", branch: 1 }],
+            [{ roomTypes: ["mineLarge"], tag: "shop", branchWeight: 1 }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret" }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret" }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.5, requirement: "hat" }],
@@ -5792,22 +5881,22 @@ const maps = {
         ],
         [
             [
-                { roomTypes: ["mineSmall"], tag: "begin", branch: 1 },
-                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branch: 4 },
-                { roomTypes: ["mineLarge"], tag: "normal_encounters", branch: 4 },
+                { roomTypes: ["mineSmall"], tag: "begin", branchWeight: 1 },
+                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branchWeight: 4 },
+                { roomTypes: ["mineLarge"], tag: "normal_encounters", branchWeight: 4 },
             ],
             [
-                { roomTypes: ["mineSmall"], tag: "DodsonCageEncounter,normal_encounters", branch: 4 },
+                { roomTypes: ["mineSmall"], tag: "DodsonCageEncounter,normal_encounters", branchWeight: 4 },
                 { roomTypes: ["mineLarge"], tag: "RockMimicEncounter,normal_encounters" },
-                { roomTypes: ["mineSmall"], tag: "end", branch: 1 }
+                { roomTypes: ["mineSmall"], tag: "end", branchWeight: 1 }
             ],
             [{ roomTypes: ["mineSmall"], tag: "relic_encounters" }],
-            [{ roomTypes: ["mineLarge"], tag: "mushroom_apprentice", branch: 1, chance: 0.7 }],
-            [{ roomTypes: ["mineSmall", "mineLarge"], tag: "mushroom", branch: 1, chance: 0.7 }],
-            [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_encounters", branch: 1 }],
+            [{ roomTypes: ["mineLarge"], tag: "mushroom_apprentice", branchWeight: 1, chance: 0.7 }],
+            [{ roomTypes: ["mineSmall", "mineLarge"], tag: "mushroom", branchWeight: 1, chance: 0.7 }],
+            [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_encounters", branchWeight: 1 }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_encounters", chance: 0.5, requirement: "whip" }],
-            [{ roomTypes: ["mineLarge"], tag: "shop", branch: 1 }],
-            [{ roomTypes: ["mineSmall"], tag: "altar", branch: 1 }],
+            [{ roomTypes: ["mineLarge"], tag: "shop", branchWeight: 1 }],
+            [{ roomTypes: ["mineSmall"], tag: "altar", branchWeight: 1 }],
             [{ roomTypes: ["mineLarge"], tag: "black_rabbit", chance: 0.5 }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret" }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret" }],
@@ -5817,24 +5906,24 @@ const maps = {
             [{ roomTypes: ["mineSmall"], tag: "tribute_fountain", chance: 0.1875 }]
         ],
         [
-            [{ roomTypes: ["mineSmall"], tag: "begin", branch: 1 }],
+            [{ roomTypes: ["mineSmall"], tag: "begin", branchWeight: 1 }],
             [
-                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branch: 4 },
-                { roomTypes: ["mineLarge"], tag: "normal_encounters", branch: 4 },
-                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branch: 4 },
-                { roomTypes: ["mineLarge"], tag: "normal_encounters", branch: 4 },
+                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branchWeight: 4 },
+                { roomTypes: ["mineLarge"], tag: "normal_encounters", branchWeight: 4 },
+                { roomTypes: ["mineSmall", "mineLarge"], tag: "normal_encounters", branchWeight: 4 },
+                { roomTypes: ["mineLarge"], tag: "normal_encounters", branchWeight: 4 },
                 { roomTypes: ["mineSmall"], tag: "end_worm" }
             ],
             [
-                { roomTypes: ["Mine_Dungeon_Room_Large"], tag: "", branch: 1 },
+                { roomTypes: ["Mine_Dungeon_Room_Large"], tag: "", branchWeight: 1 },
                 { roomTypes: ["dungeonSmall"], tag: "dungeon_entrance" }
             ],
             [{ roomTypes: ["mineSmall"], tag: "relic_encounters" }],
-            [{ roomTypes: ["mineLarge"], tag: "mushroom_apprentice", branch: 1, chance: 0.9 }],
-            [{ roomTypes: ["mineSmall", "mineLarge"], tag: "mushroom", branch: 1, chance: 0.8 }],
-            [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_encounters", branch: 1 }],
+            [{ roomTypes: ["mineLarge"], tag: "mushroom_apprentice", branchWeight: 1, chance: 0.9 }],
+            [{ roomTypes: ["mineSmall", "mineLarge"], tag: "mushroom", branchWeight: 1, chance: 0.8 }],
+            [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_encounters", branchWeight: 1 }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "treasure_encounters", chance: 0.5, requirement: "whip" }],
-            [{ roomTypes: ["mineLarge"], tag: "shop", branch: 1 }],
+            [{ roomTypes: ["mineLarge"], tag: "shop", branchWeight: 1 }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret" }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret" }],
             [{ roomTypes: ["mineSmall", "mineLarge"], tag: "secret", chance: 0.5, requirement: "hat" }],
@@ -5999,6 +6088,145 @@ function getRooms(zone, floor, seed, seenRooms = []) {
     }
     return seenRooms;
 }
+function mapMaker(roomList) {
+    const none = 0, north = 1, south = 2, east = 4, west = 8;
+    const cardinalDirections = [
+        north,
+        south,
+        east,
+        west
+    ];
+    function opposit(direction) {
+        switch (direction) {
+            case north:
+                return south;
+            case south:
+                return north;
+            case east:
+                return west;
+            case west:
+                return east;
+            default:
+                return none;
+        }
+    }
+    function allowNeighborInDirection(room, direction) {
+        return (room.prohibitedExits & direction) == none;
+    }
+    function allowLink(room, neighbor, direction) {
+        return (room.prohibitedExits & direction) == none && (neighbor.prohibitedExits & opposit(direction)) == none;
+    }
+    function allowNeighbor(room, neighbor) {
+        return allowLink(room, neighbor, north) ||
+            allowLink(room, neighbor, south) ||
+            allowLink(room, neighbor, east) ||
+            allowLink(room, neighbor, west);
+    }
+    function isValidNeighbor(room, neighbor, direction) {
+        return (direction == none) ? allowNeighbor(room, neighbor) : allowLink(room, neighbor, direction);
+    }
+    function getRoomPosition(oldPosition, direction) {
+        switch (direction) {
+            case north:
+                --oldPosition.y;
+                break;
+            case south:
+                ++oldPosition.y;
+                break;
+            case east:
+                ++oldPosition.x;
+                break;
+            case west:
+                --oldPosition.x;
+                break;
+        }
+        return oldPosition;
+    }
+    function getRoom(position) {
+        for (const room of roomList) {
+            if (room.position == position) {
+                return room;
+            }
+        }
+        return null;
+    }
+    function getDirectionInt(str) {
+        switch (str) {
+            case "north":
+                return north;
+            case "south":
+                return south;
+            case "east":
+                return east;
+            case "west":
+                return west;
+            default:
+                return none;
+        }
+    }
+    function canMove(room, direction, roomPosition) {
+        if (room.previousRoom && !isValidNeighbor(room, room.previousRoom, direction)) {
+            return false;
+        }
+        roomPosition = getRoomPosition(roomPosition, direction);
+        const room2 = getRoom(roomPosition);
+        if (room2 == null) {
+            let num = 0;
+            for (const [key, value] of Object.entries(room.branches)) {
+                const pickedDirection = getDirectionInt(key);
+                if (pickedDirection != none) {
+                    if (canMove(value, pickedDirection, roomPosition)) {
+                        ++num;
+                    }
+                    else {
+                        for (const direction2 of cardinalDirections) {
+                            if (canMove(value, direction2, roomPosition)) {
+                                ++num;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return num == Object.keys(room.branches).length;
+        }
+        return false;
+    }
+    function setRoomPosition(room) {
+        let list = [
+            north,
+            south,
+            east,
+            west
+        ];
+        let direction = none;
+        if (room.previousRoom) {
+            room.position = room.previousRoom.position;
+            direction = room.direction ?? none;
+            if (direction != none) {
+                if (canMove(room, direction, room.position)) {
+                    room.position = getRoomPosition(room.position, direction);
+                }
+                direction = none;
+            }
+            else {
+            }
+        }
+        return true;
+    }
+    const startingRoom = roomList[0];
+    let positionedRooms = [];
+    let num2;
+    for (let i = 0; i < 10; i = num2) {
+        for (const room of roomList) {
+            room.neighbours = null;
+        }
+        positionedRooms = [];
+        positionedRooms.push(startingRoom);
+        let num = 1;
+        while (num < positionedRooms.length && setRoomPosition(roomList[num])) { }
+    }
+}
 function listCraftable(table) {
     const selection = document.getElementById(`${table}-selection`);
     selection.innerHTML = `<legend>Crafted ${table}s</legend>`;
@@ -6035,93 +6263,6 @@ function populateAltar() {
     }
     altarSelection.value = "";
 }
-const lootTables = {
-    relic: [],
-    relicAll: [],
-    relicShop: [],
-    relicFinal: [],
-    relicStarter: [],
-    relicLegendary: [],
-    potion: [],
-    potionShop: [],
-    potionDibble: [],
-    potionFinal: [],
-    food: [],
-    item: [],
-    itemShop: [],
-    itemDibble: [],
-    dibble: [],
-    dibbleRelic: [],
-    potionOrRelic: []
-};
-const rand = {
-    default: null,
-    layout: null,
-    relic: null,
-    blessing: null,
-    blueprint: null,
-    basicItem: null,
-    potion: null,
-    health: null,
-    resource: null,
-    shopRelic: null,
-    shopPotion: null,
-    shopHealth: null,
-    shopBasicItem: null,
-    Legendary: null,
-    dibble: null,
-    misc: null,
-    shop: null,
-    majorCurse: null,
-    minorCurse: null,
-    familiar: null,
-    upgrade: null,
-    chaos: null,
-    table: null
-};
-let settings = {
-    checkboxes: {
-        relic: null,
-        potion: null
-    },
-    altarRelic: -1,
-    flags: {
-        shop_basic_item: 1,
-        shop_food: 1,
-        shop_potion_relic: 1,
-        dibble_extra_item: 0,
-        dibble_relic: 0,
-        relicHex: 0,
-        dog_shadow_found: 0,
-        delve_count: 0,
-        bard_met: 0,
-        secret_treasure_note: 0,
-        foundRatBond: 0,
-        priestess_met: 0,
-        haveGuacamole: 0,
-        peasant1_unlocked: 0,
-        blacksmith_rescued: 0,
-        foundWaylandsBoots: 0,
-        mushroom_green: 0,
-        mushroom_blue: 0,
-        mushroom_purple: 0,
-        apprentice_met: 0,
-        black_rabbit_met: 0,
-        rockmimic_defeated: 0,
-        hoodie_met: 0,
-        hoodie_met_mine: 0,
-        tribute_fountain_encountered: 0,
-        peasant2_unlocked: 0,
-        dibble_upgrade_count: 0,
-        prisoner_key: 0,
-        altar_encountered: 0,
-        haveWhip: 0,
-        haveHat: 0,
-        haveCircinus: 0,
-        bog_unlocked: 0
-    }
-};
-const seedRand = new Random(Date.now());
 function loadLootTables() {
     Object.values(masterTable).forEach((subTable) => {
         subTable.forEach((item, mIndex) => {

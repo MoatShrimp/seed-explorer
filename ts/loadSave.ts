@@ -91,6 +91,7 @@ function loadSave(radio:HTMLInputElement, file?:string) {
 			settingsOut.flags.haveHat = 0;
 			settingsOut.flags.bog_unlocked = 1;			
 			break;
+			
 		case "own": // loaded save, parse data
 			const saveData = JSON.parse(file);
 		

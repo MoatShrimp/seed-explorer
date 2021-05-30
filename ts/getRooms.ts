@@ -137,6 +137,8 @@ function getRooms(zone, floor, seed?, seenRooms = []) {
         previousRoom = roomOut;
         return roomOut;
     }
+
+    
     for (const roomGroup of zone[floor - 1]) {
         previousRoom = null;
         for (const room of roomGroup) {

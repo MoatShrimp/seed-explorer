@@ -14,7 +14,7 @@ const mineEncounterGroups =  {
         "begin"://46741
 		[ 
             {weight:4, roomName: "Mine_Small_Begin_Plain", sequence://49980
-				{roomTypes: ["mineSmall"], tag: "hoodie_entrance", branch: 1}
+				{roomTypes: ["mineSmall"], tag: "hoodie_entrance", branch: 1, direction: 1}
             }
         ],
         "normal_encounters"://51704
