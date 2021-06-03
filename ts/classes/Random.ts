@@ -112,4 +112,17 @@ class Random {
 		return table.find((currentItem) => ((randWeight -= currentItem.weight) <= 0));
 
 	}
+
+	shuffle (list:any[]) {
+
+        let i = list.length;
+        while (i > 1) {
+            let index = this.range(0, i--);
+            let value = list[index];
+            list[index] = list[i];
+            list[i] = value;
+        }
+
+        return list;
+    }
 }

@@ -1,7 +1,6 @@
-function getRooms(zone, floor, seed?, seenRooms = []) {
+function getRooms(zone, floor, seed?, seenRooms = [], ) {
 
     seed = (seed ?? parseInt(e$("seed-input").value)) + floor;
-    const randLayout = new Random(seed);
     let count = 0;
     let previousRoom = null;
 
@@ -75,10 +74,7 @@ function getRooms(zone, floor, seed?, seenRooms = []) {
 
     function getRoom (room){
         let value = null;
-        //console.log(room)
-        //console.log(randLayout.seed)
-        if ((room.chance ?? 1) < 1 && (room.chance < (value = randLayout.value))) {
-            //console.log(value)
+        if ((room.chance ?? 1) < 1 && (room.chance < (value = rand.layout.value))) {
             console.log(`%cSkipping room ${room.tag}: Chance failed`, "color:#a09;")
             return false;
         }
@@ -88,14 +84,14 @@ function getRooms(zone, floor, seed?, seenRooms = []) {
         }
         //console.log(value)
         if (room.tag == "secret") {
-            //randLayout.value;
         }
         
-        const type = room.roomTypes[randLayout.range(0, room.roomTypes.length)];
+        const type = room.roomTypes[rand.layout.range(0, room.roomTypes.length)];
 
 
         const tags = room.tag.split(",");
         let roomOut = null;
+        let foundRoom = null;
         for (const tag of tags) {
             const encounterGroup = mineEncounterGroups[type][tag];
             if(encounterGroup) {
@@ -104,10 +100,15 @@ function getRooms(zone, floor, seed?, seenRooms = []) {
                 //console.log(filteredRooms)
                 if (filteredRooms.length){
 
-                    roomOut = randLayout.getWeightedTable(filteredRooms);
+                    foundRoom = rand.layout.getWeightedTable(filteredRooms);
+                    //console.log(foundRoom);
+                    
+                    roomOut =  {roomName:foundRoom.roomName, sequence:foundRoom.sequence, weight:(room.weight??0)};
+                    //console.log(roomOut);
+                    //roomOut = rand.layoutLayout.getWeightedTable(filteredRooms);
                     //console.log(seed + " gives " + roomOut.roomName)
-                    if (roomOut.weightedDoorTypes) {
-                        roomOut.doorType = randLayout.getWeightedTable(roomOut.weightedDoorTypes).doorType;
+                    if (foundRoom.weightedDoorTypes) {
+                        roomOut.doorType = rand.layout.getWeightedTable(foundRoom.weightedDoorTypes).doorType;
                     }
                     break;
                 }
@@ -117,12 +118,18 @@ function getRooms(zone, floor, seed?, seenRooms = []) {
                 }
             }
             else {
-                roomOut =  mineEncounterGroups[type].direct.find( encounter => (encounter.roomTag === tag) && requirements(encounter.requirement)) ?? false;
+                foundRoom =  mineEncounterGroups[type].direct.find( encounter => (encounter.roomTag === tag) && requirements(encounter.requirement)) ?? false;
 
-                if (roomOut) {
-                    if (roomOut.weightedDoorTypes){
-                        roomOut.doorType = randLayout.getWeightedTable(roomOut.weightedDoorTypes).doorType;
+                
+                //roomOut =  mineEncounterGroups[type].direct.find( encounter => (encounter.roomTag === tag) && requirements(encounter.requirement)) ?? false;
+
+
+                if (foundRoom) {
+                    roomOut =  {roomName:foundRoom.roomName, sequence:foundRoom.sequence, weight:(room.weight??0)};
+                    if (foundRoom.weightedDoorTypes){
+                        roomOut.doorType = rand.layout.getWeightedTable(foundRoom.weightedDoorTypes).doorType;
                     }
+                    roomOut.direction = room.direction;
                     break;
                 }
                 else {
