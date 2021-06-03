@@ -94,14 +94,15 @@ class Random {
         return table.find((currentItem) => ((randWeight -= currentItem.weight) <= 0));
     }
     shuffle(list) {
-        let i = list.length;
+        let workingList = [...list];
+        let i = workingList.length;
         while (i > 1) {
             let index = this.range(0, i--);
-            let value = list[index];
-            list[index] = list[i];
-            list[i] = value;
+            let value = workingList[index];
+            workingList[index] = workingList[i];
+            workingList[i] = value;
         }
-        return list;
+        return workingList;
     }
 }
 const lootTables = {
@@ -6108,157 +6109,122 @@ function mapMaker(roomList) {
     const east = 0b0100;
     const west = 0b1000;
     const cardinalDirections = [north, south, east, west];
-    function opposite(direction) {
-        switch (direction) {
-            case north: return south;
-            case south: return north;
-            case east: return west;
-            case west: return east;
-            default: return none;
+    const opposite = (direction) => (direction & (north + east)) ? direction << 1 : direction >>> 1;
+    const startingRoom = roomList[0];
+    let positionedRooms = [];
+    for (let trial = 0; trial < 10; ++trial) {
+        roomList.forEach(room => {
+            room.neighbours = [];
+            room.position = { x: 0, y: 0 };
+        });
+        positionedRooms = [startingRoom];
+        roomList.slice(1).forEach(room => {
+            if (setRoomPosition(room)) {
+                positionedRooms.push(room);
+            }
+        });
+        if (positionedRooms.length === roomList.length) {
+            return positionedRooms.map(room => [room.roomName, room.position.x, room.position.y, room.neighbours]);
         }
-    }
-    function validDirection(room, neighbor, direction) {
-        return !(room.prohibitedExits & direction) && !(neighbor.prohibitedExits & opposite(direction));
-    }
-    function allowNeighbor(room, neighbor) {
-        const checkLink = (direction) => validDirection(room, neighbor, direction);
-        return checkLink(north) || checkLink(south) || checkLink(east) || checkLink(west);
-    }
-    function isValidNeighbor(room, neighbor, direction) {
-        return !(direction) ? allowNeighbor(room, neighbor) : validDirection(room, neighbor, direction);
-    }
-    function newPosition(room, direction) {
-        const [xPos, yPos] = [room.position.x, room.position.y];
-        switch (direction) {
-            case north: return { x: xPos, y: yPos - 1 };
-            case south: return { x: xPos, y: yPos + 1 };
-            case east: return { x: xPos + 1, y: yPos };
-            case west: return { x: xPos - 1, y: yPos };
-            default: return { x: xPos, y: yPos };
+        else {
+            console.log(`%cLayout failed, trying again!`, "color:#a00;");
         }
-    }
-    function getRoomInPos(position) {
-        const [xPos, yPos] = [position.x, position.y];
-        for (const room of roomList) {
-            if (room.position.x == xPos && room.position.y == yPos)
-                return room;
-        }
-        return null;
-    }
-    function canMove(room, direction) {
-        if (room.previousRoom && !isValidNeighbor(room, room.previousRoom, direction))
-            return false;
-        else if (getRoomInPos(newPosition(room, direction)) == null)
-            return true;
-        else
-            return false;
     }
     function setRoomPosition(room) {
-        let list = [...cardinalDirections];
         let direction = room.direction ?? none;
-        while (true) {
-            if (room.previousRoom) {
-                room.position = room.previousRoom.position;
-                if (direction) {
-                    if (canMove(room, direction)) {
-                        room.position = newPosition(room, direction);
-                        break;
-                    }
-                    direction = none;
-                    break;
+        if (room.previousRoom) {
+            room.position = room.previousRoom.position;
+            if (direction) {
+                if (canMove(room, direction)) {
+                    room.position = newPosition(room.position, direction);
                 }
                 else {
-                    list = rand.layout.shuffle(list);
-                    for (const direction2 of list) {
-                        if (canMove(room, direction2)) {
-                            direction = direction2;
-                            room.position = newPosition(room, direction);
-                            break;
-                        }
-                    }
-                    break;
+                    direction = none;
                 }
             }
-            let list2 = [...positionedRooms];
-            if (room.doorType == "none" || room.doorType == "hidden") {
-                list2 = rand.layout.shuffle(list2);
-                for (const room2 of list2) {
-                    room.position = room2.position;
-                    list = rand.layout.shuffle(list);
-                    for (const direction3 of list) {
-                        if (canMove(room, direction3)) {
-                            direction = direction3;
-                            room.position = newPosition(room, direction);
-                            break;
-                        }
-                    }
-                    if (direction != none) {
+            else {
+                for (const newDirection of rand.layout.shuffle(cardinalDirections)) {
+                    if (canMove(room, newDirection)) {
+                        direction = newDirection;
+                        room.position = newPosition(room.position, direction);
                         break;
                     }
                 }
-                break;
             }
-            list2 = list2.filter(room => room.weight);
-            while (!direction && list2.length > 0) {
-                let room3 = null;
-                if (room3 = rand.layout.getWeightedTable(list2)) {
-                    room.position = room3.position;
-                    list = rand.layout.shuffle(list);
-                    for (const direction4 of list) {
-                        if (isValidNeighbor(room3, room, direction4) && canMove(room, direction4)) {
-                            direction = direction4;
-                            room.position = newPosition(room, direction);
-                            break;
-                        }
+        }
+        else if (room.doorType === "none" || room.doorType === "hidden") {
+            for (const startRoom of rand.layout.shuffle(positionedRooms)) {
+                room.position = startRoom.position;
+                for (const newDirection of rand.layout.shuffle(cardinalDirections)) {
+                    if (canMove(room, newDirection)) {
+                        direction = newDirection;
+                        room.position = newPosition(room.position, direction);
+                        break;
                     }
-                    list2 = list2.filter(current => current != room3);
+                }
+                if (direction) {
+                    break;
                 }
             }
-            break;
+        }
+        let weightedRooms = positionedRooms.filter(room => room.weight);
+        while (!direction && weightedRooms.length > 0) {
+            let startRoom = null;
+            if (startRoom = rand.layout.getWeightedTable(weightedRooms)) {
+                room.position = startRoom.position;
+                for (const newDirection of rand.layout.shuffle(cardinalDirections)) {
+                    if (isValidNeighbor(startRoom, room, newDirection) && canMove(room, newDirection)) {
+                        direction = newDirection;
+                        room.position = newPosition(room.position, direction);
+                        break;
+                    }
+                }
+                weightedRooms = weightedRooms.filter(current => current != startRoom);
+            }
         }
         if (direction) {
             if (room.doorType != "none" && room.doorType != "hidden") {
-                let direction5 = opposite(direction);
-                let room4 = getRoomInPos(newPosition(room, direction5));
-                if (room4 != null) {
-                    room4.neighbours[direction] = room;
-                    room.neighbours[direction5] = room4;
+                let opposingDirection = opposite(direction);
+                let opposingRoom = getRoomInPos(newPosition(room.position, opposingDirection));
+                if (opposingRoom != null) {
+                    opposingRoom.neighbours[direction] = room;
+                    room.neighbours[opposingDirection] = opposingRoom;
                 }
             }
             return true;
         }
         return false;
-    }
-    const startingRoom = roomList[0];
-    let positionedRooms = [];
-    let num2;
-    for (const room11 of roomList) {
-        room11.position = { x: 0, y: 0 };
-        room11.branches = null;
-    }
-    for (let i = 0; i < 10; i = num2) {
-        for (const room of roomList) {
-            room.neighbours = [];
+        function canMove(room, direction) {
+            if (room.previousRoom && !isValidNeighbor(room, room.previousRoom, direction))
+                return false;
+            else if (!getRoomInPos(newPosition(room.position, direction)))
+                return true;
+            else
+                return false;
         }
-        positionedRooms = [];
-        positionedRooms.push(startingRoom);
-        let num = 1;
-        while (num < roomList.length && setRoomPosition(roomList[num])) {
-            positionedRooms.push(roomList[num]);
-            ++num;
+        function getRoomInPos(pos) {
+            return roomList.find(room => (room.position.x === pos.x && room.position.y === pos.y));
         }
-        if (positionedRooms.length == roomList.length) {
-            let outArray = [];
-            for (const room of positionedRooms) {
-                outArray.push([room.roomName, room.position.x, room.position.y, room.neighbours]);
+        function isValidNeighbor(room, neighbor, direction) {
+            return !(direction) ? allowNeighbor(room, neighbor) : validDirection(room, neighbor, direction);
+            function allowNeighbor(room, neighbor) {
+                const checkLink = (direction) => validDirection(room, neighbor, direction);
+                return checkLink(north) || checkLink(south) || checkLink(east) || checkLink(west);
             }
-            return outArray;
+            function validDirection(room, neighbor, direction) {
+                return !(room.prohibitedExits & direction) && !(neighbor.prohibitedExits & opposite(direction));
+            }
         }
-        console.log(`%cLayout failed, trying again!`, "color:#a00;");
-        for (let room13 of roomList) {
-            room13.position = { x: 0, y: 0 };
+        function newPosition(position, direction) {
+            const [xPos, yPos] = [position.x, position.y];
+            switch (direction) {
+                case north: return { x: xPos, y: yPos - 1 };
+                case south: return { x: xPos, y: yPos + 1 };
+                case east: return { x: xPos + 1, y: yPos };
+                case west: return { x: xPos - 1, y: yPos };
+                default: return { x: xPos, y: yPos };
+            }
         }
-        num2 = i + 1;
     }
 }
 function listCraftable(table) {

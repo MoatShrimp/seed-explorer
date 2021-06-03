@@ -20,7 +20,7 @@
     "./encounterGroups.ts",
     "./maps.ts",
     "./getRooms.ts",
-    "./makeMap.ts",
+    "./mapMaker.ts",
     "./layout.ts",
     "./looting.ts",
 	"./floor-generation/toggleUncheckedItems.ts",

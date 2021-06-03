@@ -115,14 +115,15 @@ class Random {
 
 	shuffle (list:any[]) {
 
-        let i = list.length;
+		let workingList = [...list];
+        let i = workingList.length;
         while (i > 1) {
             let index = this.range(0, i--);
-            let value = list[index];
-            list[index] = list[i];
-            list[i] = value;
+            let value = workingList[index];
+            workingList[index] = workingList[i];
+            workingList[i] = value;
         }
 
-        return list;
+        return workingList;
     }
 }
