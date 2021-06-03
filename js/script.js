@@ -6167,19 +6167,21 @@ function mapMaker(roomList) {
                 }
             }
         }
-        let weightedRooms = positionedRooms.filter(room => room.weight);
-        while (!direction && weightedRooms.length > 0) {
-            let startRoom = null;
-            if (startRoom = rand.layout.getWeightedTable(weightedRooms)) {
-                room.position = startRoom.position;
-                for (const newDirection of rand.layout.shuffle(cardinalDirections)) {
-                    if (isValidNeighbor(startRoom, room, newDirection) && canMove(room, newDirection)) {
-                        direction = newDirection;
-                        room.position = newPosition(room.position, direction);
-                        break;
+        else {
+            let weightedRooms = positionedRooms.filter(room => room.weight);
+            while (!direction && weightedRooms.length > 0) {
+                let startRoom = null;
+                if (startRoom = rand.layout.getWeightedTable(weightedRooms)) {
+                    room.position = startRoom.position;
+                    for (const newDirection of rand.layout.shuffle(cardinalDirections)) {
+                        if (isValidNeighbor(startRoom, room, newDirection) && canMove(room, newDirection)) {
+                            direction = newDirection;
+                            room.position = newPosition(room.position, direction);
+                            break;
+                        }
                     }
+                    weightedRooms = weightedRooms.filter(current => current != startRoom);
                 }
-                weightedRooms = weightedRooms.filter(current => current != startRoom);
             }
         }
         if (direction) {

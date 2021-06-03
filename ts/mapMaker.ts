@@ -83,24 +83,28 @@ function mapMaker(roomList:room[]) {
             }
         }
         
-        let weightedRooms = positionedRooms.filter(room => room.weight);
-        while(!direction && weightedRooms.length > 0) {
-            let startRoom:room = null;
+        else {
+            let weightedRooms = positionedRooms.filter(room => room.weight);
+            
+            while(!direction && weightedRooms.length > 0) {
+                let startRoom:room = null;
 
-            if (startRoom = rand.layout.getWeightedTable(weightedRooms)){
-                room.position = startRoom.position;
+                if (startRoom = rand.layout.getWeightedTable(weightedRooms)){
+                    room.position = startRoom.position;
 
-                for (const newDirection of rand.layout.shuffle(cardinalDirections)) {
-                    if (isValidNeighbor(startRoom, room, newDirection) && canMove(room, newDirection)) {
-                        direction = newDirection;
-                        room.position = newPosition(room.position, direction);
-                        break;
+                    for (const newDirection of rand.layout.shuffle(cardinalDirections)) {
+                        if (isValidNeighbor(startRoom, room, newDirection) && canMove(room, newDirection)) {
+                            direction = newDirection;
+                            room.position = newPosition(room.position, direction);
+                            break;
+                        }
                     }
-                }
 
-                weightedRooms = weightedRooms.filter(current => current != startRoom);
+                    weightedRooms = weightedRooms.filter(current => current != startRoom);
+                }
             }
         }
+
         if (direction) {
 
             if (room.doorType != "none" && room.doorType != "hidden") {
@@ -112,9 +116,10 @@ function mapMaker(roomList:room[]) {
                     room.neighbours[opposingDirection] = opposingRoom;                
                 }
             }
-            return true;
-            
+
+            return true;            
         }
+        
         return false;
 
         //helpers
