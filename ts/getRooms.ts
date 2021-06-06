@@ -75,11 +75,11 @@ function getRooms(zone, floor, seed?, seenRooms = [], ) {
     function getRoom (room){
         let value = null;
         if ((room.chance ?? 1) < 1 && (room.chance < (value = rand.layout.value))) {
-            console.log(`%cSkipping room ${room.tag}: Chance failed`, "color:#a09;")
+            //console.log(`%cSkipping room ${room.tag}: Chance failed`, "color:#a09;")
             return false;
         }
         if (!requirements(room.requirement)) {
-            console.log(`%cSkipping room ${room.tag}: Requirements not met`, "color:#a00;")
+            //console.log(`%cSkipping room ${room.tag}: Requirements not met`, "color:#a00;")
             return false;
         }
         //console.log(value)
@@ -113,7 +113,7 @@ function getRooms(zone, floor, seed?, seenRooms = [], ) {
                     break;
                 }
                 else {
-                    console.log(`%cSkipping encounter ${tag}: Requirements not met`, "color:#a00;");
+                //console.log(`%cSkipping encounter ${tag}: Requirements not met`, "color:#a00;");
                     roomOut = false;
                 }
             }
@@ -133,7 +133,7 @@ function getRooms(zone, floor, seed?, seenRooms = [], ) {
                     break;
                 }
                 else {
-                    console.log(`%cSkipping encounter ${tag}: Requirements not met`, "color:#a00;");
+                    //console.log(`%cSkipping encounter ${tag}: Requirements not met`, "color:#a00;");
                     roomOut = false;
                 }
             }
@@ -160,10 +160,10 @@ function getRooms(zone, floor, seed?, seenRooms = [], ) {
             if (currentRoom) {
                 seenRooms.push(currentRoom);
                 if (currentRoom.doorType){
-                    console.log(`${zeroPad(++count,2)}: ${currentRoom.roomName}, %cDoor: ${currentRoom.doorType}`, "color:#a70;")
+                    //console.log(`${zeroPad(++count,2)}: ${currentRoom.roomName}, %cDoor: ${currentRoom.doorType}`, "color:#a70;")
                 }
                 else {
-                    console.log(`${zeroPad(++count,2)}: ${currentRoom.roomName}`)
+                    //console.log(`${zeroPad(++count,2)}: ${currentRoom.roomName}`)
                 }
                 if (currentRoom.sequence) {
 
@@ -173,10 +173,10 @@ function getRooms(zone, floor, seed?, seenRooms = [], ) {
                         seenRooms.push(nextRoom);
                         previousRoom = currentRoom;
                         if (nextRoom.doorType){
-                            console.log(`${zeroPad(++count,2)}: ${nextRoom.roomName}, Door: ${nextRoom.doorType}`)
+                            //console.log(`${zeroPad(++count,2)}: ${nextRoom.roomName}, Door: ${nextRoom.doorType}`)
                         }
                         else {
-                            console.log(`${zeroPad(++count,2)}: ${nextRoom.roomName}`)
+                            //console.log(`${zeroPad(++count,2)}: ${nextRoom.roomName}`)
                         }
                     }
                 }

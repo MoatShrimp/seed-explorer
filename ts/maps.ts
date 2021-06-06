@@ -16,7 +16,8 @@ interface room {
 	neighbours?: room[],
 	prohibitedExits?: number,
 	branches?: [number, room][],
-	doorType?: string;
+	doorType?: string,
+	binMap?:number;
 };
 
 interface mapList {

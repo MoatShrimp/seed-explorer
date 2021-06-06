@@ -18,7 +18,8 @@ function mapMaker(roomList:room[]) {
 
         roomList.forEach(room => {
             room.neighbours = [];
-            room.position = {x:0, y:0}
+            room.position = {x:0, y:0};
+            room.binMap = none;
         });
 
         positionedRooms = [startingRoom];        
@@ -29,7 +30,12 @@ function mapMaker(roomList:room[]) {
         });
         
         if (positionedRooms.length === roomList.length) {
-            return positionedRooms.map(room => [room.roomName, room.position.x, room.position.y, room.neighbours]);
+            positionedRooms = movePosOrigo(positionedRooms);
+            console.table(getNeigbours(positionedRooms));
+            //return positionedRooms.map(room => [room.roomName, room.position.x, room.position.y, room.neighbours]);
+            const outArray = positionedRooms.map(room => [room.roomName, room.position.x, room.position.y, room.binMap]);
+            //console.table(positionedRooms, ["roomName", "position", "binMap"]);
+            return outArray;
         }
         else {
             console.log(`%cLayout failed, trying again!`, "color:#a00;");
@@ -134,7 +140,7 @@ function mapMaker(roomList:room[]) {
         }    
     
         //verify that two rooms can be connected
-        function isValidNeighbor(room:room, neighbor:room, direction:number) {
+        function isValidNeighbor(room:room, neighbor:room, direction:number) {            
             return !(direction) ? allowNeighbor(room, neighbor) : validDirection(room, neighbor, direction);
     
             //helpers
@@ -158,5 +164,30 @@ function mapMaker(roomList:room[]) {
                 default: return {x:xPos, y:yPos}
             }
         }  
-    }     
+    }
+    
+    //moving the origo to the top left
+    function movePosOrigo (rooms:room[]) {
+        const xMin = rooms.reduce((min, current) => min = Math.min(min, current.position.x), 0);
+        const yMin = rooms.reduce((min, current) => min = Math.min(min, current.position.y), 0);
+
+        rooms.forEach(room => room.position = {x:(room.position.x-xMin), y:(room.position.y-yMin)});
+        return rooms;
+    }
+
+    function getNeigbours (rooms:room[]) {
+        let binaryMap:room[][] = Array.from(Array(10), () => new Array());
+
+        rooms.forEach(room => binaryMap[room.position.y][room.position.x] = room;
+        
+        for (const room of rooms) {
+            const [xPos, yPos] = [room.position.x, room.position.y];
+            if (yPos && !(room.binMap & north) && (binaryMap[yPos-1][xPos])) room.binMap += north;
+            if (!(room.binMap & south) && (binaryMap[yPos+1][xPos])) room.binMap += south;
+            if (!(room.binMap & east) && (binaryMap[yPos][xPos+1])) room.binMap += east;
+            if (xPos && !(room.binMap & west) && (binaryMap[yPos][xPos-1])) room.binMap += west;
+        }
+
+        return binaryMap;       
+    }
 }

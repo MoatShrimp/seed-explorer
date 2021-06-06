@@ -6017,11 +6017,9 @@ function getRooms(zone, floor, seed, seenRooms = []) {
     function getRoom(room) {
         let value = null;
         if ((room.chance ?? 1) < 1 && (room.chance < (value = rand.layout.value))) {
-            console.log(`%cSkipping room ${room.tag}: Chance failed`, "color:#a09;");
             return false;
         }
         if (!requirements(room.requirement)) {
-            console.log(`%cSkipping room ${room.tag}: Requirements not met`, "color:#a00;");
             return false;
         }
         if (room.tag == "secret") {
@@ -6043,7 +6041,6 @@ function getRooms(zone, floor, seed, seenRooms = []) {
                     break;
                 }
                 else {
-                    console.log(`%cSkipping encounter ${tag}: Requirements not met`, "color:#a00;");
                     roomOut = false;
                 }
             }
@@ -6058,7 +6055,6 @@ function getRooms(zone, floor, seed, seenRooms = []) {
                     break;
                 }
                 else {
-                    console.log(`%cSkipping encounter ${tag}: Requirements not met`, "color:#a00;");
                     roomOut = false;
                 }
             }
@@ -6079,10 +6075,8 @@ function getRooms(zone, floor, seed, seenRooms = []) {
             if (currentRoom) {
                 seenRooms.push(currentRoom);
                 if (currentRoom.doorType) {
-                    console.log(`${zeroPad(++count, 2)}: ${currentRoom.roomName}, %cDoor: ${currentRoom.doorType}`, "color:#a70;");
                 }
                 else {
-                    console.log(`${zeroPad(++count, 2)}: ${currentRoom.roomName}`);
                 }
                 if (currentRoom.sequence) {
                     const nextRoom = getRoom(currentRoom.sequence);
@@ -6090,10 +6084,8 @@ function getRooms(zone, floor, seed, seenRooms = []) {
                         seenRooms.push(nextRoom);
                         previousRoom = currentRoom;
                         if (nextRoom.doorType) {
-                            console.log(`${zeroPad(++count, 2)}: ${nextRoom.roomName}, Door: ${nextRoom.doorType}`);
                         }
                         else {
-                            console.log(`${zeroPad(++count, 2)}: ${nextRoom.roomName}`);
                         }
                     }
                 }
@@ -6116,6 +6108,7 @@ function mapMaker(roomList) {
         roomList.forEach(room => {
             room.neighbours = [];
             room.position = { x: 0, y: 0 };
+            room.binMap = none;
         });
         positionedRooms = [startingRoom];
         roomList.slice(1).forEach(room => {
@@ -6124,7 +6117,10 @@ function mapMaker(roomList) {
             }
         });
         if (positionedRooms.length === roomList.length) {
-            return positionedRooms.map(room => [room.roomName, room.position.x, room.position.y, room.neighbours]);
+            positionedRooms = movePosOrigo(positionedRooms);
+            console.table(getNeigbours(positionedRooms));
+            const outArray = positionedRooms.map(room => [room.roomName, room.position.x, room.position.y, room.binMap]);
+            return outArray;
         }
         else {
             console.log(`%cLayout failed, trying again!`, "color:#a00;");
@@ -6227,6 +6223,28 @@ function mapMaker(roomList) {
                 default: return { x: xPos, y: yPos };
             }
         }
+    }
+    function movePosOrigo(rooms) {
+        const xMin = rooms.reduce((min, current) => min = Math.min(min, current.position.x), 0);
+        const yMin = rooms.reduce((min, current) => min = Math.min(min, current.position.y), 0);
+        rooms.forEach(room => room.position = { x: (room.position.x - xMin), y: (room.position.y - yMin) });
+        return rooms;
+    }
+    function getNeigbours(rooms) {
+        let binaryMap = Array.from(Array(10), () => new Array());
+        rooms.forEach(room => binaryMap[room.position.y][room.position.x] = room);
+        for (const room of rooms) {
+            const [xPos, yPos] = [room.position.x, room.position.y];
+            if (yPos && !(room.binMap & north) && (binaryMap[yPos - 1][xPos]))
+                room.binMap += north;
+            if (!(room.binMap & south) && (binaryMap[yPos + 1][xPos]))
+                room.binMap += south;
+            if (!(room.binMap & east) && (binaryMap[yPos][xPos + 1]))
+                room.binMap += east;
+            if (xPos && !(room.binMap & west) && (binaryMap[yPos][xPos - 1]))
+                room.binMap += west;
+        }
+        return binaryMap;
     }
 }
 function listCraftable(table) {
