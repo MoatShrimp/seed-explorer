@@ -7,8 +7,8 @@ class Random {
 		/*Info: the three pseudo-seeds in Unity are generated from: 
 		  [uint seed = (uint)(1812433253 * (uint)previousSeed + 1)]*/
 		
-		//splitting 1812433253 into two factors to stay under Number.MAX_SAFE_INTEGER during multiplication
-		const nextSeed = (seed:number) => toUInt32(1289 * toUInt32(1406077 * seed) + 1);
+		//Using Math.imul to stay under Number.MAX_SAFE_INTEGER during multiplication
+		const nextSeed = (seed:number) => toUInt32(Math.imul(11812433253, seed) + 1);
 		
 		const firstSeed = toUInt32(initSeed),
 			  secondSeed = nextSeed(firstSeed),
