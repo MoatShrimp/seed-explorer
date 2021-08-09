@@ -18,6 +18,7 @@
     "./applySettings.ts",
     "./master-table.ts",
     "./encounterGroups.ts",
+    "./encounters.ts",
     "./maps.ts",
     "./getRooms.ts",
     "./mapMaker.ts",
