@@ -73,7 +73,6 @@ function getRooms(zone, floor, seed?, seenRooms = [], ) {
     }
 
     function getRoom (room){
-        console.log(rand.layout.state);
         let value = null;
         if ((room.chance ?? 1) < 1 && (room.chance < (value = rand.layout.value))) {
             //console.log(`%cSkipping room ${room.tag}: Chance failed`, "color:#a09;")
