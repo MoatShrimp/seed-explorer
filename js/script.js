@@ -6015,6 +6015,7 @@ function getRooms(zone, floor, seed, seenRooms = []) {
         }
     }
     function getRoom(room) {
+        console.log(rand.layout.state);
         let value = null;
         if ((room.chance ?? 1) < 1 && (room.chance < (value = rand.layout.value))) {
             return false;
