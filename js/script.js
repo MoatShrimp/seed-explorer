@@ -18,7 +18,7 @@ function e$c(type, options) {
 function toUInt32(floatVar) { return floatVar >>> 0; }
 class Random {
     constructor(initSeed = 51113926) {
-        const nextSeed = (seed) => toUInt32(1289 * toUInt32(1406077 * seed) + 1);
+        const nextSeed = (seed) => toUInt32(Math.imul(1812433253, seed) + 1);
         const firstSeed = toUInt32(initSeed), secondSeed = nextSeed(firstSeed), thirdSeed = nextSeed(secondSeed), fourthSeed = nextSeed(thirdSeed);
         this.seed = [
             firstSeed,
@@ -6015,7 +6015,6 @@ function getRooms(zone, floor, seed, seenRooms = []) {
         }
     }
     function getRoom(room) {
-        console.log(rand.layout.state);
         let value = null;
         if ((room.chance ?? 1) < 1 && (room.chance < (value = rand.layout.value))) {
             return false;
