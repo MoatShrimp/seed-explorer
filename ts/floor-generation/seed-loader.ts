@@ -1,7 +1,8 @@
 //load new random seed
 function randomSeed(){
-	e$("seed-input").value  = <string><unknown>seedRand.rangeInclusive(1, 99999999);
+	//e$("seed-input").value  = <string><unknown>seedRand.rangeInclusive(1, 99999999);
 	//$("#seed-input").value = 68906772; // map at Diibble, sequence breaker in mine1
+	e$("seed-input").value = (73486680).toString(); // map at Diibble, sequence breaker in mine1
 	loadSeed();
 }
 

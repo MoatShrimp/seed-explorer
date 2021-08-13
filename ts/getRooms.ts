@@ -1,4 +1,4 @@
-function getRooms(zone, floor, seed?, seenRooms = [], ) {
+function oldGetRooms(zone, floor, seed?, seenRooms = [], ) {
 
     seed = (seed ?? parseInt(e$("seed-input").value)) + floor;
     let count = 0;

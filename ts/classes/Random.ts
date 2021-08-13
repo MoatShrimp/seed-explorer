@@ -8,7 +8,7 @@ class Random {
 		  [uint seed = (uint)(1812433253 * (uint)previousSeed + 1)]*/
 		
 		//Using Math.imul to stay under Number.MAX_SAFE_INTEGER during multiplication
-		const nextSeed = (seed:number) => toUInt32(Math.imul(11812433253, seed) + 1);
+		const nextSeed = (seed:number) => toUInt32(Math.imul(1812433253, seed) + 1);
 		
 		const firstSeed = toUInt32(initSeed),
 			  secondSeed = nextSeed(firstSeed),
@@ -108,8 +108,17 @@ class Random {
 	getWeightedTable (table) {			
 		const totalWeight = table.reduce((totalWeight, currentItem) => totalWeight + currentItem.weight, 0);
 		let randWeight = this.rangeInclusive(1, totalWeight);
+		//console.log(totalWeight)
 		
 		return table.find((currentItem) => ((randWeight -= currentItem.weight) <= 0));
+
+	}
+
+	getWeightedTableNum (table) {			
+		const totalWeight = table.reduce((totalWeight, currentItem) => totalWeight + currentItem[0], 0);
+		let randWeight = this.rangeInclusive(1, totalWeight);
+		
+		return table.find((currentItem) => ((randWeight -= currentItem[0]) <= 0));
 
 	}
 
