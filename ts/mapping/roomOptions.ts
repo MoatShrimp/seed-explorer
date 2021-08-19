@@ -55,7 +55,14 @@ const roomOptions = {
       direction: direction.north,
       requirements: (flag) => true,
     }],
-  },    
+  },
+  shop: {
+    weightedDoor: [
+      {weight:10, door: door.normal},
+      {weight:7, door: door.locked},
+    ],
+    requirements: (flag) => true,
+  },
   relic: {
     icon: icon.relicOn,
     door: door.locked,
@@ -105,14 +112,14 @@ const roomOptions = {
     icon: icon.altarOn,
     door: door.locked,
     requirements: (flag) => (
-      flag.guacamole
+      false //&& flag.guacamole
     ),
   },
   altarGuacamoleBug: {
     icon: icon.altarOn,
     door: door.locked,
     requirements: (flag) => (
-      flag.guacamole > 2
+      false //&& flag.guacamole > 2
     ),
   },
   altarAlt: {
@@ -164,7 +171,7 @@ const roomOptions = {
   secretFountain: {
     icon: icon.fountain,
     requirements: (flag) => (
-      flag.storyMode &&
+      true || flag.storyMode &&
       flag.bog_unlocked
     ),
   },
