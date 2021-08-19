@@ -5747,6 +5747,7 @@ const requirements = {
     hasWhip: (flag) => flag.hasWhip ?? false,
     hasHat: (flag) => flag.hasHat ?? false,
     storyNotWhip: (flag) => (!flag.whip_enabled && flag.storyMode) ?? false,
+    priestessRescued: (flag) => (flag.priestess_met > 2) ?? false,
 };
 const enemies = { name: "",
     assassin: { name: "assassin", difficulty: 7, rougeDifficulty: 5, max: 3, type: 1 },
