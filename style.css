@@ -17,12 +17,17 @@ h1{
 
 #items-to-hide {
 	-display: none;
-	display: flex;
-	flex-flow: column wrap;
+	
 	align-content: stretch;
 	height:0px;
 	transition: height 0.5s;
 	overflow:hidden;
+}
+
+
+#items-to-hide > fieldset > div {
+	display: flex;
+	flex-flow: column wrap;
 }
 
 #show-more:checked ~ #items-to-hide {

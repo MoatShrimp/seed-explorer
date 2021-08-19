@@ -7,8 +7,8 @@ class Random {
 		/*Info: the three pseudo-seeds in Unity are generated from: 
 		  [uint seed = (uint)(1812433253 * (uint)previousSeed + 1)]*/
 		
-		//splitting 1812433253 into two factors to stay under Number.MAX_SAFE_INTEGER during multiplication
-		const nextSeed = (seed:number) => toUInt32(1289 * toUInt32(1406077 * seed) + 1);
+		//Using Math.imul to stay under Number.MAX_SAFE_INTEGER during multiplication
+		const nextSeed = (seed:number) => toUInt32(Math.imul(1812433253, seed) + 1);
 		
 		const firstSeed = toUInt32(initSeed),
 			  secondSeed = nextSeed(firstSeed),
@@ -70,6 +70,7 @@ class Random {
 
 	//return uint between min and max
 	range (min = 0, max = 99999999) {
+		//console.log("Doing Range: " + this.state);
 		if (max < min){ 
 			[min, max] = [max, min];
 		}		
@@ -113,17 +114,31 @@ class Random {
 
 	}
 
+
+	// Token: 0x06000754 RID: 1876 RVA: 0x0001A910 File Offset: 0x00018B10
+
+	arrayPick (array) {
+		const totalWeight = array.reduce((total, current) => total + current, 0);
+		let randWeight = this.rangeInclusive(1, totalWeight);
+
+		return array.findIndex( current => ((randWeight -= current) <= 0));
+	}
+
 	shuffle (list:any[]) {
 
 		let workingList = [...list];
-        let i = workingList.length;
-        while (i > 1) {
-            let index = this.range(0, i--);
-            let value = workingList[index];
-            workingList[index] = workingList[i];
-            workingList[i] = value;
-        }
+		let i = workingList.length;
+		while (i > 1) {
+				let index = this.range(0, i--);
+				let value = workingList[index];
+				workingList[index] = workingList[i];
+				workingList[i] = value;
+		}
 
-        return workingList;
-    }
+		return workingList;
+	}
+
+	chance (chance) {
+		return chance == 1 || (chance && chance > this.value)
+	}
 }

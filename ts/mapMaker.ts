@@ -178,7 +178,7 @@ function mapMaker(roomList:room[]) {
     function getNeigbours (rooms:room[]) {
         let binaryMap:room[][] = Array.from(Array(10), () => new Array());
 
-        rooms.forEach(room => binaryMap[room.position.y][room.position.x] = room;
+        //rooms.forEach(room => binaryMap[room.position.y][room.position.x] = room;
         
         for (const room of rooms) {
             const [xPos, yPos] = [room.position.x, room.position.y];

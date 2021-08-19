@@ -87,4 +87,5 @@ let settings = {
 	}
 }
 
+//const seedRand = new Random(Date.now());
 const seedRand = new Random(Date.now());

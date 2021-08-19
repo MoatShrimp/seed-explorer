@@ -25,7 +25,7 @@ interface mapList {
 };
 
 
-const maps:mapList = {
+const mapss:mapList = {
 	mineTutorial ://tutorial floor for new save
 	[
 		[//floor 1
