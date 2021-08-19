@@ -19,6 +19,8 @@
     "master-table.ts",
     "encounterGroups.ts",
     "mapping/requirements.ts",
+    "mapping/enemies.ts",
+    "mapping/ZoneData.ts",
     "mapping/roomOptions.ts",
     "mapping/encounters.ts",
     "mapping/getRooms.ts",
