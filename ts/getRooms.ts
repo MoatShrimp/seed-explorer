@@ -5,7 +5,7 @@ function oldGetRooms(zone, floor, seed?, seenRooms = [], ) {
     let previousRoom = null;
 
     const zeroPad = (num, places) => String(num).padStart(places, "0")
-    
+    let state = rand.layout.state;
     function requirements(check:string):boolean{
         if(check == undefined){
             return true;
@@ -87,8 +87,6 @@ function oldGetRooms(zone, floor, seed?, seenRooms = [], ) {
         }
         
         const type = room.roomTypes[rand.layout.range(0, room.roomTypes.length)];
-
-
         const tags = room.tag.split(",");
         let roomOut = null;
         let foundRoom = null;

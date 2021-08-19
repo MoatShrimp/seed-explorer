@@ -70,6 +70,7 @@ class Random {
 
 	//return uint between min and max
 	range (min = 0, max = 99999999) {
+		//console.log("Doing Range: " + this.state);
 		if (max < min){ 
 			[min, max] = [max, min];
 		}		
@@ -108,31 +109,36 @@ class Random {
 	getWeightedTable (table) {			
 		const totalWeight = table.reduce((totalWeight, currentItem) => totalWeight + currentItem.weight, 0);
 		let randWeight = this.rangeInclusive(1, totalWeight);
-		//console.log(totalWeight)
 		
 		return table.find((currentItem) => ((randWeight -= currentItem.weight) <= 0));
 
 	}
 
-	getWeightedTableNum (table) {			
-		const totalWeight = table.reduce((totalWeight, currentItem) => totalWeight + currentItem[0], 0);
-		let randWeight = this.rangeInclusive(1, totalWeight);
-		
-		return table.find((currentItem) => ((randWeight -= currentItem[0]) <= 0));
 
+	// Token: 0x06000754 RID: 1876 RVA: 0x0001A910 File Offset: 0x00018B10
+
+	arrayPick (array) {
+		const totalWeight = array.reduce((total, current) => total + current, 0);
+		let randWeight = this.rangeInclusive(1, totalWeight);
+
+		return array.findIndex( current => ((randWeight -= current) <= 0));
 	}
 
 	shuffle (list:any[]) {
 
 		let workingList = [...list];
-        let i = workingList.length;
-        while (i > 1) {
-            let index = this.range(0, i--);
-            let value = workingList[index];
-            workingList[index] = workingList[i];
-            workingList[i] = value;
-        }
+		let i = workingList.length;
+		while (i > 1) {
+				let index = this.range(0, i--);
+				let value = workingList[index];
+				workingList[index] = workingList[i];
+				workingList[i] = value;
+		}
 
-        return workingList;
-    }
+		return workingList;
+	}
+
+	chance (chance) {
+		return chance == 1 || (chance && chance > this.value)
+	}
 }
