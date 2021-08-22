@@ -70,12 +70,83 @@ const conditions:Requirements = {
   hallLibraryCombat: (flag) => (!flag.collector_book && !flag.whip_enabled && flag.storyMode) ?? false,
   //OtherMine
   storeRoom: (flag) => (flag.rougeMode) ?? false,
-  //zone versions
-  tutorialDone: (flag) => (flag.tutorial_complete) ?? false,
-  rockmimicDefeated: (flag) => (flag.rockmimic_defeated) ?? false,
-  sandwormDefeated: (flag) => (flag.sandworm_defeated) ?? false,
-  stonelordDefeated: (flag) => (flag.stonelord_defeated) ?? false,
-  shadowlordDefeated: (flag) => (flag.shadowlord_defeated) ?? false,
-  crystallordDefeated: (flag) => (flag.crystallord_defeated) ?? false,
-  firelordDefeated: (flag) => (flag.firelord_defeated) ?? false,
+  //zone versions Mine
+  tutorialIncomplete: (flag) => (
+    !flag.tutorial_complete
+  ) ?? false,
+  tutorialComplete: (flag) => (
+    !flag.rockmimic_defeated && 
+    !flag.sandworm_defeated && 
+    !flag.stonelord_defeated &&
+    !flag.shadowlord_defeated
+  ) ?? false,
+  mimicKilled: (flag) => (
+    flag.rockmimic_defeated &&
+    !flag.sandworm_defeated && 
+    !flag.stonelord_defeated &&
+    !flag.shadowlord_defeated
+  ) ?? false,
+  mineSandwormKilled: (flag) => (
+    flag.sandworm_defeated && 
+    !flag.stonelord_defeated &&
+    !flag.shadowlord_defeated
+  ) ?? false,
+  mineStonelordKilled: (flag) => (
+    flag.stonelord_defeated &&
+    !flag.shadowlord_defeated
+  ) ?? false,
+  mineShadowlordKilled: (flag) => (
+    flag.shadowlord_defeated
+  ) ?? false,
+  //zone versions Rest
+  allBossesAlive: (flag) => (
+    !flag.sandworm_defeated && 
+    !flag.stonelord_defeated &&
+    !flag.shadowlord_defeated &&
+    !flag.crystallord_defeated
+  ) ?? false,
+  sandwormKilled: (flag) => (
+    flag.sandworm_defeated && 
+    !flag.stonelord_defeated &&
+    !flag.shadowlord_defeated &&
+    !flag.crystallord_defeated
+  ) ?? false,
+  stonelordNotKilled: (flag) => (
+    !flag.stonelord_defeated &&
+    !flag.shadowlord_defeated &&
+    !flag.crystallord_defeated
+  ) ?? false,
+  stonelordKilled: (flag) => (
+    flag.stonelord_defeated &&
+    !flag.shadowlord_defeated &&
+    !flag.crystallord_defeated
+  ) ?? false,
+  shadowlordNotKilled: (flag) => (
+    !flag.shadowlord_defeated &&
+    !flag.crystallord_defeated
+  ) ?? false,
+  shadowlordKilled: (flag) => (
+    flag.shadowlord_defeated &&
+    !flag.crystallord_defeated
+  ) ?? false,
+  crystallordKilled: (flag) => (
+    flag.crystallord_defeated
+  ) ?? false,
+  crystallordNotKilled: (flag) => (
+    !flag.crystallord_defeated &&
+    !flag.firelord_defeated &&
+    !flag.enterBog
+  ) ?? false,
+  crystallordKilledNotFire: (flag) => (
+    flag.crystallord_defeated &&
+    !flag.firelord_defeated &&
+    !flag.enterBog
+  ) ?? false,
+  firelordKilled: (flag) => (
+    flag.firelord_defeated &&
+    !flag.enterBog
+  ) ?? false,
+  enterBog: (flag) => (
+    flag.enterBog
+  ) ?? false,
 }

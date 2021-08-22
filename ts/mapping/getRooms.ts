@@ -1,18 +1,15 @@
-const trial = {
-  isFunction: (flag) => {console.log("hello")}
-}
+function getRooms(floor:number, seed?,) {  
 
-function getRooms(zone, floor, flags, seed?,) {  
-
-  const data = zoneData[zone][4][floor-1];
+  const flags = settings.flags;
+  const floorData = getFloorData(floor, flags);
   seed = (seed ?? parseInt(e$("seed-input").value)) + floor;
   const rand = new Random(seed);
   const enemyCombos = [3,5,6];
   const seenRooms = [];
   const output = [];
-  const map = maps[zone];
-  const level = map.levels[floor - 1];
-  settings.flags.floor_number = data.floorNumber;
+  const map = maps[floorData.map];
+  const level = map.levels[floorData.index];
+  flags.floor_number = floorData.floor;
   let previousRoom = null;
 
   for (const roomGroup of level) {
@@ -47,7 +44,7 @@ function getRooms(zone, floor, flags, seed?,) {
       return null;       
     }
     
-    else if (room.floorChance && !rand.chance(room.floorChance(data.floorNumber))) { 
+    else if (room.floorChance && !rand.chance(room.floorChance(floorData.floor))) { 
       console.log(`%cSkipping ${room.tags}, failed floorChance`, "color: #bada55");
       return null;       
     }
@@ -76,13 +73,12 @@ function getRooms(zone, floor, flags, seed?,) {
                     (!withDefault.requirements || withDefault.requirements(flags))
             )
           });
-          console.log(filteredRooms);
           //if (filteredRooms.length){
           foundRoom = rand.getWeightedTable(filteredRooms);
           if (foundRoom) {
             seenRooms.push(foundRoom);
             const withDefault = {...usedZone[stage][tag]?.default, ...foundRoom};
-            roomOut =  {name:`${zone}_${stage}_${tag}_${withDefault.name}`, sequence:withDefault.sequence, door:withDefault.door ?? "normal"};
+            roomOut =  {name:`${floorData.map}_${stage}_${tag}_${withDefault.name}`, sequence:withDefault.sequence, door:withDefault.door ?? "normal"};
             
             if (foundRoom.weightedDoor) {
                 roomOut.door = rand.getWeightedTable(withDefault.weightedDoor).door;
@@ -114,7 +110,7 @@ function getRooms(zone, floor, flags, seed?,) {
           if (foundRoom) {
             
             seenRooms.push(foundRoom);
-            roomOut =  {name:`${zone}_${stage}_${tag}_${foundRoom.name}`, sequence:foundRoom.sequence, door:foundRoom.door};
+            roomOut =  {name:`${floorData.map}_${stage}_${tag}_${foundRoom.name}`, sequence:foundRoom.sequence, door:foundRoom.door};
             if (foundRoom.weightedDoor){
                 roomOut.door = rand.getWeightedTable(foundRoom.weightedDoor).door;
             }
@@ -147,7 +143,7 @@ function getRooms(zone, floor, flags, seed?,) {
 
       const enemies = [];
       const difficultyAdjustemnt = encounter.difficulty[1] ?? 0;
-      let enemyList = encounter.enemies ?? data.enemies;
+      let enemyList = encounter.enemies ?? floorData.enemies;
       if (encounter.prohibitedEnemies) {
         enemyList = enemyList.filter( enemy => !encounter.prohibitedEnemies.includes(enemy.name) );
       }
@@ -162,7 +158,7 @@ function getRooms(zone, floor, flags, seed?,) {
         }
         
         enemyList = enemyList.filter( enemy => enemy.type & enemyCombo);
-        let num = Math.min(enemyList.length, rand.arrayPick(data.enemyTypeWeight));
+        let num = Math.min(enemyList.length, rand.arrayPick(floorData.enemyTypeWeight));
 
         if(num) {
           enemyList = rand.shuffle(enemyList);
@@ -180,7 +176,7 @@ function getRooms(zone, floor, flags, seed?,) {
           }
 
           if (pickedEnemies.length) {
-            let remainingDifficulty = data.difficulty + difficultyAdjustemnt;
+            let remainingDifficulty = floorData.difficulty + difficultyAdjustemnt;
             const totalOfType = [];
 
             for (const enemy of pickedEnemies) {
@@ -208,4 +204,3 @@ function getRooms(zone, floor, flags, seed?,) {
     return null;
   }
 }
-      

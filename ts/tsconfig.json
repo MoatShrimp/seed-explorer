@@ -22,7 +22,7 @@
     "mapping/rooms.ts",
     "mapping/enemies.ts",
     "mapping/ZoneData.ts",
-    "mapping/getZoneData.ts",
+    "mapping/getFloorData.ts",
     "mapping/roomOptions.ts",
     "mapping/encounters.ts",
     "mapping/getRooms.ts",
