@@ -12,7 +12,7 @@ const maps = {
 		levels: [
       [
 			  rooms("begin", "easy", "easy", "easy", "end"),
-        rooms.multi(
+        ...rooms.multi(
           "relicUnlocked",
           "treasureBasic",
           "treasureBasicChance",
@@ -57,7 +57,7 @@ const maps = {
       ],
       [
         rooms("begin"),
-        rooms("normal", "normal", "normal", "normal", "endBoss"),
+        rooms("normal", "normal", "normal", "normal", "endBossSmall"),
         rooms("prechamber", "nextDown"),
         ...rooms.multi(
           "relic",
@@ -136,7 +136,7 @@ const maps = {
       ],
       [
         rooms("begin"),
-        rooms("normal", "normalLarge", "normal", "normalLarge", "endBoss"),
+        rooms("normal", "normalLarge", "normal", "normalLarge", "endBossSmall"),
         rooms("prechamber", "nextDown"),
         ...rooms.multi(
           "relic",
@@ -162,14 +162,14 @@ const maps = {
     levels: [
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-        rooms.multi(
+        ...rooms.multi(
           "dibble",
           "relic",
           "treasure",
           "treasureChance",
           "shop",
           "altar",
-          "masterKey",
+          "mastersKey",
           "secret",
           "secret",
           "secretChance",
@@ -182,13 +182,13 @@ const maps = {
       ],
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-        rooms.multi(
+        ...rooms.multi(
           "relic",
           "treasure",
           "treasureChance",
           "shop",
           "altar",
-          "masterKey",
+          "mastersKey",
           "secret",
           "secret",
           "secretChance",
@@ -200,13 +200,13 @@ const maps = {
       ],
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-        rooms.multi(
+        ...rooms.multi(
           "relic",
           "treasure",
           "treasureChance",
           "shop",
           "blackRabbit",
-          "masterKey",
+          "mastersKey",
           "secret",
           "secret",
           "secretChance",
@@ -219,13 +219,13 @@ const maps = {
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "endBoss"),
         rooms("prechamber", "nextDown"),
-        rooms.multi(
+        ...rooms.multi(
           "relic",
           "treasure",
           "treasureChance",
           "shop",
           "altar",
-          "masterKey",
+          "mastersKey",
           "secret",
           "secret",
           "secretChance",
@@ -244,14 +244,14 @@ const maps = {
     levels: [
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-        rooms.multi(
+        ...rooms.multi(
           "dibble",
           "relic",
           "treasure",
           "treasureChance",
           "shop",
           "altar",
-          "masterKey",
+          "mastersKey",
           "secret",
           "secret",
           "secretChance",
@@ -270,7 +270,7 @@ const maps = {
     levels: [
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-        rooms.multi(
+        ...rooms.multi(
           "libraryCombat",
           "relic",
           "treasure",
@@ -288,7 +288,7 @@ const maps = {
       ],
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-        rooms.multi(
+        ...rooms.multi(
           "relic",
           "treasure",
           "treasureChance",
@@ -303,7 +303,7 @@ const maps = {
       ],
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-        rooms.multi(
+        ...rooms.multi(
           "relic",
           "treasure",
           "treasureChance",
@@ -321,7 +321,7 @@ const maps = {
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "endBoss"),
         rooms("prechamber", "nextDown"),
-        rooms.multi(
+        ...rooms.multi(
           "relic",
           "treasure",
           "treasureChance",
@@ -343,7 +343,7 @@ const maps = {
     levels: [
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-        rooms.multi(
+        ...rooms.multi(
           "relic",
           "treasure",
           "treasureChance",
@@ -360,7 +360,7 @@ const maps = {
       ],
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-        rooms.multi(
+        ...rooms.multi(
           "relic",
           "treasure",
           "treasureChance",
@@ -375,7 +375,7 @@ const maps = {
       ],
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-        rooms.multi(
+        ...rooms.multi(
           "relic",
           "treasure",
           "treasureChance",
@@ -394,7 +394,7 @@ const maps = {
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "endBoss"),
         rooms("prechamber", "nextDown"),
         rooms("bogPrechamber", "bogDown"),
-        rooms.multi(
+        ...rooms.multi(
           "relic",
           "treasure",
           "treasureChance",
@@ -418,7 +418,7 @@ const maps = {
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "endBoss"),
         rooms("prechamber", "nextDown"),
         rooms("bogPrechamberBug", "bogDownBug"),
-        rooms.multi(
+        ...rooms.multi(
           "relic",
           "treasure",
           "treasureChance",
@@ -440,7 +440,7 @@ const maps = {
     levels: [
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-        rooms.multi(
+        ...rooms.multi(
           "relic",
           "treasure",
           "treasureChance",
@@ -455,7 +455,7 @@ const maps = {
       ],
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-        rooms.multi(
+        ...rooms.multi(
           "relic",
           "treasure",
           "treasureChance",
@@ -469,7 +469,7 @@ const maps = {
       ],
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-        rooms.multi(
+        ...rooms.multi(
           "relic",
           "treasure",
           "treasureChance",
@@ -485,7 +485,7 @@ const maps = {
       ],
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "endBoss"),
-        rooms.multi(
+        ...rooms.multi(
           "relic",
           "treasure",
           "treasureChance",
@@ -506,7 +506,7 @@ const maps = {
     levels: [
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-        rooms.multi(
+        ...rooms.multi(
           "relicExtraCost",
           "treasure",
           "treasureChance",
@@ -522,7 +522,7 @@ const maps = {
       ],
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-        rooms.multi(
+        ...rooms.multi(
           "relicExtraCost",
           "treasure",
           "treasureChance",
@@ -537,7 +537,7 @@ const maps = {
       ],
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-        rooms.multi(
+        ...rooms.multi(
           "relicExtraCost",
           "treasure",
           "treasureChance",
@@ -554,7 +554,7 @@ const maps = {
       ],
       [
         rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "endBoss"),
-        rooms.multi(
+        ...rooms.multi(
           "relicExtraCost",
           "treasure",
           "treasureChance",

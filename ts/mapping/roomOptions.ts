@@ -15,11 +15,11 @@ const roomOptions = {
   relic: {
     icon: icon.relicOn,
     door: door.locked,
-    requirements: !(conditions.hexDesolation),
+    requirements: conditions.noHexDesolation,
   },
   relicUnlocked: {
     icon: icon.relicOn,
-    requirements: !(conditions.hexDesolation),
+    requirements: conditions.noHexDesolation,
   },
   secret: {
     icon: icon.secret,
@@ -275,6 +275,11 @@ const roomOptions = {
     icon: icon.exclamation,
     door: door.secret,
     requirements: conditions.dibblesStoreRoom,
+  },
+  kurtz: {
+    tag: "kurtz",
+    noExit: direction.ns,
+    requirements: conditions.kurtz,
   },
   //special rooms Halls
   threeChests: {

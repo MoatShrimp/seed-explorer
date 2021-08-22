@@ -281,7 +281,8 @@ function loadSave(radio, file) {
             rougeMode: 0,
             hexDesolation: 0,
             discoveredRatBond: 0,
-            discoveredwWaylandBoots: 0,
+            discoveredWaylandBoots: 0,
+            discoveredHungrySpirit: 0,
             relicWhip: 0,
             relicHat: 0,
             relicCircinus: 0,
@@ -341,7 +342,8 @@ function loadSave(radio, file) {
             settingsOut.flags.rougeMode = 0;
             settingsOut.flags.hexDesolation = 0;
             settingsOut.flags.discoveredRatBond = 1;
-            settingsOut.flags.discoveredwWaylandBoots = 1;
+            settingsOut.flags.discoveredWaylandBoots = 1;
+            settingsOut.flags.discoveredHungrySpirit = 1;
             settingsOut.flags.relicWhip = 0;
             settingsOut.flags.relicHat = 0;
             settingsOut.flags.relicCircinus = 0;
@@ -5496,7 +5498,7 @@ const conditions = {
     relicCircinus: (flag) => flag.relicCircinus ?? false,
     relicGuacamole: (flag) => flag.guacamole ?? false,
     relicGuacamoleBug: (flag) => (flag.guacamole > 2) ?? false,
-    hexDesolation: (flag) => flag.hexDesolation ?? false,
+    noHexDesolation: (flag) => !flag.hexDesolation ?? false,
     storyMode: (flag) => flag.storyMode,
     notWhip: (flag) => !flag.whip_enabled,
     storyNotWhip: (flag) => (!flag.whip_enabled && flag.storyMode) ?? false,
@@ -5533,7 +5535,7 @@ const conditions = {
     royalRoadStart: (flag) => (!flag.whip_enabled) ?? false,
     queensRoom: (flag) => (!flag.whip_enabled) ?? false,
     dodsonNotRescued: (flag) => (!flag.peasant1_unlocked && !flag.whip_enabled && flag.storyMode) ?? false,
-    waylandShop: (flag) => ((!flag.discoveredwWaylandBoots || !flag.blacksmith_rescued) && !flag.whip_enabled) ?? false,
+    waylandShop: (flag) => ((!flag.discoveredWaylandBoots || !flag.blacksmith_rescued) && !flag.whip_enabled) ?? false,
     blackRabbitFirst: (flag) => (!flag.black_rabbit_met && !flag.whip_enabled && flag.storyMode) ?? false,
     treasureHunt: (flag) => (!flag.secret_treasure_note && !flag.whip_enabled) ?? false,
     ratFriendship: (flag) => (!flag.discoveredRatBond && !flag.whip_enabled) ?? false,
@@ -5543,6 +5545,7 @@ const conditions = {
     dungeonLibrary: (flag) => (!flag.collector_book && !flag.whip_enabled && flag.storyMode) ?? false,
     dibble: (flag) => (!flag.peasant2_unlocked && !flag.whip_enabled && flag.storyMode) && false,
     dibblesStoreRoom: (flag) => (!flag.peasant2_unlocked && !flag.whip_enabled && flag.storyMode) ?? false,
+    kurtz: (flag) => (flag.storyMode && (!flag.discoveredHungrySpirit || !flag.peasant4_unlocked)) ?? false,
     threeChests: (flag) => (flag.storyMode) ?? false,
     hallLibrary: (flag) => (!flag.whip_enabled && flag.storyMode) ?? false,
     partyPopcornRoom: (flag) => (flag.foundPartyPopcornPotion && !flag.whip_enabled) ?? false,
@@ -5632,13 +5635,14 @@ rooms.list = {
     royalRoad4: { stage: ["large"], tags: "royal_road_4", direction: 1 },
     queenRoom: { stage: ["large"], tags: "queen_room", direction: 1 },
     endBoss: { stage: ["large"], tags: "down_boss", branchWeight: 1 },
+    endBossSmall: { stage: ["small"], tags: "down_boss", branchWeight: 1 },
     bossRoom: { stage: ["extra"], tags: "bossRoom" },
     prechamber: { stage: ["large"], tags: "pre_room", direction: 1 },
     nextDown: { stage: ["small"], tags: "next_entrance", direction: 1 },
-    bogPrechamber: { stage: ["large"], tags: "", direction: 1 },
-    bogDown: { stage: ["small"], tags: "next_entrance", direction: 1 },
-    bogPrechamberBug: { stage: ["large"], tags: "" },
-    bogDownBug: { stage: ["small"], tags: "next_entrance" },
+    bogPrechamber: { stage: ["large"], tags: "pre_bog", direction: 1 },
+    bogDown: { stage: ["small"], tags: "next_entrance_bog", direction: 1 },
+    bogPrechamberBug: { stage: ["large"], tags: "pre_bog" },
+    bogDownBug: { stage: ["small"], tags: "next_entrance_bog" },
     shop: { stage: ["extra"], tags: "shop", branchWeight: 1 },
     shopExtraCost: { stage: ["extra"], tags: "shop", branchWeight: 1, doorCost: "2 keys" },
     marketBaby: { stage: ["extra"], tags: "market_baby" },
@@ -7468,11 +7472,11 @@ const roomOptions = {
     relic: {
         icon: 4,
         door: 4,
-        requirements: !(conditions.hexDesolation),
+        requirements: conditions.noHexDesolation,
     },
     relicUnlocked: {
         icon: 4,
-        requirements: !(conditions.hexDesolation),
+        requirements: conditions.noHexDesolation,
     },
     secret: {
         icon: 7,
@@ -7720,6 +7724,11 @@ const roomOptions = {
         door: 5,
         requirements: conditions.dibblesStoreRoom,
     },
+    kurtz: {
+        tag: "kurtz",
+        noExit: 6,
+        requirements: conditions.kurtz,
+    },
     threeChests: {
         noExit: 9,
         requirements: conditions.storyMode,
@@ -7758,7 +7767,6 @@ const encounters = {
         extra: {
             special: {
                 rooms: [
-                    { tag: "hoody", name: "sleepyHoodyRoom" },
                     { tag: "black_rabbit", name: "BlackRabbit" },
                     { tag: "bossRoom", name: "SandRoom" },
                 ]
@@ -7766,6 +7774,11 @@ const encounters = {
             shop: {
                 rooms: [
                     { weight: 1, name: "Shop", ...roomOptions.shop },
+                ]
+            },
+            hoody: {
+                rooms: [
+                    { weight: 1, name: "sleepyHoodyRoom" },
                 ]
             },
         },
@@ -7837,7 +7850,7 @@ const encounters = {
                     { tag: "tutorial_relic", name: "Relic" },
                     { tag: "tutorial_secret", name: "Secret" },
                     { tag: "end", name: "Normal", icon: 3 },
-                    { tag: "endBoss", name: "Boss", icon: 2 },
+                    { tag: "down_boss", name: "Boss", icon: 2 },
                     { tag: "end_tutorial", name: "Tutorial", icon: 3 },
                     { tag: "next_entrance", name: "DungeonEntrance", ...roomOptions.dungeonEntrance },
                 ]
@@ -7927,9 +7940,9 @@ const encounters = {
             },
             treasureBasic: {
                 rooms: [
-                    { weight: 1, name: "Skeleton", difficulty: [0.25, 0] },
-                    { weight: 1, name: "Rocks" },
-                    { weight: 1, name: "Plain" },
+                    { weight: 1, name: "Skeleton", difficulty: [0.5, 0] },
+                    { weight: 1, name: "Rocks", difficulty: [0.5, 0] },
+                    { weight: 1, name: "Plain", difficulty: [0.5, 0] },
                 ]
             },
             altar: {
@@ -7972,15 +7985,18 @@ const encounters = {
                     { weight: 2, name: "PillarRocks" },
                     { weight: 2, name: "SpikeDonut" },
                     { weight: 3, name: "RailBrideLoop", prohibitedEnemies: ["bobo"] },
-                    { weight: 3, name: "RailBridge", difficulty: [1, -6] },
+                    { weight: 3, name: "RailBridge", difficulty: [1, -6],
+                        enemies: [enemies.flyRanged, enemies.flyRanged02, enemies.bat,], },
                     { weight: 1, name: "OilBarrels" },
                     { weight: 2, name: "MineField", difficulty: [0.4, 2] },
                     { weight: 2, name: "Bridges", difficulty: [1, -2] },
                     { weight: 2, name: "Spikes" },
                     { weight: 3, name: "CornerNE", noExit: 14, difficulty: [1, 0], prohibitedEnemies: ["bobo"] },
-                    { weight: 1, name: "LandBridgeNS", noExit: 12, difficulty: [1, 0] },
+                    { weight: 1, name: "LandBridgeNS", noExit: 12, difficulty: [1, 0],
+                        enemies: [enemies.flyRanged,], },
                     { weight: 2, name: "DualPillars" },
-                    { weight: 2, name: "SpikeBridge", noExit: 6, difficulty: [0, 0] },
+                    { weight: 2, name: "SpikeBridge", noExit: 6, difficulty: [0, 0],
+                        enemies: [enemies.flyRanged,], },
                     { weight: 3, name: "CornerSW", noExit: 5, difficulty: [1, 0], prohibitedEnemies: ["bobo"] },
                     { weight: 2, name: "RockCross" },
                     { weight: 2, name: "SlotHoles" },
@@ -8018,7 +8034,7 @@ const encounters = {
             },
             special: {
                 rooms: [
-                    { tag: "RockMimicEncounter", name: "RockMimic", ...roomOptions.rockMimic, difficulty: [1, 0] },
+                    { tag: "RockMimicEncounter", name: "RockMimic", ...roomOptions.rockMimic },
                     { tag: "mushroom", name: "MushroomDarkness", ...roomOptions.mushroomPurple, difficulty: [1, 0] },
                     { tag: "mushroom_apprentice", name: "AlchemistApprentice0", ...roomOptions.alchemistApprentice0 },
                     { tag: "mushroom_apprentice", name: "AlchemistApprentice3", ...roomOptions.alchemistApprentice3 },
@@ -8070,18 +8086,18 @@ const encounters = {
             },
             treasure: {
                 rooms: [
-                    { weight: 3, name: "ItemBlocks" },
-                    { weight: 3, name: "SpikedChest", noExit: 3 },
+                    { weight: 3, name: "ItemBlocks", difficulty: [0, -2] },
+                    { weight: 3, name: "SpikedChest", noExit: 3, difficulty: [0, 1] },
                     { weight: 3, name: "HoleSpikeChest", noExit: 4, difficulty: [1, 0] },
-                    { weight: 3, name: "TorchPuzzle", difficulty: [1, 0] },
-                    { weight: 3, name: "SpikeRails", noExit: 9 },
-                    { weight: 3, name: "BridgePuzzle", noExit: 6 },
-                    { weight: 3, name: "BombPuzzle" },
+                    { weight: 3, name: "TorchPuzzle", difficulty: [1, -2] },
+                    { weight: 3, name: "SpikeRails", noExit: 9, difficulty: [0, -2] },
+                    { weight: 3, name: "BridgePuzzle", noExit: 6, difficulty: [0, -2] },
+                    { weight: 3, name: "BombPuzzle", difficulty: [0, -2] },
                     { weight: 4, name: "JustSomeTreasure", noExit: 1 },
-                    { weight: 2, name: "LeverBridge", noExit: 4 },
-                    { weight: 3, name: "VerticalBridge" },
-                    { weight: 4, name: "Decision", noExit: 3 },
-                    { weight: 3, name: "HealthLever" },
+                    { weight: 2, name: "LeverBridge", noExit: 4, difficulty: [0, -2] },
+                    { weight: 3, name: "VerticalBridge", difficulty: [0, -2] },
+                    { weight: 4, name: "Decision", noExit: 3, difficulty: [0, -2] },
+                    { weight: 3, name: "HealthLever", difficulty: [0, -2] },
                     { weight: 5, name: "SecretShop", ...roomOptions.secretShop },
                     { weight: 2, name: "OilChest", difficulty: [0.5, -6] },
                     { weight: 2, name: "FireyChest" },
@@ -8091,7 +8107,7 @@ const encounters = {
                     { weight: 1, name: "TwoBombsOneKey" },
                     { weight: 2, name: "SpikeSacrifice" },
                     { weight: 2, name: "Choice" },
-                    { weight: 2, name: "DoubleRail" },
+                    { weight: 2, name: "DoubleRail", difficulty: [0, -2] },
                     { weight: 1, name: "RockLock", difficulty: [0.5, -4] },
                 ]
             },
@@ -8159,8 +8175,9 @@ const encounters = {
                     { tag: "hoodie_entrance", name: "Hoodie_Locked", ...roomOptions.hoodieDungeonLocked },
                     { tag: "hoodie_entrance", name: "Hoodie_Unlocked", ...roomOptions.hoodieDungeonUnlocked },
                     { tag: "tribute_fountain", name: "TributeFountain", ...roomOptions.fountain },
-                    { tag: "next_entrance", name: "DungeonEntrance", ...roomOptions.dungeonEntrance },
-                    { tag: "end", name: "End", icon: 3 },
+                    { tag: "next_entrance", name: "HallEntrance", ...roomOptions.dungeonEntrance },
+                    { tag: "end", name: "Normal", icon: 3 },
+                    { tag: "endBoss", name: "Boss", icon: 2 },
                     { tag: "down_boss", name: "Boss", icon: 2 },
                 ]
             },
@@ -8228,7 +8245,7 @@ const encounters = {
             hidden: {
                 default: roomOptions.hidden,
                 rooms: [
-                    { weight: 10, name: "Kurtz", tag: "kurtz", noExit: 6 },
+                    { weight: 10, name: "Kurtz", ...roomOptions.kurtz },
                     { weight: 3, name: "DoubleChest" },
                     { weight: 3, name: "GoldStatue" },
                     { weight: 3, name: "WaterChest" },
@@ -8399,6 +8416,7 @@ const encounters = {
                     { tag: "masters_key", name: "MastersKey", ...roomOptions.mastersKey },
                     { tag: "down_boss", name: "StonelordEntrance", ...roomOptions.bossRoom },
                     { tag: "relic_altar", name: "RelicAltar", ...roomOptions.relicAltar },
+                    { tag: "pre_room", name: "BeforeHallEntrance", ...roomOptions.dungeonEntrance },
                 ]
             },
             relic: {
@@ -8448,12 +8466,6 @@ const encounters = {
                     { weight: 1, name: "Torches" },
                 ]
             },
-            end: {
-                rooms: [
-                    { weight: 1, name: "End", icon: 3, tag: "end" },
-                    { weight: 1, name: "Boss", icon: 2, tag: "end_boss" },
-                ]
-            },
             normal: {
                 default: { difficulty: [1, -4] },
                 rooms: [
@@ -8485,6 +8497,9 @@ const encounters = {
                     { tag: "hoodie_entrance", name: "Hoodie_Unlocked", ...roomOptions.hoodieHallUnlocked },
                     { tag: "hall_library", name: "Library", ...roomOptions.hallLibrary },
                     { tag: "tribute_fountain", name: "TributeFountain", ...roomOptions.fountain },
+                    { tag: "next_entrance", name: "CavernEntrance", ...roomOptions.dungeonEntrance },
+                    { tag: "end", name: "Normal", icon: 3 },
+                    { tag: "endBoss", name: "Boss", icon: 2 },
                 ]
             },
             relic: {
@@ -8505,7 +8520,7 @@ const encounters = {
             },
             treasure: {
                 rooms: [
-                    { weight: 2, name: "SetPiece" },
+                    { weight: 2, name: "SetPiece", difficulty: [0.4, -6] },
                     { weight: 3, name: "ChestSpawner" },
                     { weight: 3, name: "HalfEast", noExit: 4 },
                     { weight: 3, name: "HalfWest", noExit: 2 },
@@ -8611,8 +8626,8 @@ const encounters = {
                     { weight: 2, name: "DonutSpinner", direction: 6, difficulty: [1, -4] },
                     { weight: 3, name: "HazardHeavy" },
                     { weight: 2, name: "GargoyleHall", difficulty: [1, -4] },
-                    { weight: 2, name: "EWBridgeThin", direction: 6, difficulty: [1, -8] },
-                    { weight: 3, name: "EWBridgeThick", direction: 6, difficulty: [1, -10] },
+                    { weight: 2, name: "EWBridgeThin", direction: 6, difficulty: [0.8, -8] },
+                    { weight: 3, name: "EWBridgeThick", direction: 6, difficulty: [0.8, -10] },
                     { weight: 3, name: "SpiderDen" },
                     { weight: 4, name: "ChessBoard" },
                     { weight: 5, name: "CrossHole" },
@@ -8693,6 +8708,7 @@ const encounters = {
                     { tag: "down_boss", name: "ShadowlordEntrance", ...roomOptions.bossRoom },
                     { tag: "hall_library_combat_arena", name: "CombatWave", ...roomOptions.hallLibraryCombat },
                     { tag: "relic_altar", name: "RelicAltar", ...roomOptions.relicAltar },
+                    { tag: "pre_room", name: "BeforeCavernEntrance", ...roomOptions.dungeonEntrance },
                 ]
             },
             challange: {
@@ -8722,12 +8738,6 @@ const encounters = {
                     { weight: 1, name: "PillarHole" },
                     { weight: 1, name: "Pillars" },
                     { weight: 1, name: "Round" },
-                ]
-            },
-            end: {
-                rooms: [
-                    { weight: 1, name: "End", icon: 3, tag: "end" },
-                    { weight: 1, name: "Boss", icon: 2, tag: "end_boss" },
                 ]
             },
             normal: {
@@ -8767,6 +8777,10 @@ const encounters = {
                     { tag: "hidden_campsite", name: "HiddenCampsite", door: 2 },
                     { tag: "hidden_hallway", name: "HiddenHallway", noExit: 12 },
                     { tag: "tribute_fountain", name: "TributeFountain", ...roomOptions.fountain },
+                    { tag: "end", name: "Normal", icon: 3 },
+                    { tag: "endBoss", name: "Boss", icon: 2 },
+                    { tag: "next_entrance", name: "CoreEntrance", ...roomOptions.dungeonEntrance },
+                    { tag: "next_entrance_bog", name: "BogEntrance", ...roomOptions.dungeonEntrance },
                 ]
             },
             relic: {
@@ -8977,6 +8991,8 @@ const encounters = {
                 rooms: [
                     { tag: "down_boss", name: "PonzuEntrance", ...roomOptions.bossRoom },
                     { tag: "relic_altar", name: "RelicAltar", ...roomOptions.relicAltar },
+                    { tag: "pre_room", name: "BeforeCoreEntrance", ...roomOptions.dungeonEntrance },
+                    { tag: "pre_bog", name: "BeforeBogEntrance", ...roomOptions.dungeonEntrance },
                 ]
             },
             challange: {
@@ -9006,12 +9022,6 @@ const encounters = {
                     { weight: 1, name: "Pillars" },
                     { weight: 1, name: "Holes" },
                     { weight: 1, name: "Blocks" },
-                ]
-            },
-            end: {
-                rooms: [
-                    { weight: 1, name: "End", icon: 3, tag: "end" },
-                    { weight: 1, name: "Boss", icon: 2, tag: "end_boss" },
                 ]
             },
             normal: {
@@ -9049,6 +9059,8 @@ const encounters = {
             special: {
                 rooms: [
                     { tag: "core_entrance", name: "Entrance", ...roomOptions.nextAreaEntrance },
+                    { tag: "end", name: "Normal", icon: 3 },
+                    { tag: "endBoss", name: "Boss", icon: 2 },
                 ]
             },
             relic: {
@@ -9275,6 +9287,8 @@ const encounters = {
                 rooms: [
                     { tag: "down_boss", name: "SeerEntrance", ...roomOptions.bossRoom },
                     { tag: "relic_altar", name: "RelicAltar", ...roomOptions.relicAltar },
+                    { tag: "end", name: "Normal", icon: 3 },
+                    { tag: "endBoss", name: "Boss", icon: 2 },
                 ]
             },
             challange: {
@@ -9307,12 +9321,6 @@ const encounters = {
                     { weight: 1, name: "PressurePlate" },
                 ]
             },
-            end: {
-                rooms: [
-                    { weight: 1, name: "End", icon: 3, tag: "end" },
-                    { weight: 1, name: "Boss", icon: 2, tag: "end_boss" },
-                ]
-            },
             normal: {
                 default: { difficulty: [1, -22] },
                 rooms: [
@@ -9339,6 +9347,8 @@ const encounters = {
             special: {
                 rooms: [
                     { tag: "bog_entrance", name: "Entrance", ...roomOptions.nextAreaEntrance },
+                    { tag: "end", name: "Normal", icon: 3 },
+                    { tag: "endBoss", name: "Boss", icon: 2 },
                 ]
             },
             relic: {
@@ -9658,15 +9668,12 @@ function getRooms(floor, seed) {
     }
     function getRoom(room) {
         if (room.chance && !rand.chance(room.chance)) {
-            console.log(`%cSkipping ${room.tags}, failed chance`, "color: #bada55");
             return null;
         }
         else if (room.floorChance && !rand.chance(room.floorChance(floorData.floor))) {
-            console.log(`%cSkipping ${room.tags}, failed floorChance`, "color: #bada55");
             return null;
         }
         if (room.requirements && !room.requirements(flags)) {
-            console.log(`%cSkipping ${room.tags}, failed requirements`, "color: #daba55");
             return null;
         }
         const usedZone = encounters[room.zone] ?? encounters[map.default.zone];
@@ -9682,23 +9689,29 @@ function getRooms(floor, seed) {
                     return (!seenRooms.includes(current) &&
                         (!withDefault.requirements || withDefault.requirements(flags)));
                 });
-                foundRoom = rand.getWeightedTable(filteredRooms);
-                if (foundRoom) {
-                    seenRooms.push(foundRoom);
-                    const withDefault = { ...usedZone[stage][tag]?.default, ...foundRoom };
-                    roomOut = { name: `${floorData.map}_${stage}_${tag}_${withDefault.name}`, sequence: withDefault.sequence, door: withDefault.door ?? "normal" };
-                    if (foundRoom.weightedDoor) {
-                        roomOut.door = rand.getWeightedTable(withDefault.weightedDoor).door;
+                if (filteredRooms.length) {
+                    foundRoom = rand.getWeightedTable(filteredRooms);
+                    if (foundRoom) {
+                        seenRooms.push(foundRoom);
+                        const withDefault = { ...usedZone[stage][tag]?.default, ...foundRoom };
+                        roomOut = { name: `${floorData.map}_${stage}_${tag}_${withDefault.name}`, sequence: withDefault.sequence, door: withDefault.door ?? "normal" };
+                        if (withDefault.weightedDoor) {
+                            roomOut.door = rand.getWeightedTable(withDefault.weightedDoor).door;
+                        }
+                        else {
+                        }
+                        roomOut.direction = room.direction;
+                        roomOut.enemies = determineEnemies(withDefault);
+                        if (roomOut.enemies) {
+                            console.log(`${roomOut.name} with enemies: ${roomOut.enemies}`);
+                        }
+                        else {
+                            console.log(`${roomOut.name}`);
+                        }
+                        break;
                     }
-                    else {
-                    }
-                    roomOut.direction = room.direction;
-                    roomOut.enemies = determineEnemies(withDefault);
-                    console.log(`${roomOut.name} with enemies: ${roomOut.enemies}`);
-                    break;
                 }
                 else {
-                    console.log(`No room for tag: "${tag}" found`);
                     roomOut = null;
                 }
             }
@@ -9724,7 +9737,6 @@ function getRooms(floor, seed) {
                     break;
                 }
                 else {
-                    console.log(`%cSkipping ${room.tags}, failed internal requirements`, "color: #daba55");
                     roomOut = null;
                 }
             }
@@ -9813,7 +9825,7 @@ const maps = {
         levels: [
             [
                 rooms("begin", "easy", "easy", "easy", "end"),
-                rooms.multi("relicUnlocked", "treasureBasic", "treasureBasicChance", "secret", "secret", "secretChance", "hoody", "hidden", "relicAltar"),
+                ...rooms.multi("relicUnlocked", "treasureBasic", "treasureBasicChance", "secret", "secret", "secretChance", "hoody", "hidden", "relicAltar"),
             ],
             [
                 rooms("begin", "normal", "normal", "normal", "end"),
@@ -9827,7 +9839,7 @@ const maps = {
             ],
             [
                 rooms("begin"),
-                rooms("normal", "normal", "normal", "normal", "endBoss"),
+                rooms("normal", "normal", "normal", "normal", "endBossSmall"),
                 rooms("prechamber", "nextDown"),
                 ...rooms.multi("relic", "altar", "treasure", "treasureChance", "shop", "secret", "secret", "secretChance", "bossRoom", "hidden", "relicAltar"),
             ],
@@ -9852,7 +9864,7 @@ const maps = {
             ],
             [
                 rooms("begin"),
-                rooms("normal", "normalLarge", "normal", "normalLarge", "endBoss"),
+                rooms("normal", "normalLarge", "normal", "normalLarge", "endBossSmall"),
                 rooms("prechamber", "nextDown"),
                 ...rooms.multi("relic", "apprentice", "mushroom", "treasure", "treasureChance", "shop", "secret", "secret", "secretChance", "bossRoom", "hidden", "relicAltar", "fountain"),
             ],
@@ -9863,20 +9875,20 @@ const maps = {
         levels: [
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-                rooms.multi("dibble", "relic", "treasure", "treasureChance", "shop", "altar", "masterKey", "secret", "secret", "secretChance", "priestess", "hoody", "hidden", "relicAltar", "fountain"),
+                ...rooms.multi("dibble", "relic", "treasure", "treasureChance", "shop", "altar", "mastersKey", "secret", "secret", "secretChance", "priestess", "hoody", "hidden", "relicAltar", "fountain"),
             ],
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-                rooms.multi("relic", "treasure", "treasureChance", "shop", "altar", "masterKey", "secret", "secret", "secretChance", "priestess", "hidden", "relicAltar", "fountain"),
+                ...rooms.multi("relic", "treasure", "treasureChance", "shop", "altar", "mastersKey", "secret", "secret", "secretChance", "priestess", "hidden", "relicAltar", "fountain"),
             ],
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-                rooms.multi("relic", "treasure", "treasureChance", "shop", "blackRabbit", "masterKey", "secret", "secret", "secretChance", "priestess", "hidden", "relicAltar", "fountain"),
+                ...rooms.multi("relic", "treasure", "treasureChance", "shop", "blackRabbit", "mastersKey", "secret", "secret", "secretChance", "priestess", "hidden", "relicAltar", "fountain"),
             ],
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "endBoss"),
                 rooms("prechamber", "nextDown"),
-                rooms.multi("relic", "treasure", "treasureChance", "shop", "altar", "masterKey", "secret", "secret", "secretChance", "bossRoom", "priestess", "hidden", "relicAltar", "fountain"),
+                ...rooms.multi("relic", "treasure", "treasureChance", "shop", "altar", "mastersKey", "secret", "secret", "secretChance", "bossRoom", "priestess", "hidden", "relicAltar", "fountain"),
             ],
         ]
     },
@@ -9885,7 +9897,7 @@ const maps = {
         levels: [
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-                rooms.multi("dibble", "relic", "treasure", "treasureChance", "shop", "altar", "masterKey", "secret", "secret", "secretChance", "hoody", "priestess", "hidden", "relicAltar", "fountain"),
+                ...rooms.multi("dibble", "relic", "treasure", "treasureChance", "shop", "altar", "mastersKey", "secret", "secret", "secretChance", "hoody", "priestess", "hidden", "relicAltar", "fountain"),
             ],
         ],
     },
@@ -9894,20 +9906,20 @@ const maps = {
         levels: [
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-                rooms.multi("libraryCombat", "relic", "treasure", "treasureChance", "shop", "altar", "secret", "secret", "secretChance", "hoody", "hidden", "relicAltar", "fountain"),
+                ...rooms.multi("libraryCombat", "relic", "treasure", "treasureChance", "shop", "altar", "secret", "secret", "secretChance", "hoody", "hidden", "relicAltar", "fountain"),
             ],
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-                rooms.multi("relic", "treasure", "treasureChance", "shop", "secret", "secret", "secretChance", "hidden", "relicAltar", "fountain"),
+                ...rooms.multi("relic", "treasure", "treasureChance", "shop", "secret", "secret", "secretChance", "hidden", "relicAltar", "fountain"),
             ],
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-                rooms.multi("relic", "treasure", "treasureChance", "shop", "altar", "blackRabbit", "secret", "secret", "secretChance", "hidden", "relicAltar", "fountain"),
+                ...rooms.multi("relic", "treasure", "treasureChance", "shop", "altar", "blackRabbit", "secret", "secret", "secretChance", "hidden", "relicAltar", "fountain"),
             ],
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "endBoss"),
                 rooms("prechamber", "nextDown"),
-                rooms.multi("relic", "treasure", "treasureChance", "shop", "secret", "secret", "secretChance", "bossRoom", "hidden", "relicAltar", "fountain"),
+                ...rooms.multi("relic", "treasure", "treasureChance", "shop", "secret", "secret", "secretChance", "bossRoom", "hidden", "relicAltar", "fountain"),
             ],
         ],
     },
@@ -9916,21 +9928,21 @@ const maps = {
         levels: [
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-                rooms.multi("relic", "treasure", "treasureChance", "shop", "altar", "secret", "secret", "secretChance", "hoody", "hidden", "relicAltar", "fountain"),
+                ...rooms.multi("relic", "treasure", "treasureChance", "shop", "altar", "secret", "secret", "secretChance", "hoody", "hidden", "relicAltar", "fountain"),
             ],
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-                rooms.multi("relic", "treasure", "treasureChance", "shop", "secret", "secret", "secretChance", "hidden", "relicAltar", "fountain"),
+                ...rooms.multi("relic", "treasure", "treasureChance", "shop", "secret", "secret", "secretChance", "hidden", "relicAltar", "fountain"),
             ],
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-                rooms.multi("relic", "treasure", "treasureChance", "shop", "altar", "blackReddit", "secret", "secret", "secretChance", "hidden", "relicAltar", "fountain"),
+                ...rooms.multi("relic", "treasure", "treasureChance", "shop", "altar", "blackReddit", "secret", "secret", "secretChance", "hidden", "relicAltar", "fountain"),
             ],
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "endBoss"),
                 rooms("prechamber", "nextDown"),
                 rooms("bogPrechamber", "bogDown"),
-                rooms.multi("relic", "treasure", "treasureChance", "shop", "secret", "secret", "secretChance", "bossRoom", "hidden", "relicAltar", "fountain"),
+                ...rooms.multi("relic", "treasure", "treasureChance", "shop", "secret", "secret", "secretChance", "bossRoom", "hidden", "relicAltar", "fountain"),
             ],
         ]
     },
@@ -9941,7 +9953,7 @@ const maps = {
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "endBoss"),
                 rooms("prechamber", "nextDown"),
                 rooms("bogPrechamberBug", "bogDownBug"),
-                rooms.multi("relic", "treasure", "treasureChance", "shop", "secret", "secret", "secretChance", "bossRoom", "hidden", "relicAltar", "fountain"),
+                ...rooms.multi("relic", "treasure", "treasureChance", "shop", "secret", "secret", "secretChance", "bossRoom", "hidden", "relicAltar", "fountain"),
             ]
         ]
     },
@@ -9950,19 +9962,19 @@ const maps = {
         levels: [
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-                rooms.multi("relic", "treasure", "treasureChance", "shop", "altar", "secret", "secret", "secretChance", "hidden", "relicAltarLastFloors"),
+                ...rooms.multi("relic", "treasure", "treasureChance", "shop", "altar", "secret", "secret", "secretChance", "hidden", "relicAltarLastFloors"),
             ],
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-                rooms.multi("relic", "treasure", "treasureChance", "shop", "secret", "secret", "secretChance", "hidden", "relicAltarLastFloors"),
+                ...rooms.multi("relic", "treasure", "treasureChance", "shop", "secret", "secret", "secretChance", "hidden", "relicAltarLastFloors"),
             ],
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-                rooms.multi("relic", "treasure", "treasureChance", "shop", "altar", "blackRabbit", "secret", "secret", "secretChance", "hidden", "relicAltarLastFloors"),
+                ...rooms.multi("relic", "treasure", "treasureChance", "shop", "altar", "blackRabbit", "secret", "secret", "secretChance", "hidden", "relicAltarLastFloors"),
             ],
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "endBoss"),
-                rooms.multi("relic", "treasure", "treasureChance", "shop", "secret", "secret", "secretChance", "bossRoom", "hidden", "relicAltarLastFloors"),
+                ...rooms.multi("relic", "treasure", "treasureChance", "shop", "secret", "secret", "secretChance", "bossRoom", "hidden", "relicAltarLastFloors"),
             ],
         ],
     },
@@ -9971,19 +9983,19 @@ const maps = {
         levels: [
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-                rooms.multi("relicExtraCost", "treasure", "treasureChance", "shopExtraCost", "altar", "royalRoad0", "secret", "secret", "secretChance", "hidden", "relicAltarLastFloors"),
+                ...rooms.multi("relicExtraCost", "treasure", "treasureChance", "shopExtraCost", "altar", "royalRoad0", "secret", "secret", "secretChance", "hidden", "relicAltarLastFloors"),
             ],
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-                rooms.multi("relicExtraCost", "treasure", "treasureChance", "shopExtraCost", "royalRoad0", "secret", "secret", "secretChance", "hidden", "relicAltarLastFloors"),
+                ...rooms.multi("relicExtraCost", "treasure", "treasureChance", "shopExtraCost", "royalRoad0", "secret", "secret", "secretChance", "hidden", "relicAltarLastFloors"),
             ],
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "end"),
-                rooms.multi("relicExtraCost", "treasure", "treasureChance", "shopExtraCost", "altar", "blackRabbit", "royalRoad0", "secret", "secret", "secretChance", "hidden", "relicAltarLastFloors"),
+                ...rooms.multi("relicExtraCost", "treasure", "treasureChance", "shopExtraCost", "altar", "blackRabbit", "royalRoad0", "secret", "secret", "secretChance", "hidden", "relicAltarLastFloors"),
             ],
             [
                 rooms("begin", "normalLarge", "normal", "normalLarge", "normalLarge", "endBoss"),
-                rooms.multi("relicExtraCost", "treasure", "treasureChance", "shopExtraCost", "royalRoad0", "secret", "secret", "secretChance", "hidden", "bossRoom", "relicAltarLastFloors"),
+                ...rooms.multi("relicExtraCost", "treasure", "treasureChance", "shopExtraCost", "royalRoad0", "secret", "secret", "secretChance", "hidden", "bossRoom", "relicAltarLastFloors"),
             ],
         ]
     }

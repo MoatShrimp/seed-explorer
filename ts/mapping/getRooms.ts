@@ -11,10 +11,8 @@ function getRooms(floor:number, seed?,) {
   const level = map.levels[floorData.index];
   flags.floor_number = floorData.floor;
   let previousRoom = null;
-
   for (const roomGroup of level) {
     output.concat(getAllFromGroup(roomGroup, 1));
-
   }
   return output;
 
@@ -23,6 +21,7 @@ function getRooms(floor:number, seed?,) {
     previousRoom = null;
     const output = [];
     for (const room of roomGroup) {
+      
       const currentRoom = getRoom(room);
       if (currentRoom) {
         output.push(currentRoom);
@@ -38,19 +37,19 @@ function getRooms(floor:number, seed?,) {
   }
 
   function getRoom (room){
-    
-    if (room.chance && !rand.chance(room.chance)) { 
-      console.log(`%cSkipping ${room.tags}, failed chance`, "color: #bada55");
-      return null;       
-    }
-    
-    else if (room.floorChance && !rand.chance(room.floorChance(floorData.floor))) { 
-      console.log(`%cSkipping ${room.tags}, failed floorChance`, "color: #bada55");
-      return null;       
-    }
+    //console.log(rand.state)
 
+    if (room.chance && !rand.chance(room.chance)) { 
+      //console.log(`%cSkipping ${room.tags}, failed chance`, "color: #bada55");
+      return null;
+    }
+    else if (room.floorChance && !rand.chance(room.floorChance(floorData.floor))) { 
+      //console.log(`%cSkipping ${room.tags}, failed floorChance`, "color: #bada55");
+      return null;       
+    }
+   
     if (room.requirements && !room.requirements(flags)) {
-      console.log(`%cSkipping ${room.tags}, failed requirements`, "color: #daba55");
+      //console.log(`%cSkipping ${room.tags}, failed requirements`, "color: #daba55");
       return null; 
     }
     const usedZone = encounters[room.zone] ?? encounters[map.default.zone];
@@ -62,38 +61,44 @@ function getRooms(floor:number, seed?,) {
     let foundRoom = null;
 
     for (const tag of tags) {
-
-      const encounterGroup = usedZone[stage][tag]?.rooms;      
+      
+      const encounterGroup = usedZone[stage][tag]?.rooms;
+      
       if(encounterGroup) {
 
           const filteredRooms = encounterGroup.filter(current => {
             const withDefault = {...usedZone[stage][tag]?.default, ...current};
-          
             return (!seenRooms.includes(current) &&
                     (!withDefault.requirements || withDefault.requirements(flags))
             )
           });
-          //if (filteredRooms.length){
-          foundRoom = rand.getWeightedTable(filteredRooms);
-          if (foundRoom) {
-            seenRooms.push(foundRoom);
-            const withDefault = {...usedZone[stage][tag]?.default, ...foundRoom};
-            roomOut =  {name:`${floorData.map}_${stage}_${tag}_${withDefault.name}`, sequence:withDefault.sequence, door:withDefault.door ?? "normal"};
-            
-            if (foundRoom.weightedDoor) {
-                roomOut.door = rand.getWeightedTable(withDefault.weightedDoor).door;
+          if (filteredRooms.length){
+            foundRoom = rand.getWeightedTable(filteredRooms);
+            if (foundRoom) {
+              seenRooms.push(foundRoom);
+              const withDefault = {...usedZone[stage][tag]?.default, ...foundRoom};
+              roomOut =  {name:`${floorData.map}_${stage}_${tag}_${withDefault.name}`, sequence:withDefault.sequence, door:withDefault.door ?? "normal"};
+              
+              if (withDefault.weightedDoor) {
+                  roomOut.door = rand.getWeightedTable(withDefault.weightedDoor).door;
+              }
+              else {
+                //rand.next;
+              }
+              roomOut.direction = room.direction;
+              roomOut.enemies = determineEnemies(withDefault);
+              if (roomOut.enemies) {
+                console.log(`${roomOut.name} with enemies: ${roomOut.enemies}`);
+              }
+              else {
+                console.log(`${roomOut.name}`);
+              }
+              
+              break;
             }
-            else {
-              //rand.next;
-            }
-            roomOut.direction = room.direction;
-            roomOut.enemies = determineEnemies(withDefault);
-            console.log(`${roomOut.name} with enemies: ${roomOut.enemies}`);
-            
-            break;
           }
           else  {
-            console.log(`No room for tag: "${tag}" found`);
+            //console.log(`No room for tag: "${tag}" found`);
             roomOut = null;
           }
       }
@@ -114,6 +119,7 @@ function getRooms(floor:number, seed?,) {
             if (foundRoom.weightedDoor){
                 roomOut.door = rand.getWeightedTable(foundRoom.weightedDoor).door;
             }
+            
             else {
               //rand.next;
             }
@@ -123,7 +129,7 @@ function getRooms(floor:number, seed?,) {
             break;
           }
           else {
-            console.log(`%cSkipping ${room.tags}, failed internal requirements`, "color: #daba55");
+           //console.log(`%cSkipping ${room.tags}, failed internal requirements`, "color: #daba55");
             roomOut = null; }
       }
     }
@@ -185,6 +191,7 @@ function getRooms(floor:number, seed?,) {
               totalOfType.push(1);
             }
             while (remainingDifficulty > 0 && pickedEnemies.length > 0) {
+              
               const i = rand.range(0, pickedEnemies.length);
               const enemy = pickedEnemies[i];
               if(enemy.difficulty > remainingDifficulty  || (enemy.max > 0 && enemy.max == totalOfType[i])) {

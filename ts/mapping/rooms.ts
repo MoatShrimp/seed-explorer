@@ -63,14 +63,15 @@ rooms.list = {
   queenRoom: {stage:["large"], tags: "queen_room", direction: direction.north},
   //boss
   endBoss: {stage:["large"], tags:"down_boss", branchWeight: 1},
+  endBossSmall: {stage:["small"], tags:"down_boss", branchWeight: 1},
   bossRoom: {stage:["extra"], tags:"bossRoom"},
   //entrance next zone
   prechamber: {stage:["large"], tags:"pre_room", direction: 1},
   nextDown: {stage:["small"], tags:"next_entrance", direction: 1},
-  bogPrechamber: {stage:["large"], tags:"", direction: 1},
-  bogDown: {stage:["small"], tags:"next_entrance", direction: 1},
-  bogPrechamberBug: {stage:["large"], tags:""},
-  bogDownBug: {stage:["small"], tags:"next_entrance"},
+  bogPrechamber: {stage:["large"], tags:"pre_bog", direction: 1},
+  bogDown: {stage:["small"], tags:"next_entrance_bog", direction: 1},
+  bogPrechamberBug: {stage:["large"], tags:"pre_bog"},
+  bogDownBug: {stage:["small"], tags:"next_entrance_bog"},
   //shop
   shop: {stage:["extra"], tags:"shop", branchWeight: 1},
   shopExtraCost: {stage:["extra"], tags:"shop", branchWeight: 1, doorCost:"2 keys"},

@@ -8,7 +8,7 @@ const conditions:Requirements = {
   relicCircinus: (flag) => flag.relicCircinus ?? false,
   relicGuacamole: (flag) => flag.guacamole ?? false,
   relicGuacamoleBug: (flag) => (flag.guacamole > 2) ?? false,
-  hexDesolation: (flag) => flag.hexDesolation ?? false,
+  noHexDesolation: (flag) => !flag.hexDesolation ?? false,
   storyMode: (flag) => flag.storyMode,
   notWhip: (flag) => !flag.whip_enabled,
   storyNotWhip: (flag) => (!flag.whip_enabled && flag.storyMode) ?? false,
@@ -52,7 +52,7 @@ const conditions:Requirements = {
   queensRoom: (flag) => (!flag.whip_enabled) ?? false,
   //mines
   dodsonNotRescued: (flag) => (!flag.peasant1_unlocked && !flag.whip_enabled && flag.storyMode) ?? false,
-  waylandShop: (flag) => ((!flag.discoveredwWaylandBoots || !flag.blacksmith_rescued) && !flag.whip_enabled) ?? false,
+  waylandShop: (flag) => ((!flag.discoveredWaylandBoots || !flag.blacksmith_rescued) && !flag.whip_enabled) ?? false,
   blackRabbitFirst: (flag) => (!flag.black_rabbit_met && !flag.whip_enabled && flag.storyMode) ?? false,
   treasureHunt: (flag) => (!flag.secret_treasure_note && !flag.whip_enabled) ?? false,
   ratFriendship: (flag) => (!flag.discoveredRatBond && !flag.whip_enabled) ?? false,
@@ -63,6 +63,7 @@ const conditions:Requirements = {
   dungeonLibrary: (flag) => (!flag.collector_book && !flag.whip_enabled && flag.storyMode) ?? false,
   dibble: (flag) => (!flag.peasant2_unlocked && !flag.whip_enabled && flag.storyMode) && false,
   dibblesStoreRoom: (flag) => (!flag.peasant2_unlocked && !flag.whip_enabled && flag.storyMode) ?? false,
+  kurtz: (flag) => (flag.storyMode && (!flag.discoveredHungrySpirit || !flag.peasant4_unlocked)) ?? false,
   //hall
   threeChests:(flag) => (flag.storyMode) ?? false,
   hallLibrary: (flag) => (!flag.whip_enabled && flag.storyMode) ?? false,

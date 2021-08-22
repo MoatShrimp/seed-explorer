@@ -60,7 +60,8 @@ function loadSave(radio:HTMLInputElement, file?:string) {
 			rougeMode: 0,
 			hexDesolation: 0,
 			discoveredRatBond: 0,
-			discoveredwWaylandBoots: 0,
+			discoveredWaylandBoots: 0,
+			discoveredHungrySpirit: 0,
 			relicWhip: 0,
 			relicHat: 0,
 			relicCircinus: 0,	
@@ -125,7 +126,8 @@ function loadSave(radio:HTMLInputElement, file?:string) {
 			settingsOut.flags.rougeMode = 0;
 			settingsOut.flags.hexDesolation = 0;
 			settingsOut.flags.discoveredRatBond = 1;
-			settingsOut.flags.discoveredwWaylandBoots = 1;
+			settingsOut.flags.discoveredWaylandBoots = 1;
+			settingsOut.flags.discoveredHungrySpirit = 1;
 			settingsOut.flags.relicWhip = 0;
 			settingsOut.flags.relicHat = 0;
 			settingsOut.flags.relicCircinus = 0;
