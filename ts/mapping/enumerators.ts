@@ -1,0 +1,46 @@
+const enum direction {
+  none,
+  north,
+  east,
+  south,
+  west,
+  ne,
+  ns,
+  nw,
+  nes,
+  new,
+  nsw,
+  es,
+  ew,
+  esw,
+  sw,
+}
+
+const enum icon {
+  none,
+  start,
+  boss,
+  exit,
+  relicOn,
+  altarOn,
+  relicAltar,
+  secret,
+  exclamation,
+  shopBR,
+  shop,
+  combat,
+  new,
+  hoody,
+  fountain,
+  exlamation,
+}
+
+const enum door {
+  normal,
+  iron,
+  rock,
+  crystal,
+  locked,
+  secret,
+  hidden,
+}
