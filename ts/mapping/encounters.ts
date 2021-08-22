@@ -6,7 +6,7 @@ const encounters = {
 				rooms: [
 					{tag:"hoody", name:"sleepyHoodyRoom"},
 					{tag:"black_rabbit", name:"BlackRabbit"},					
-					{tag:"boss", name:"RandRoom"},					
+					{tag:"bossRoom", name:"SandRoom"},
 				]
 			},
 			shop: {
@@ -22,23 +22,6 @@ const encounters = {
 					{weight:4, name:"begin"},
 				]
 			},
-			/*end: {
-				rooms: [
-					{tag:"end", name:"Normal", icon: icon.exit},
-					{tag:"end_worm", name:"Worm", icon: icon.boss},
-					{tag:"end_boss", name:"Boss", icon: icon.boss},
-					{tag:"end_tutorial", name:"Tutorial", icon: icon.exit},
-				]
-			},
-			/*tutorial: [
-					{tag:"begin_tutorial", name:"Begin", ...roomOptions.tutorialBegin},
-					{tag:"tutorial_jump", name:"Jump"},
-					{tag:"tutorial_attack", name:"Attack"},
-					{tag:"tutorial_bomb", name:"Bomb"},
-					{tag:"tutorial_relic", name:"Relic"},
-					{tag:"tutorial_secret", name:"Secret"},
-				]
-			},*/
 			easy: {
 				rooms: [
 					{weight:1, name:"Spinner"},
@@ -100,9 +83,9 @@ const encounters = {
 					{tag:"tutorial_relic", name:"Relic"},
 					{tag:"tutorial_secret", name:"Secret"},
 					{tag:"end", name:"Normal", icon: icon.exit},
-					{tag:"end_worm", name:"Worm", icon: icon.boss},
-					{tag:"end_boss", name:"Boss", icon: icon.boss},
+					{tag:"endBoss", name:"Boss", icon: icon.boss},
 					{tag:"end_tutorial", name:"Tutorial", icon: icon.exit},
+					{tag:"next_entrance", name:"DungeonEntrance", ...roomOptions.dungeonEntrance},					
 				]
 			},
 			relic: {
@@ -288,6 +271,7 @@ const encounters = {
 					{tag:"relic_altar", name:"RelicAltar", ...roomOptions.relicAltar},
 					{tag:"tutorial_throw", name:"Throw", doorOverride: direction.east},
 					{tag:"tutorial_pilfer", name:"Pilfer"},
+					{tag:"pre_room", name:"BeforeDungeonEntrance", ...roomOptions.dungeonEntrance},
 				]
 			},
 			secret: {
@@ -330,11 +314,6 @@ const encounters = {
 					{weight:1, name:"Gap"},
 				]
 			},
-			/*tutorial: [
-					{tag:"tutorial_throw", name:"Throw", doorOverride: direction.east},
-					{tag:"tutorial_pilfer", name:"Pilfer"},
-				]
-			},*/
 			treasure: {
 				rooms: [
 					{weight:3, name:"ItemBlocks"},
@@ -377,7 +356,12 @@ const encounters = {
 					{tag:"hoody", name:"sleepyHoodyRoom"},
 					{tag:"black_rabbit", name:"BlackRabbit"},
 					{tag:"shop", name:"Shop"},
-					{tag:"boss", name:"StoneRoom"},
+					{tag:"boss", name:"SandRoom"},
+				]
+			},
+			shop: {
+				rooms: [
+					{weight:1, name:"Shop", ...roomOptions.shop},
 				]
 			},
 		},
@@ -392,12 +376,12 @@ const encounters = {
 					{weight:2, name:"Begin_Cells"},
 				]
 			},
-			end: {
+			/*end: {
 				rooms: [
 					{weight:1, name:"End", icon: icon.exit, tag:"end"},
-					{weight:1, name:"Boss", icon: icon.boss, tag: "end_boss"},
+					{weight:1, name:"Boss", icon: icon.boss, tag: "endBoss"},
 				]
-			},
+			},*/
 			normal: {
 				default:{difficulty:[1, -2]},
 				rooms: [
@@ -420,14 +404,16 @@ const encounters = {
 			},	
 			special: {
 				rooms: [
-					{tag:"dungeon_entrance", name:"Entrance", ...roomOptions.dungeonEntrance},
-					{tag:"store_room", name:"DibblesStoreRoom", ...roomOptions.dibblesStoreRoom},
-					{tag:"dungeonlibrary", name:"Library", ...roomOptions.dungeonLibrary},
-					{tag:"priestess", name:"PriestessEntrance", ...roomOptions.priestessEntrance},
-					{tag:"hoodie_entrance", name:"Hoodie_Locked", ...roomOptions.hoodieDungeonLocked},
-					{tag:"hoodie_entrance", name:"Hoodie_Unlocked", ...roomOptions.hoodieDungeonUnlocked},
-					{tag:"tribute_fountain", name:"TributeFountain", ...roomOptions.fountain},
-					{tag:"dungeon_entrance", name:"Entrance", ...roomOptions.dungeonEntrance},
+					{tag: "dungeon_entrance", name:"Entrance", ...roomOptions.dungeonEntrance},
+					{tag: "store_room", name:"DibblesStoreRoom", ...roomOptions.dibblesStoreRoom},
+					{tag: "dungeonlibrary", name:"Library", ...roomOptions.dungeonLibrary},
+					{tag: "priestess", name:"PriestessEntrance", ...roomOptions.priestessEntrance},
+					{tag: "hoodie_entrance", name:"Hoodie_Locked", ...roomOptions.hoodieDungeonLocked},
+					{tag: "hoodie_entrance", name:"Hoodie_Unlocked", ...roomOptions.hoodieDungeonUnlocked},
+					{tag: "tribute_fountain", name:"TributeFountain", ...roomOptions.fountain},
+					{tag: "next_entrance", name:"DungeonEntrance", ...roomOptions.dungeonEntrance},
+					{tag: "end", name:"End", icon: icon.exit},
+					{tag: "down_boss", name:"Boss", icon: icon.boss},
 				]
 			},
 			relic: {
@@ -663,7 +649,7 @@ const encounters = {
 					{tag:"priestesshall3", name:"PriestessHall3", ...roomOptions.priestessHall3},
 					{tag:"priestess_main", name:"Priestess", ...roomOptions.priestessMain},
 					{tag:"masters_key", name:"MastersKey", ...roomOptions.mastersKey},
-					{tag:"end_stone", name:"StonelordEntrance", ...roomOptions.bossRoom},
+					{tag:"down_boss", name:"StonelordEntrance", ...roomOptions.bossRoom},
 					{tag:"relic_altar", name:"RelicAltar", ...roomOptions.relicAltar},
 				]
 			},		
@@ -956,7 +942,7 @@ const encounters = {
 			},
 			special: {
 				rooms: [
-					{tag:"end_shadow", name:"ShadowlordEntrance", ...roomOptions.bossRoom},
+					{tag:"down_boss", name:"ShadowlordEntrance", ...roomOptions.bossRoom},
 					{tag:"hall_library_combat_arena", name:"CombatWave", ...roomOptions.hallLibraryCombat},
 					{tag:"relic_altar", name:"RelicAltar", ...roomOptions.relicAltar},
 				]
@@ -1241,7 +1227,7 @@ const encounters = {
 			},
 			special: {
 				rooms: [
-					{tag:"down_crystallord", name:"PonzuEntrance", ...roomOptions.bossRoom},
+					{tag:"down_boss", name:"PonzuEntrance", ...roomOptions.bossRoom},
 					{tag:"relic_altar", name:"RelicAltar", ...roomOptions.relicAltar},
 				]
 			},
@@ -1539,7 +1525,7 @@ const encounters = {
 			},
 			special: {
 				rooms: [
-					{tag:"down_firelord", name:"SeerEntrance", ...roomOptions.bossRoom},
+					{tag:"down_boss", name:"SeerEntrance", ...roomOptions.bossRoom},
 					{tag:"relic_altar", name:"RelicAltar", ...roomOptions.relicAltar},
 				]
 			},
@@ -1838,7 +1824,7 @@ const encounters = {
 			special: {
 				rooms: [
 					{tag:"relic_altar", name:"RelicAltar", ...roomOptions.relicAltar},					
-					{tag:"down_pk", name:"PlunderKingEntrance", ...roomOptions.bossRoom},					
+					{tag:"down_boss", name:"PlunderKingEntrance", ...roomOptions.bossRoom},					
 					{tag:"queen_room", name:"QueensRoom", ...roomOptions.queensRoom},					
 					{tag:"royal_road_4", name:"RoyalRoad_4", ...roomOptions.royalRoad},					
 					{tag:"royal_road_2", name:"RoyalRoad_2", ...roomOptions.royalRoad},					

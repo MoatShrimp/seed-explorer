@@ -12,6 +12,7 @@ function getRooms(zone, floor, flags, seed?,) {
   const output = [];
   const map = maps[zone];
   const level = map.levels[floor - 1];
+  settings.flags.floor_number = data.floorNumber;
   let previousRoom = null;
 
   for (const roomGroup of level) {
@@ -40,15 +41,21 @@ function getRooms(zone, floor, flags, seed?,) {
   }
 
   function getRoom (room){
-    console.log(rand.state);
+    
     if (room.chance && !rand.chance(room.chance)) { 
       console.log(`%cSkipping ${room.tags}, failed chance`, "color: #bada55");
+      return null;       
+    }
+    
+    else if (room.floorChance && !rand.chance(room.floorChance(data.floorNumber))) { 
+      console.log(`%cSkipping ${room.tags}, failed floorChance`, "color: #bada55");
       return null;       
     }
 
     if (room.requirements && !room.requirements(flags)) {
       console.log(`%cSkipping ${room.tags}, failed requirements`, "color: #daba55");
-      return null; }
+      return null; 
+    }
     const usedZone = encounters[room.zone] ?? encounters[map.default.zone];
 
     const stage = room.stage[rand.range(0, room.stage.length)];
@@ -69,33 +76,35 @@ function getRooms(zone, floor, flags, seed?,) {
                     (!withDefault.requirements || withDefault.requirements(flags))
             )
           });
-
+          console.log(filteredRooms);
           //if (filteredRooms.length){
-              foundRoom = rand.getWeightedTable(filteredRooms);
-            if (foundRoom) {
-              seenRooms.push(foundRoom);
-              const withDefault = {...usedZone[stage][tag]?.default, ...foundRoom};
-              roomOut =  {name:`${zone}_${stage}_${tag}_${withDefault.name}`, sequence:withDefault.sequence, door:withDefault.door ?? "normal"};
-              
-              if (foundRoom.weightedDoor) {
-                  roomOut.door = rand.getWeightedTable(withDefault.weightedDoor).door;
-              }
-              else {
-                //rand.next;
-              }
-              roomOut.direction = room.direction;
-              roomOut.enemies = determineEnemies(withDefault);
-              console.log(`${roomOut.name} with enemies: ${roomOut.enemies}`);
-              
-              break;
-         }
-          else roomOut = null;
+          foundRoom = rand.getWeightedTable(filteredRooms);
+          if (foundRoom) {
+            seenRooms.push(foundRoom);
+            const withDefault = {...usedZone[stage][tag]?.default, ...foundRoom};
+            roomOut =  {name:`${zone}_${stage}_${tag}_${withDefault.name}`, sequence:withDefault.sequence, door:withDefault.door ?? "normal"};
+            
+            if (foundRoom.weightedDoor) {
+                roomOut.door = rand.getWeightedTable(withDefault.weightedDoor).door;
+            }
+            else {
+              //rand.next;
+            }
+            roomOut.direction = room.direction;
+            roomOut.enemies = determineEnemies(withDefault);
+            console.log(`${roomOut.name} with enemies: ${roomOut.enemies}`);
+            
+            break;
+          }
+          else  {
+            console.log(`No room for tag: "${tag}" found`);
+            roomOut = null;
+          }
       }
       else {
           const foundRooms = usedZone[stage].special.rooms.filter(
             encounter => (encounter.tag === tag));
           for (const room of foundRooms) {
-            //console.log(`found ${room.name}`)
             if (!room.requirements || room.requirements(flags)) {
               foundRoom = room;
               break;

@@ -1,89 +1,31 @@
-const enum direction {
-  none,
-  north,
-  east,
-  south,
-  west,
-  ne,
-  ns,
-  nw,
-  nes,
-  new,
-  nsw,
-  es,
-  ew,
-  esw,
-  sw,
+const weightedDoors = {
+  altar: [{weight: 1, door: door.normal}, {weight: 1, door: door.locked}],
+  shop: [{weight: 10, door: door.normal}, {weight: 7, door: door.locked}],
 }
-
-const enum icon {
-  none,
-  start,
-  boss,
-  exit,
-  relicOn,
-  altarOn,
-  relicAltar,
-  secret,
-  exclamation,
-  shopBR,
-  shop,
-  combat,
-  new,
-  hoody,
-  fountain,
-  exlamation,
-}
-
-const enum door {
-  normal,
-  iron,
-  rock,
-  crystal,
-  locked,
-  secret,
-  hidden,
-}
-
 const roomOptions = {
   //common rooms
   begin: {
     icon: icon.start,
-    sequence: [{
-      stage:["small"],
-      tags: "hoodie_entrance",
-      direction: direction.north,
-      requirements: (flag) => true,
-    }],
+    sequence: rooms("hoodieTop"),
   },
   shop: {
-    weightedDoor: [
-      {weight:10, door: door.normal},
-      {weight:7, door: door.locked},
-    ],
-    requirements: (flag) => true,
+    weightedDoor: weightedDoors.shop,
+    requirements: conditions.storyMode,
   },
   relic: {
     icon: icon.relicOn,
     door: door.locked,
-    requirements: (f) => !f.itemFreedom,
+    requirements: !(conditions.hexDesolation),
   },
   relicUnlocked: {
     icon: icon.relicOn,
-    requirements: (f) => !f.itemFreedom,
+    requirements: !(conditions.hexDesolation),
   },
   secret: {
     icon: icon.secret,
     door: door.secret,
     reqursion: 1,
-    sequence: [{
-      stage:["small", "large"],
-      tags: "secret",
-      chance: 0.25,
-      requirements: (flag) => (
-        flag.itemCircinus
-      )
-    }]
+    sequence: rooms("circinus"),
   },
   hidden: {
     door: door.hidden,
@@ -91,524 +33,282 @@ const roomOptions = {
   },
   altar: {
     icon: icon.altarOn,
-    sequence: [{stage:["small"], tags: "altar_guacamole"}],
-    weightedDoor: [
-      {weight:1, door: door.normal},
-      {weight:1, door: door.locked},
-    ],
-    requirements: (flag) => (
-      flag.priestess_met > 2
-    ),
+    sequence: rooms("guacamole"),
+    weightedDoor: weightedDoors.altar,
+    requirements: conditions.priestessRescued,
   },
   altarLocked: {
     icon: icon.altarOn,
-    sequence: [{stage:["small"], tags: "altar_guacamole"}],
+    sequence: rooms("guacamole"),
     door: door.locked,
-    requirements: (flag) => (
-      flag.priestess_met > 2
-    ),
+    requirements: conditions.priestessRescued,
   },
   altarGuacamole: {
     icon: icon.altarOn,
     door: door.locked,
-    requirements: (flag) => (
-      false //&& flag.guacamole
-    ),
+    requirements: conditions.relicGuacamole,
   },
   altarGuacamoleBug: {
     icon: icon.altarOn,
     door: door.locked,
-    requirements: (flag) => (
-      false //&& flag.guacamole > 2
-    ),
+    requirements: conditions.relicGuacamoleBug,
   },
   altarAlt: {
     icon: icon.altarOn,
-    sequence: [{
-      stage:["small"],
-      tags: "altar_guacamole",
-      requirements: (flag) => (
-        flag.guacamole > 2
-      ),
-    }],
-    weightedDoor: [
-      {weight:1, door: door.normal},
-      {weight:1, door: door.locked},
-    ],
-    requirements: (flag) => (
-      flag.priestess_met > 2
-    ),
+    sequence: rooms("guacamoleAlt"),
+    weightedDoor: weightedDoors.altar,
+    requirements: conditions.priestessRescued,
   },
   altarLockedAlt: {
     icon: icon.altarOn,
-    sequence: [{
-      stage:["small"],
-      tags: "altar_guacamole",
-      requirements: (flag) => (
-        flag.guacamole > 2
-      ),
-    }],
+    equence: rooms("guacamoleAlt"),
     door: door.locked,
-    requirements: (flag) => (
-      flag.priestess_met > 2
-    ),
+    requirements: conditions.priestessRescued,
   },
   altarGuacamoleAlt: {
     icon: icon.altarOn,
     door: door.locked,
-    requirements: (flag) => (
-      flag.priestess_met > 2
-    ),
+    requirements: conditions.priestessRescued,
   },
   fountain: {
     icon: icon.fountain,
-    requirements: (flag) => (
-      flag.storyMode && 
-      !flag.ribute_fountain_encountered && 
-      flag.bog_unlocked
-    ),
+    requirements: conditions.noFountain,
   },
   secretFountain: {
     icon: icon.fountain,
-    requirements: (flag) => (
-      true || flag.storyMode &&
-      flag.bog_unlocked
-    ),
+    requirements: conditions.secretFountain,
   },
   bard: {
-    requirements: (f) => !f.bard_met,
+    requirements: conditions.notBardMet,
   },
   relicAltar: {
     icon: icon.relicAltar,
-    upgrade: "relicAltar",
-    requirements: (flag) => (
-      !flag.altar_encountered &&
-      !flag.whip_enabled
-    ),
+    upgrade: (flag) => flag.relicAltar = 1,
+    requirements: conditions.relicAltar,
   },
   blackRabbitShop:{
-    requirements: (flag) => (
-      flag.black_rabbit_met > 0
-    ),
+    requirements: conditions.blackRabbitMet,
   },
   secretShop: {
     icon: icon.shop,
     door: door.crystal,
-    requirements: (flag) => (
-      flag.peasant2_unlocked &&
-      (flag.dibble_upgrade_count < 4) &&
-      flag.storyMode
-    ),
+    requirements: conditions.secretShop,
   },
   talismanSpawn: {
-    requirements: (flag) => (
-      flag.priestess_met > 2
-    ),
+    requirements: conditions.priestessRescued,
   },
   bossRoom: {
     icon: icon.boss,
-    requirements: (flag) => (
-      flag.storyMode
-    ),
+    requirements: conditions.storyMode,
   },
   nextAreaEntrance: {
     icon: icon.exit,
     noExit: direction.new,
-    door: door.iron,						
-    requirements: (flag) => (
-      flag.storyMode
-    ),
+    door: door.iron,
+    requirements: conditions.storyMode,
   },
-
   //shops
   undergroundMarket: {
     subFloor:1,
-    sequence: [
-      {tags: "market_baby"},
-      {tags: "market_baby", direction: direction.east},
-    ],
+    sequence: rooms("marketBaby"),
   },
   storeRoom: {
     subFloor:1,
     icon: icon.none,
     door: door.hidden,
-    requirements: (flag) => (
-      flag.rougeMode
-    )
+    requirements: conditions.rougeMode,
   },
-
   //hoodie rooms
   hoodieMineLocked: {
-    icon: icon.hoody,
-    requirements: (flag) => false && (
-      flag.rockmimic_defeated && 
-      flag.hoodie_met_mine && 
-      (flag.floor_number == 1) && 
-      flag.storyMode
-    ),
+    door: door.crystal,
+    requirements: conditions.hoodieMineL,
   },
   hoodieMineUnlocked: {
     icon: icon.hoody,
-    requirements: (flag) => false && (
-      flag.rockmimic_defeated && 
-      flag.hoodie_met_mine && 
-      (flag.floor_number == 1) && 
-      flag.storyMode
-    ),
+    requirements: conditions.hoodieMineU,
   },
   hoodieDungeonLocked: {
     door: door.crystal,
-    requirements: (flag) => (
-      !flag.hoodie_met_dungeon &&
-      (flag.floor_number == 5) &&
-      flag.storyMode
-    ),
+    requirements: conditions.hoodieDungeonL,
   },
   hoodieDungeonUnlocked: {
     icon: icon.hoody,
-    requirements: (flag) => (
-      flag.hoodie_met_dungeon &&
-      (flag.floor_number == 5) &&
-      flag.storyMode
-    ),
+    requirements: conditions.hoodieDungeonU,
   },
   hoodieHallLocked: {
     door: door.crystal,
-    requirements: (flag) => (
-      (!flag.hoodie_met_hall &&
-      (flag.floor_number == 11) &&
-      flag.storyMode) ?? false
-    ),
+    requirements: conditions.hoodieHallL,
   },
   hoodieHallUnlocked: {
     icon: icon.hoody,
-    requirements: (flag) => (
-      (flag.hoodie_met_hall &&
-      (flag.floor_number == 11) &&
-      flag.storyMode) ?? false
-    ),
+    requirements: conditions.hoodieHallU,
   },
   hoodieCavernLocked: {
     door: door.crystal,
-    requirements: (flag) => (
-      !flag.hoodie_met_cavern &&
-      (flag.floor_number == 16) &&
-      flag.storyMode
-    ),
+    requirements: conditions.hoodieCavernL,
   },
   hoodieCavernUnlocked: {
     icon: icon.hoody,
-    requirements: (flag) => (
-      flag.hoodie_met_cavern &&
-      (flag.floor_number == 16) &&
-      flag.storyMode
-    ),
+    requirements: conditions.hoodieCavernU,
   },
-
   //dogs
   dogShadow: {
-    requirements: (flag) => (
-      !flag.dog_shadow_found &&
-      (flag.delve_count > 5) &&
-      !flag.whip_enabled
-    ),
+    requirements: conditions.dogShadow,
   },
   dogEngine: {
-    requirements: (flag) => (
-      !flag.dog_engine_found &&
-      (flag.delve_count > 6) &&
-      !flag.whip_enabled
-    ),
+    requirements: conditions.dogEngine,
   },
   dogDillion: {
-    requirements: (flag) => (
-      !flag.dog_dillon_found &&
-      (flag.delve_count > 7) &&
-      !flag.whip_enabled
-    ),
+    requirements: conditions.dogDillion,
   },
-
   //mushroom quest
   alchemistApprentice0: {
     icon: icon.exclamation,
-    requirements: (flag) => (
-      !flag.apprentice_met && 
-      flag.blacksmith_rescued && 
-      !flag.whip_enabled && 
-      flag.storyMode
-    ),
+    requirements: conditions.alchemistApprentice0,
   },
   alchemistApprentice3: {
     icon: icon.exclamation,
-    requirements: (flag) => (
-      (flag.apprentice_met == 4) && 
-      flag.blacksmith_rescued && 
-      !flag.whip_enabled && 
-      flag.storyMode
-    ),
+    requirements: conditions.alchemistApprentice3,
   },
   mushroomPurple: {
     door: door.rock,
-    requirements: (flag) => (
-      !flag.mushroom_purple && 
-      flag.apprentice_met && 
-      !flag.whip_enabled && 
-      flag.storyMode
-    ),
+    requirements: conditions.mushroomPurple,
   },
   mushroomGreen: {
     noExit: direction.north,
     door: door.rock,
-    requirements: (flag) => (
-      !flag.mushroom_green && 
-      flag.apprentice_met && 
-      !flag.whip_enabled && 
-      flag.storyMode
-    ),
+    requirements: conditions.mushroomGreen,
   },
   mushroomBlue: {
-    requirements: (flag) => (
-      !flag.mushroom_blue && 
-      flag.apprentice_met && 
-      !flag.whip_enabled && 
-      flag.storyMode
-    ),
+    requirements: conditions.mushroomBlue,
   },
-
   //priestess
   priestessEntrance: {
-    sequence: [{tags: "priestesshall1"}],
-    requirements: (flag) => (
-      !flag.priestess_met &&
-      !flag.whip_enabled &&
-      flag.storyMode
-    ),
+    sequence: rooms("priestesshall1"),
+    requirements: conditions.priestessEntrance,
   },
   priestessHall1: {
     noExit: direction.ew,
-    requirements: (flag) => (
-      !flag.whip_enabled &&
-      flag.storyMode
-    ),
+    requirements: conditions.storyNotWhip,
   },
   priestessHall2: {
     noExit: direction.ew,
-    requirements: (flag) => (
-      !flag.whip_enabled &&
-      flag.storyMode
-    ),
+    requirements: conditions.storyNotWhip,
   },
   priestessHall3: {
     noExit: direction.ew,
-    requirements: (flag) => (
-      !flag.whip_enabled &&
-      flag.storyMode
-    ),
+    requirements: conditions.storyNotWhip,
   },
   priestessMain: {
     icon: icon.exclamation,
-    noExit: direction.new,						
-    requirements: (flag) => (
-      !flag.peasant2_unlocked &&
-      !flag.whip_enabled &&
-      flag.storyMode
-    )											
+    noExit: direction.new,
+    requirements: conditions.storyNotWhip,
   },
   mastersKey: {
     icon: icon.boss,
-    noExit: direction.new,						
-    requirements: (flag) => (
-      flag.priestess_met && !flag.masters_key && !flag.whip_enabled && flag.storyMode
-    )											
+    noExit: direction.new,
+    requirements: conditions.mastersKey,
   },
-
   //Bog Trials
   royalRoad:{
     icon: icon.secret,
-    requirements: (flag) => (
-      !flag.whip_enabled
-    ),
+    requirements: conditions.notWhip,
   },
   royalRoadStart:{
-    requirements: (flag) => (
-      !flag.whip_enabled
-    ),
-    sequence: [
-      {tags: "royal_road_1", direction: direction.east},
-      {tags: "royal_road_2", direction: direction.north},
-      {tags: "royal_road_3", direction: direction.west},
-      {tags: "royal_road_4", direction: direction.north},
-      {tags: "queen_room", direction: direction.north},
-    ],
+    requirements: conditions.notWhip,
+    sequence: rooms("royalRoad1", "royalRoad2", "royalRoad3", "royalRoad4", "queenRoom",),
   },
   queensRoom:{
-    requirements: (flag) => (
-      !flag.whip_enabled
-    ),
+    requirements: conditions.notWhip,
   },
-
   //tutorial
   tutorialBegin: {
     icon: icon.start,
-		sequence: [{
-      tags: "tutorial_secret",
-      direction: direction.north
-    }],
+    sequence: rooms("tuSecret"),
   },
-
   //special rooms Mines
   dodson: {
-    icon: icon.exclamation,						
-    requirements: (flag) => (
-      !flag.peasant1_unlocked && 
-      !flag.whip_enabled && 
-      flag.storyMode
-    ),
+    icon: icon.exclamation,
+    requirements: conditions.dodsonNotRescued,
   },
   wayland: {
-    requirements: (flag) => (
-      (!flag.waylandBootsFound || !flag.blacksmith_rescued) && 
-      !flag.whip_enabled && 
-      flag.storyMode
-    ),
+    requirements: conditions.waylandShop,
   },
   blackRabbitFirst: {
     icon: icon.shopBR,
     noExit: direction.nsw,
-    requirements: (flag) => (
-      !flag.black_rabbit_met && 
-      !flag.whip_enabled && 
-      flag.storyMode
-    ),
-  },  
+    requirements: conditions.blackRabbitFirst,
+  },
   treasureHunt: {
     noExit: direction.north,
-    requirements: (flag) => (
-      !flag.secret_treasure_note &&
-      !flag.whip_enabled
-    ),
+    upgrade: (flag) => flag.secret_treasure_note = 1,
+    requirements: conditions.treasureHunt,
   },
   ratFriendship: {
     tags: "mrrat",
-    requirements: (flag) => (
-      !flag.discoveredRatBond &&
-      !flag.whip_enabled
-    ),
-  },  
-  rockMimic:{					
-    requirements: (flag) => (
-      !flag.prisoner_key && 
-      !flag.whip_enabled && 
-      flag.storyMode
-    ),
-  },  
+    requirements: conditions.ratFriendship,
+  },
+  rockMimic:{
+    requirements: conditions.rockMimic,
+  },
   dangerousToGo: {
     noExit: direction.new,
-    requirements: (flag) => (
-      flag.delve_count > 8
-    ),
-  },  
-
+    requirements: conditions.dangerousToGo,
+  },
   //special rooms Dungeon
   dungeonEntrance: {
     icon: icon.exit,
-    door: door.iron,						
-    requirements: (flag) => (
-      flag.storyMode
-    ),
-  },  
+    door: door.iron,
+    requirements: conditions.storyMode,
+  },
   dungeonLibrary: {
     door: door.locked,
-    requirements: (flag) => (
-      !flag.collector_book &&
-      !flag.whip_enabled &&
-      flag.storyMode
-    ),
+    requirements: conditions.dungeonLibrary,
   },
   dibble: {
-    icon: icon.exclamation,						
+    icon: icon.exclamation,
     noExit: direction.ew,
-    sequence: [{tags: "store_room", direction: direction.north}],						
-    requirements: (flag) => (
-      !flag.peasant2_unlocked&& !flag.whip_enabled && flag.storyMode
-    )											
+    sequence: rooms("storeRoom"),
+    requirements: conditions.dibble,
   },
   dibblesStoreRoom: {
     icon: icon.exclamation,
     door: door.secret,
-    requirements: (flag) => (
-      !flag.peasant2_unlocked &&
-      !flag.whip_enabled &&
-      flag.storyMode
-    ),
+    requirements: conditions.dibblesStoreRoom,
   },
-
   //special rooms Halls
   threeChests: {
     noExit: direction.new,
-    requirements: (flag) => (
-      flag.storyMode
-    ),
+    requirements: conditions.storyMode,
   },
   hallLibrary: {
     icon: icon.exclamation,
-    requirements: (flag) => (
-      !flag.whip_enabled && flag.storyMode
-    ),
+    requirements: conditions.storyNotWhip,
   },
   pitSpikes: {
-    sequence: [{
-      tags: "hall_hidden_three_chests",
-      direction: direction.east
-    }],
+    sequence: rooms("threeChests"),
   },
   secretEast: {
     noExit: direction.ns,
-    sequence: [{
-      stage:["small", "large"],
-      tags: "secret",
-      direction: direction.east
-    }]
+    sequence: rooms("secretEast"),
   },
   partyPopcornRoom: {
-    requirements: (flag) => (
-      flag.foundPartyPopcornPotion &&
-      !flag.whip_enabled
-    ),
+    requirements: conditions.partyPopcornRoom,
   },
   hallLibraryCombat: {
     noExit: direction.ew,
-    sequence: [{
-      tags: "hall_library",
-      direction: direction.north}],					
-    requirements: (flag) => (
-      !flag.collector_book &&
-      !flag.whip_enabled &&
-      flag.storyMode
-    )											
+    sequence: rooms("library"),
+    requirements: conditions.hallLibraryCombat,
   },
-
   //special rooms Cavern
   campsite: {
-    sequence: [{
-      tags: "hidden_hallway",
-      direction: direction.north
-    }]
+    sequence: rooms("hiddenHallway"),
 	},
-
   //special rooms Core
   secretWest: {
-    sequence: [{
-      tags: "secret",
-      direction: direction.west
-    }]
+    sequence: rooms("secretWest"),
 	},
   maybeSecretEast: {
-    sequence: [{
-      tags: "secret",
-      chance: 0.5,
-      direction: direction.east
-    }],
+    sequence: rooms("maybeSecretEast"),
   },
-
 }
