@@ -4,14 +4,18 @@ const encounters = {
 		extra: {
 			special: {
 				rooms: [
-					{tag:"hoody", name:"sleepyHoodyRoom"},
 					{tag:"black_rabbit", name:"BlackRabbit"},					
-					{tag:"boss", name:"RandRoom"},					
+					{tag:"bossRoom", name:"SandRoom"},
 				]
 			},
 			shop: {
 				rooms: [
 					{weight:1, name:"Shop", ...roomOptions.shop},
+				]
+			},
+			hoody: {
+				rooms: [
+					{weight:1, name:"sleepyHoodyRoom", door:door.hidden},
 				]
 			},
 		},
@@ -22,24 +26,8 @@ const encounters = {
 					{weight:4, name:"begin"},
 				]
 			},
-			/*end: {
-				rooms: [
-					{tag:"end", name:"Normal", icon: icon.exit},
-					{tag:"end_worm", name:"Worm", icon: icon.boss},
-					{tag:"end_boss", name:"Boss", icon: icon.boss},
-					{tag:"end_tutorial", name:"Tutorial", icon: icon.exit},
-				]
-			},
-			/*tutorial: [
-					{tag:"begin_tutorial", name:"Begin", ...roomOptions.tutorialBegin},
-					{tag:"tutorial_jump", name:"Jump"},
-					{tag:"tutorial_attack", name:"Attack"},
-					{tag:"tutorial_bomb", name:"Bomb"},
-					{tag:"tutorial_relic", name:"Relic"},
-					{tag:"tutorial_secret", name:"Secret"},
-				]
-			},*/
 			easy: {
+				default:{autoSpawn: 31},
 				rooms: [
 					{weight:1, name:"Spinner"},
 					{weight:1, name:"Spikes"},
@@ -48,19 +36,19 @@ const encounters = {
 				]
 			},
 			normal: {
-				default:{difficulty:[1, 0]},
+				default:{difficulty:[1, 0], autoSpawn: 31},
 				rooms: [
 					{weight:3, name:"MineCart"},
 					{weight:3, name:"Pillar"},
 					{weight:3, name:"PillarHole"},
 					{weight:3, name:"PillarSpinner"},
 					{weight:3, name:"RockWall", difficulty:[1, -1]},
-					{weight:3, name:"SouthNorthHole", prohibitedEnemies:["bobo"]},
+					{weight:3, name:"SouthNorthHole", prohibitedEnemies:["bobo"], autoSpawn: 15},
 					{weight:3, name:"StationarySpinners"},
 					{weight:3, name:"BrokenCarts"},
 					{weight:3, name:"StatueSpinner"},
 					{weight:2, name:"Bridge", difficulty:[0.5, 0]},
-					{weight:3, name:"EWSpinners", noExit: direction.ns, difficulty:[0.25, 0]},
+					{weight:3, name:"EWSpinners", noExit: direction.ns, difficulty:[0.25, 0], autoSpawn: 15},
 					{weight:3, name:"CornerHoles", prohibitedEnemies:["bobo"]},
 					{weight:3, name:"DualPillar"},
 					{weight:3, name:"Spikes"},
@@ -69,15 +57,15 @@ const encounters = {
 					{weight:1, name:"SetPiece", difficulty:[1, -2]},
 					{weight:2, name:"HoleEW", noExit: direction.ns, prohibitedEnemies:["bobo"]},
 					{weight:2, name:"HoleEWSpinner", noExit: direction.ns, difficulty:[0, 0], prohibitedEnemies:["bobo"]},
-					{weight:4, name:"Plain", difficulty:[1, 1]},
+					{weight:4, name:"Plain", difficulty:[1, 1], autoSpawn: -1},
 					{weight:2, name:"HazardHeavy", difficulty:[1, -2]},
 					{weight:2, name:"DangerWalls", noExit: direction.ew},
-					{weight:3, name:"TilePattern", difficulty:[1, 1]},
-					{weight:3, name:"CornerRocks"},
-					{weight:2, name:"RockPath"},
-					{weight:3, name:"DiagonalHole", difficulty:[1, -2]},
-					{weight:3, name:"CenterTorches"},
-					{weight:2, name:"Ruins"},
+					{weight:3, name:"TilePattern", difficulty:[1, 1], autoSpawn: -1},
+					{weight:3, name:"CornerRocks", autoSpawn: -1},
+					{weight:2, name:"RockPath", autoSpawn: 15},
+					{weight:3, name:"DiagonalHole", difficulty:[1, -2], autoSpawn: -1},
+					{weight:3, name:"CenterTorches", autoSpawn: -1},
+					{weight:2, name:"Ruins", autoSpawn: -1},
 					{weight:3, name:"Statues", prohibitedEnemies:["bobo"]},
 					{weight:3, name:"LargeSpinnerTrack"},
 				]
@@ -94,35 +82,35 @@ const encounters = {
 					{tag:"hoodie_entrance", name:"Hoodie_Unlocked", ...roomOptions.hoodieMineUnlocked},
 					{tag:"tribute_fountain", name:"TributeFountain", ...roomOptions.fountain},
 					{tag:"begin_tutorial", name:"Begin", ...roomOptions.tutorialBegin},
-					{tag:"tutorial_jump", name:"Jump"},
+					{tag:"tutorial_jump", name:"Jump", autoSpawn: 4},
 					{tag:"tutorial_attack", name:"Attack"},
 					{tag:"tutorial_bomb", name:"Bomb"},
-					{tag:"tutorial_relic", name:"Relic"},
-					{tag:"tutorial_secret", name:"Secret"},
-					{tag:"end", name:"Normal", icon: icon.exit},
-					{tag:"end_worm", name:"Worm", icon: icon.boss},
-					{tag:"end_boss", name:"Boss", icon: icon.boss},
+					{tag:"tutorial_relic", name:"Relic", autoSpawn: 1},
+					{tag:"tutorial_secret", name:"Secret", autoSpawn: 4},
+					{tag:"end", name:"Normal", icon: icon.exit, autoSpawn: 23},
+					{tag:"down_boss", name:"Boss", icon: icon.boss, autoSpawn: 5},
 					{tag:"end_tutorial", name:"Tutorial", icon: icon.exit},
+					{tag:"next_entrance", name:"DungeonEntrance", ...roomOptions.dungeonEntrance},					
 				]
 			},
 			relic: {
 				default: roomOptions.relic,
 				rooms: [
-					{weight:4, name:"Torches"},
 					{weight:4, name:"Pots"},
+					{weight:4, name:"Torches"},
 					{weight:4, name:"Hole", noExit: direction.nes},
 					{weight:1, name:"TorchPuzzle", noExit: direction.north},
-					{weight:4, name:"Statues"},
+					{weight:4, name:"Statues", autoSpawn: 7},
 				]
 			},
 			relic_unlocked: {
 				default: roomOptions.relicUnlocked,
 				rooms: [
-					{weight:4, name:"Torches"},
 					{weight:4, name:"Pots"},
+					{weight:4, name:"Torches"},
 					{weight:4, name:"Hole", noExit: direction.nes},
 					{weight:1, name:"TorchPuzzle", noExit: direction.north},
-					{weight:4, name:"Statues"},
+					{weight:4, name:"Statues", autoSpawn: 7},
 				]
 			},
 			secret: {
@@ -135,9 +123,9 @@ const encounters = {
 					{weight:3, name:"Crystals"},
 					{weight:4, name:"Chest"},
 					{weight:3, name:"SpikeSacrifice"},
-					{weight:1, name:"Blessing"},
-					{weight:3, name:"Items"},
-					{weight:3, name:"Chest"},
+					{weight:1, name:"Blessing", autoSpawn: 6},
+					{weight:3, name:"Items", autoSpawn: 6},
+					{weight:3, name:"Chest", autoSpawn: 6},
 					{weight:3, name:"ChestCommon"},
 					{weight:3, name:"KeyBlock"},
 					{weight:3, name:"Bombs"},
@@ -159,25 +147,26 @@ const encounters = {
 					{weight:2, name:"CursedTorch"},
 					{weight:2, name:"CursedRelic"},
 					{weight:3, name:"Crystals"},
-					{weight:1, name:"Lab"},
+					{weight:1, name:"Lab", autoSpawn: 5},
 					{weight:3, name:"Chest"},
 					{weight:3, name:"SpikeSacrifice"},
 					{weight:1, name:"Blessing"},
-					{weight:1, name:"Blessing02"},
-					{weight:1, name:"ButchersRoom"},
+					{weight:1, name:"Blessing02", autoSpawn: 3},
+					{weight:1, name:"ButchersRoom", autoSpawn: 3},
 					{weight:1, name:"RatFriendship", ...roomOptions.ratFriendship},
 					{weight:3, name:"Chest"},
 					{weight:2, name:"Bard", ...roomOptions.bard},
 				]
 			},
 			treasure: {
+				default:{autoSpawn: 31},
 				rooms: [
 					{weight:3, name:"Skeleton", difficulty:[1, 0]},
 					{weight:3, name:"Rocks", difficulty:[1, 0]},
 					{weight:3, name:"Spikes", difficulty:[1, 0]},
 					{weight:2, name:"HoleBridges", difficulty:[1, 0]},
 					{weight:3, name:"LockedRocks", noExit: direction.south},
-					{weight:2, name:"StatuePuzzle"},
+					{weight:2, name:"StatuePuzzle", autoSpawn: 3},
 					{weight:3, name:"LockedBlocks", noExit: direction.north},
 					{weight:1, name:"CursedRelics", door: door.locked},
 					{weight:3, name:"SpikeCage", difficulty:[1, -4]},
@@ -189,10 +178,11 @@ const encounters = {
 				]
 			},
 			treasureBasic: {
+				default:{autoSpawn: 31},
 				rooms: [
-					{weight:1, name:"Skeleton", difficulty:[0.25, 0]},
-					{weight:1, name:"Rocks"},
-					{weight:1, name:"Plain"},
+					{weight:1, name:"Skeleton", difficulty:[0.5, 0]},
+					{weight:1, name:"Rocks", difficulty:[0.5, 0]},
+					{weight:1, name:"Plain", difficulty:[0.5, 0]},
 				]
 			},
 			altar: {
@@ -225,69 +215,73 @@ const encounters = {
 		},
 		large: {
 			normal: {
-				default:{difficulty:[1, 2]},
+				default:{difficulty:[1, 2], autoSpawn: -1},
 				rooms: [
 					{weight:2, name:"RailStatues"},
 					{weight:2, name:"LargeRail"},
 					{weight:2, name:"HoleBridge"},
 					{weight:2, name:"RailSnake"},
-					{weight:2, name:"Staging"},
+					{weight:2, name:"Staging", autoSpawn: 31},
 					{weight:2, name:"PillarRocks"},
-					{weight:2, name:"SpikeDonut"},
-					{weight:3, name:"RailBrideLoop", prohibitedEnemies:["bobo"]},
-					{weight:3, name:"RailBridge", difficulty:[1, -6]},
-					{weight:1, name:"OilBarrels"},
+					{weight:2, name:"SpikeDonut", autoSpawn: 31},
+					{weight:3, name:"RailBrideLoop", prohibitedEnemies:["bobo"], autoSpawn: 31},
+					{weight:3, name:"RailBridge", difficulty:[1, -6], autoSpawn: 9,
+						enemies: [enemies.flyRanged, enemies.flyRanged02, enemies.bat,],},
+					{weight:1, name:"OilBarrels", autoSpawn: 59},
 					{weight:2, name:"MineField", difficulty:[0.4, 2]},
-					{weight:2, name:"Bridges", difficulty:[1, -2]},
+					{weight:2, name:"Bridges", difficulty:[1, -2], autoSpawn: 13},
 					{weight:2, name:"Spikes"},
 					{weight:3, name:"CornerNE", noExit: direction.sw, difficulty:[1, 0], prohibitedEnemies:["bobo"]},
-					{weight:1, name:"LandBridgeNS", noExit: direction.ew, difficulty:[1, 0]},
+					{weight:1, name:"LandBridgeNS", noExit: direction.ew, difficulty:[1, 0], autoSpawn: 15,
+						enemies: [enemies.flyRanged,],},
 					{weight:2, name:"DualPillars"},
-					{weight:2, name:"SpikeBridge", noExit: direction.ns, difficulty:[0, 0]},
+					{weight:2, name:"SpikeBridge", noExit: direction.ns, difficulty:[0, 0], autoSpawn: 15,
+						enemies: [enemies.flyRanged,],},
 					{weight:3, name:"CornerSW", noExit: direction.ne, difficulty:[1, 0], prohibitedEnemies:["bobo"]},
-					{weight:2, name:"RockCross"},
-					{weight:2, name:"SlotHoles"},
-					{weight:2, name:"RockColumns"},
+					{weight:2, name:"RockCross", autoSpawn: 31},
+					{weight:2, name:"SlotHoles", autoSpawn: 31},
+					{weight:2, name:"RockColumns", autoSpawn: 31},
 					{weight:3, name:"ATrack"},
 					{weight:3, name:"DynamicHole"},
 					{weight:2, name:"TeeRocks"},
-					{weight:3, name:"HoleArrows", difficulty:[1, 1]},
-					{weight:1, name:"DualSetPiece"},
+					{weight:3, name:"HoleArrows", difficulty:[1, 1], autoSpawn: 31},
+					{weight:1, name:"DualSetPiece", autoSpawn: 31},
 					{weight:3, name:"Arena", noExit: direction.ew},
 					{weight:2, name:"ArenaTrack", noExit: direction.ew, difficulty:[1, 1]},
 					{weight:2, name:"QuadPillars"},
-					{weight:2, name:"RockArrowMaze"},
-					{weight:2, name:"RailGuantlet", noExit: direction.ns, difficulty:[0.5, -2]},
+					{weight:2, name:"RockArrowMaze", autoSpawn: 11},
+					{weight:2, name:"RailGuantlet", noExit: direction.ns, difficulty:[0.5, -2], autoSpawn: 31},
 					{weight:2, name:"HazardHeavy"},
-					{weight:2, name:"ArrowGuantlet", difficulty:[1, -2]},
-					{weight:2, name:"DonutSpinner", noExit: direction.ns, difficulty:[1, -2]},
+					{weight:2, name:"ArrowGuantlet", difficulty:[1, -2], autoSpawn: 31},
+					{weight:2, name:"DonutSpinner", noExit: direction.ns, difficulty:[1, -2], autoSpawn: 31},
 					{weight:2, name:"CornerRocks", prohibitedEnemies:["jumperFire", "jumperOil", "jumperWater"]},
-					{weight:2, name:"TeeJunction", noExit: direction.north},
+					{weight:2, name:"TeeJunction", noExit: direction.north, autoSpawn: 31},
 					{weight:3, name:"CornerBridge"},
 					{weight:3, name:"BridgeHole"},
 					{weight:3, name:"BigRocks", prohibitedEnemies:["jumperFire", "jumperOil", "jumperWater"]},
-					{weight:3, name:"TriangleRocks"},
-					{weight:2, name:"SnakeBridge"},
-					{weight:3, name:"RandomBlocks"},
+					{weight:3, name:"TriangleRocks", autoSpawn: 31},
+					{weight:2, name:"SnakeBridge", autoSpawn: 31},
+					{weight:3, name:"RandomBlocks", autoSpawn: 31},
 					{weight:3, name:"Empty", difficulty:[1, 3]},
-					{weight:4, name:"TwoSetPiece"},
+					{weight:4, name:"TwoSetPiece", autoSpawn: 31},
 					{weight:3, name:"Grassy", difficulty:[1, 3]},
 					{weight:2, name:"FivePillars"},
 					{weight:1, name:"SnakeTrack", difficulty:[1, 0]},
-					{weight:3, name:"Torches"},
-					{weight:2, name:"RailIslands", difficulty:[1, 0]},
+					{weight:3, name:"Torches", autoSpawn: 31},
+					{weight:2, name:"RailIslands", difficulty:[1, 0], autoSpawn: 31},
 					{weight:1, name:"MushroomGrowOp"},
 				]
 			},				
 			special: {
 				rooms: [
-					{tag:"RockMimicEncounter", name:"RockMimic", ...roomOptions.rockMimic, difficulty:[1, 0]},
+					{tag:"RockMimicEncounter", name:"RockMimic", ...roomOptions.rockMimic},
 					{tag:"mushroom", name:"MushroomDarkness", ...roomOptions.mushroomPurple, difficulty:[1, 0]},
 					{tag:"mushroom_apprentice", name:"AlchemistApprentice0", ...roomOptions.alchemistApprentice0},
 					{tag:"mushroom_apprentice", name:"AlchemistApprentice3", ...roomOptions.alchemistApprentice3},
 					{tag:"relic_altar", name:"RelicAltar", ...roomOptions.relicAltar},
-					{tag:"tutorial_throw", name:"Throw", doorOverride: direction.east},
-					{tag:"tutorial_pilfer", name:"Pilfer"},
+					{tag:"tutorial_throw", name:"Throw", doorOverride: direction.east, autoSpawn: 4},
+					{tag:"tutorial_pilfer", name:"Pilfer", autoSpawn: 4},
+					{tag:"pre_room", name:"BeforeDungeonEntrance", ...roomOptions.dungeonEntrance},
 				]
 			},
 			secret: {
@@ -307,8 +301,8 @@ const encounters = {
 					{weight:3, name:"DoubleLockBlock", noExit: direction.north},
 					{weight:4, name:"StatueBombPuzzle"},
 					{weight:1, name:"Pillars"},
-					{weight:1, name:"OilyBridge", noExit: direction.nes},
-					{weight:1, name:"DarkMaze"},
+					{weight:1, name:"OilyBridge", noExit: direction.nes, autoSpawn: 5},
+					{weight:1, name:"DarkMaze", autoSpawn: 6},
 				]
 			},
 			hidden: {
@@ -316,56 +310,52 @@ const encounters = {
 				rooms: [
 					{weight:2, name:"LeverBlocks"},
 					{weight:2, name:"GrassChests"},
-					{weight:2, name:"TorchPuzzle"},
-					{weight:2, name:"Keys"},
+					{weight:2, name:"TorchPuzzle", autoSpawn: 1},
+					{weight:2, name:"Keys", autoSpawn: 1},
 					{weight:2, name:"Potions"},
 					{weight:1, name:"Blessing"},
 					{weight:1, name:"Blessing02"},
-					{weight:1, name:"CursedRelics"},
+					{weight:1, name:"CursedRelics", autoSpawn: 31},
 					{weight:1, name:"Altar", noExit: direction.north},
 					{weight:2, name:"PressureTrap", noExit: direction.ne},
-					{weight:2, name:"ChooseBlessing"},
+					{weight:2, name:"ChooseBlessing", autoSpawn: 31},
 					{weight:2, name:"BobosLair"},
-					{weight:2, name:"CaveIn"},
+					{weight:2, name:"CaveIn", autoSpawn: 31},
 					{weight:1, name:"Gap"},
 				]
 			},
-			/*tutorial: [
-					{tag:"tutorial_throw", name:"Throw", doorOverride: direction.east},
-					{tag:"tutorial_pilfer", name:"Pilfer"},
-				]
-			},*/
 			treasure: {
+				default:{autoSpawn: 31},
 				rooms: [
-					{weight:3, name:"ItemBlocks"},
-					{weight:3, name:"SpikedChest", noExit: direction.south},
-					{weight:3, name:"HoleSpikeChest", noExit: direction.west, difficulty:[1, 0]},
-					{weight:3, name:"TorchPuzzle", difficulty:[1, 0]},
-					{weight:3, name:"SpikeRails", noExit: direction.new},
-					{weight:3, name:"BridgePuzzle", noExit: direction.ns},
-					{weight:3, name:"BombPuzzle"},
+					{weight:3, name:"ItemBlocks", difficulty:[0, -2]},
+					{weight:3, name:"SpikedChest", noExit: direction.south, difficulty:[0, 1]},
+					{weight:3, name:"HoleSpikeChest", noExit: direction.west, difficulty:[1, 1]},
+					{weight:3, name:"TorchPuzzle", difficulty:[1, -2]},
+					{weight:3, name:"SpikeRails", noExit: direction.new, difficulty:[0, -2], autoSpawn: 15},
+					{weight:3, name:"BridgePuzzle", noExit: direction.ns, difficulty:[0, -2], autoSpawn: 5},
+					{weight:3, name:"BombPuzzle", difficulty:[0, -2], autoSpawn: 15},
 					{weight:4, name:"JustSomeTreasure", noExit: direction.north},
-					{weight:2, name:"LeverBridge", noExit: direction.west},
-					{weight:3, name:"VerticalBridge"},
-					{weight:4, name:"Decision", noExit: direction.south},
-					{weight:3, name:"HealthLever"},
-					{weight:5, name:"SecretShop", ...roomOptions.secretShop},
+					{weight:2, name:"LeverBridge", noExit: direction.west, difficulty:[0, -2]},
+					{weight:3, name:"VerticalBridge", difficulty:[0, -2]},
+					{weight:4, name:"Decision", noExit: direction.south, difficulty:[0, -2]},
+					{weight:3, name:"HealthLever", difficulty:[0, -2], autoSpawn: -1},
+					{weight:5, name:"SecretShop", ...roomOptions.secretShop, autoSpawn: 5},
 					{weight:2, name:"OilChest", difficulty:[0.5, -6]},
-					{weight:2, name:"FireyChest"},
-					{weight:2, name:"ElectrifiedChest"},
+					{weight:2, name:"FireyChest", autoSpawn: 7},
+					{weight:2, name:"ElectrifiedChest", autoSpawn: 7},
 					{weight:4, name:"JustSomeTreasure02"},
-					{weight:2, name:"Nexus"},
+					{weight:2, name:"Nexus", autoSpawn: 7},
 					{weight:1, name:"TwoBombsOneKey"},
 					{weight:2, name:"SpikeSacrifice"},
-					{weight:2, name:"Choice"},
-					{weight:2, name:"DoubleRail"},
-					{weight:1, name:"RockLock", difficulty:[0.5, -4]},
+					{weight:2, name:"Choice", autoSpawn: 7},
+					{weight:2, name:"DoubleRail", difficulty:[0, -2]},
+					{weight:1, name:"RockLock", difficulty:[0.5, -4], autoSpawn: 15},
 				]
 			},
 			challange: {
 				rooms: [
-					{weight:1, name:"GamblingRoom", icon: icon.shopBR},
-					{weight:1, name:"Combat", icon: icon.combat},
+					{weight:1, name:"GamblingRoom", icon: icon.shopBR, autoSpawn: 7},
+					{weight:1, name:"Combat", icon: icon.combat, autoSpawn: 15},
 				]
 			},
 		},
@@ -376,8 +366,12 @@ const encounters = {
 				rooms: [
 					{tag:"hoody", name:"sleepyHoodyRoom"},
 					{tag:"black_rabbit", name:"BlackRabbit"},
-					{tag:"shop", name:"Shop"},
-					{tag:"boss", name:"StoneRoom"},
+					{tag:"boss", name:"SandRoom", autoSpawn: 1},
+				]
+			},
+			shop: {
+				rooms: [
+					{weight:1, name:"Shop", ...roomOptions.shop},
 				]
 			},
 		},
@@ -388,18 +382,18 @@ const encounters = {
 					{weight:3, name:"Begin_Holes"},
 					{weight:3, name:"Begin_Plain"},
 					{weight:3, name:"Begin_Statues"},
-					{weight:1, name:"Begin_Squeeze"},
-					{weight:2, name:"Begin_Cells"},
+					{weight:1, name:"Begin_Squeeze", autoSpawn: 7},
+					{weight:2, name:"Begin_Cells", autoSpawn: 7},
 				]
 			},
-			end: {
+			/*end: {
 				rooms: [
 					{weight:1, name:"End", icon: icon.exit, tag:"end"},
-					{weight:1, name:"Boss", icon: icon.boss, tag: "end_boss"},
+					{weight:1, name:"Boss", icon: icon.boss, tag: "endBoss"},
 				]
-			},
+			},*/
 			normal: {
-				default:{difficulty:[1, -2]},
+				default:{difficulty:[1, -2], autoSpawn: 31},
 				rooms: [
 					{weight:3, name:"Spikes"},
 					{weight:3, name:"LongHole"},
@@ -407,12 +401,12 @@ const encounters = {
 					{weight:3, name:"Water", difficulty:[1, 0]},
 					{weight:3, name:"Torches", difficulty:[1, -1]},
 					{weight:3, name:"DynamicPillar", difficulty:[1, -1]},
-					{weight:1, name:"ArrowBridge", noExit: direction.ns, difficulty:[0, 0]},
+					{weight:1, name:"ArrowBridge", noExit: direction.ns, difficulty:[0, 0], autoSpawn: 15},
 					{weight:1, name:"FlamingArrows", noExit: direction.ew, difficulty:[0, 0]},
 					{weight:3, name:"TallBlocks", difficulty:[1, 0]},
 					{weight:1, name:"SetPiece"},
 					{weight:2, name:"Track"},
-					{weight:3, name:"Empty", difficulty:[1, 0]},
+					{weight:3, name:"Empty", difficulty:[1, 0], autoSpawn: -1},
 					{weight:3, name:"SmallBowTie", noExit: direction.ns, difficulty:[1, 0]},
 					{weight:3, name:"RazorBlade", noExit: direction.ew, difficulty:[1, 0]},
 					{weight:2, name:"VerticalHole", noExit: direction.ns, difficulty:[1, -6]},
@@ -420,14 +414,17 @@ const encounters = {
 			},	
 			special: {
 				rooms: [
-					{tag:"dungeon_entrance", name:"Entrance", ...roomOptions.dungeonEntrance},
-					{tag:"store_room", name:"DibblesStoreRoom", ...roomOptions.dibblesStoreRoom},
-					{tag:"dungeonlibrary", name:"Library", ...roomOptions.dungeonLibrary},
-					{tag:"priestess", name:"PriestessEntrance", ...roomOptions.priestessEntrance},
-					{tag:"hoodie_entrance", name:"Hoodie_Locked", ...roomOptions.hoodieDungeonLocked},
-					{tag:"hoodie_entrance", name:"Hoodie_Unlocked", ...roomOptions.hoodieDungeonUnlocked},
-					{tag:"tribute_fountain", name:"TributeFountain", ...roomOptions.fountain},
-					{tag:"dungeon_entrance", name:"Entrance", ...roomOptions.dungeonEntrance},
+					{tag: "dungeon_entrance", name:"Entrance", ...roomOptions.dungeonEntrance},
+					{tag: "store_room", name:"DibblesStoreRoom", ...roomOptions.dibblesStoreRoom},
+					{tag: "dungeonlibrary", name:"Library", ...roomOptions.dungeonLibrary},
+					{tag: "priestess", name:"PriestessEntrance", ...roomOptions.priestessEntrance},
+					{tag: "hoodie_entrance", name:"Hoodie_Locked", ...roomOptions.hoodieDungeonLocked},
+					{tag: "hoodie_entrance", name:"Hoodie_Unlocked", ...roomOptions.hoodieDungeonUnlocked},
+					{tag: "tribute_fountain", name:"TributeFountain", ...roomOptions.fountain},
+					{tag: "next_entrance", name:"HallEntrance", ...roomOptions.dungeonEntrance},
+					{tag:"end", name:"Normal", icon: icon.exit, autoSpawn: 31},
+					{tag:"endBoss", name:"Boss", icon: icon.boss, autoSpawn: 23},
+					{tag: "down_boss", name:"Boss", icon: icon.boss},
 				]
 			},
 			relic: {
@@ -451,10 +448,11 @@ const encounters = {
 				]
 			},
 			treasure: {
+				default: {autoSpawn: 7},
 				rooms: [
-					{weight:3, name:"StatueChest"},
-					{weight:3, name:"CellNE", noExit: direction.ne},
-					{weight:3, name:"CellsEW", noExit: direction.ew},
+					{weight:3, name:"StatueChest", autoSpawn: 1},
+					{weight:3, name:"CellNE", noExit: direction.ne, autoSpawn: 1},
+					{weight:3, name:"CellsEW", noExit: direction.ew, autoSpawn: 1},
 					{weight:3, name:"DiamondFloor"},
 					{weight:3, name:"CellN", noExit: direction.north},
 					{weight:3, name:"CellE", noExit: direction.nes},
@@ -464,7 +462,7 @@ const encounters = {
 					{weight:1, name:"SpikedHallwayW", noExit: direction.nsw},
 					{weight:1, name:"SpikedHallwayE", noExit: direction.new},
 					{weight:3, name:"Track"},
-					{weight:1, name:"TinyRoom", noExit: direction.new},
+					{weight:1, name:"TinyRoom", noExit: direction.new, autoSpawn: 1},
 					{weight:2, name:"HealthLever"},
 					{weight:3, name:"JustAChest"},
 				]
@@ -472,43 +470,43 @@ const encounters = {
 			secret: {
 				default: roomOptions.secret,
 				rooms: [
-					{weight:5, name:"OpenedChest"},
-					{weight:5, name:"WaterChest"},
-					{weight:3, name:"SpikeSacrifice"},
-					{weight:3, name:"CursedTorch"},
-					{weight:3, name:"BombStorage"},
+					{weight:5, name:"OpenedChest", autoSpawn: 5},
+					{weight:5, name:"WaterChest", autoSpawn: 5},
+					{weight:3, name:"SpikeSacrifice", autoSpawn: 5},
+					{weight:3, name:"CursedTorch", autoSpawn: 5},
+					{weight:3, name:"BombStorage", autoSpawn: 5},
 					{weight:1, name:"Altar"},
 					{weight:3, name:"StorageRoom"},
-					{weight:3, name:"DualLevers"},
-					{weight:5, name:"Potion"},
-					{weight:1, name:"Blessing"},
-					{weight:10, name:"DogEngine", ...roomOptions.dogEngine},
+					{weight:3, name:"DualLevers", autoSpawn: 3},
+					{weight:5, name:"Potion", autoSpawn: 3},
+					{weight:1, name:"Blessing", autoSpawn: 3},
+					{weight:10, name:"DogEngine", ...roomOptions.dogEngine, autoSpawn: 3},
 					{weight:3, name:"Talisman", ...roomOptions.talismanSpawn},
 					{weight:2, name:"KeyPillar"},
 					{weight:1, name:"BigChest"},
-					{weight:2, name:"Nugg"},
-					{weight:3, name:"Bard", ...roomOptions.bard},
+					{weight:2, name:"Nugg", autoSpawn: 5},
+					{weight:3, name:"Bard", ...roomOptions.bard, autoSpawn: 5},
 					{weight:3, name:"TributeFountain", ...roomOptions.secretFountain},
 				]
 			},
 			hidden: {
 				default: roomOptions.hidden,
 				rooms: [
-					{weight:10, name:"Kurtz", tag: "kurtz", noExit: direction.ns},
-					{weight:3, name:"DoubleChest"},
-					{weight:3, name:"GoldStatue"},
-					{weight:3, name:"WaterChest"},
-					{weight:3, name:"SpikeSacrifice"},
-					{weight:3, name:"CursedTorch"},
-					{weight:3, name:"BombStorage"},
-					{weight:1, name:"TripleCursedChest"},
+					{weight:10, name:"Kurtz", ...roomOptions.kurtz, autoSpawn: 5},
+					{weight:3, name:"DoubleChest", autoSpawn: 5},
+					{weight:3, name:"GoldStatue", autoSpawn: 5},
+					{weight:3, name:"WaterChest", autoSpawn: 5},
+					{weight:3, name:"SpikeSacrifice", autoSpawn: 5},
+					{weight:3, name:"CursedTorch", autoSpawn: 5},
+					{weight:3, name:"BombStorage", autoSpawn: 5},
+					{weight:1, name:"TripleCursedChest", autoSpawn: 6},
 					{weight:1, name:"DoubleBlessing"},
-					{weight:1, name:"Lab"},
+					{weight:1, name:"Lab", autoSpawn: 5},
 					{weight:2, name:"CursedRelic"},
-					{weight:1, name:"PyroLair"},
-					{weight:3, name:"StatueChest"},
+					{weight:1, name:"PyroLair", autoSpawn: 3},
+					{weight:3, name:"StatueChest", autoSpawn: 5},
 					{weight:3, name:"CostedLever"},
-					{weight:1, name:"CursedRelic"},
+					{weight:1, name:"CursedRelic", autoSpawn: 1},
 					{weight:1, name:"FourBigChests"},
 					{weight:2, name:"Bard"},
 				]
@@ -540,59 +538,60 @@ const encounters = {
 		},
 		large: {
 			normal: {
-				default:{difficulty:[1, 2]},
+				default:{difficulty:[1, 2], autoSpawn:31},
 				rooms: [
 					{weight:3, name:"CenterTurret", difficulty:[1, 1]},
-					{weight:3, name:"Flooded"},
+					{weight:3, name:"Flooded", autoSpawn: -1},
 					{weight:3, name:"DualPillar"},
 					{weight:3, name:"SlotHoles", difficulty:[1, 0]},
-					{weight:3, name:"CornerWater"},
+					{weight:3, name:"CornerWater", autoSpawn: 59},
 					{weight:3, name:"BridgeEW", noExit: direction.ns, difficulty:[1, -2]},
-					{weight:3, name:"BridgeNS", noExit: direction.ew, difficulty:[1, -2]},
-					{weight:2, name:"BendNE", noExit: direction.sw, difficulty:[1, -2]},
+					{weight:3, name:"BridgeNS", noExit: direction.ew, difficulty:[1, -2], autoSpawn: -1},
+					{weight:2, name:"BendNE", noExit: direction.sw, difficulty:[1, -2], autoSpawn: -1},
 					{weight:1, name:"BendNEPillar", noExit: direction.sw, difficulty:[1, -4]},
-					{weight:2, name:"BendSW", noExit: direction.ne, difficulty:[1, -2]},
+					{weight:2, name:"BendSW", noExit: direction.ne, difficulty:[1, -2], autoSpawn: -1},
 					{weight:1, name:"BendSWPillar", noExit: direction.ne, difficulty:[1, -4]},
-					{weight:3, name:"BallChainDynamic"},
-					{weight:3, name:"BallChain", difficulty:[1, -2]},
+					{weight:3, name:"BallChainDynamic", autoSpawn: -1},
+					{weight:3, name:"BallChain", difficulty:[1, -2], autoSpawn: 27},
 					{weight:3, name:"HolesBlocks"},
-					{weight:3, name:"DynamicShape", difficulty:[1, 0]},
+					{weight:3, name:"DynamicShape", difficulty:[1, 0], autoSpawn: -1},
 					{weight:3, name:"Cells", difficulty:[1, 0]},
-					{weight:1, name:"Guantlet", noExit: direction.ns, difficulty:[0, 0]},
+					{weight:1, name:"Guantlet", noExit: direction.ns, difficulty:[0, 0], autoSpawn: 9},
 					{weight:1, name:"Furnace", difficulty:[1, -10]},
 					{weight:1, name:"Turrets", difficulty:[0.5, -6]},
-					{weight:3, name:"DynamicHole"},
-					{weight:3, name:"Gutters"},
+					{weight:3, name:"DynamicHole", autoSpawn: -1},
+					{weight:3, name:"Gutters", autoSpawn: -1},
 					{weight:3, name:"Blocks"},
 					{weight:3, name:"Sewer"},
 					{weight:3, name:"CornerTurrets", difficulty:[1, 0]},
 					{weight:2, name:"SpikeStrip", noExit: direction.ns, difficulty:[1, -2]},
-					{weight:3, name:"Cross"},
+					{weight:3, name:"Cross", autoSpawn: -1},
 					{weight:3, name:"Ess", noExit: direction.ns, difficulty:[1, 0]},
 					{weight:3, name:"DonutSpinner", difficulty:[1, -4]},
-					{weight:3, name:"Plain", difficulty:[1, 3]},
-					{weight:3, name:"HazardHeavy"},
-					{weight:3, name:"Pools"},
-					{weight:3, name:"ElBlocks"},
-					{weight:3, name:"BowTie", noExit: direction.ns},
-					{weight:3, name:"RazorBlade", noExit: direction.ew},
-					{weight:2, name:"WestDiagonal", noExit: direction.west},
-					{weight:2, name:"EastDiagonal", noExit: direction.east},
-					{weight:1, name:"FireWitchHunt", difficulty:[1, -4]},
-					{weight:1, name:"FurnacePart2", difficulty:[1, -5]},
-					{weight:2, name:"SlidingWall"},
-					{weight:2, name:"SlantedPillars"},
-					{weight:2, name:"CornerSlants"},
+					{weight:3, name:"Plain", difficulty:[1, 3], autoSpawn: -1},
+					{weight:3, name:"HazardHeavy", autoSpawn: -1},
+					{weight:3, name:"Pools", autoSpawn: -1},
+					{weight:3, name:"ElBlocks", autoSpawn: -1},
+					{weight:3, name:"BowTie", noExit: direction.ns, autoSpawn: -1},
+					{weight:3, name:"RazorBlade", noExit: direction.ew, autoSpawn: -1},
+					{weight:2, name:"WestDiagonal", noExit: direction.west, autoSpawn: -1},
+					{weight:2, name:"EastDiagonal", noExit: direction.east, autoSpawn: -1},
+					{weight:1, name:"FireWitchHunt", difficulty:[1, -4], autoSpawn: -1},
+					{weight:1, name:"FurnacePart2", difficulty:[1, -5], autoSpawn: 30},
+					{weight:2, name:"SlidingWall", autoSpawn:-1},
+					{weight:2, name:"SlantedPillars", autoSpawn: -1},
+					{weight:2, name:"CornerSlants", autoSpawn: -1},
 					{weight:1, name:"SewerPart2", noExit: direction.ns, difficulty:[1, -8]},
 					{weight:3, name:"SewerPart3", difficulty:[1, -4]},
 					{weight:2, name:"SewerPart4", difficulty:[1, -4]},
-					{weight:1, name:"VerticalHall", noExit: direction.ew, difficulty:[0, 0]},
-					{weight:3, name:"CornerPillar"},
+					{weight:1, name:"VerticalHall", noExit: direction.ew, difficulty:[0, 0], autoSpawn: 15},
+					{weight:3, name:"CornerPillar", autoSpawn: -1},
 					{weight:3, name:"OffsetTurrets", difficulty:[1, -2]},
 					{weight:2, name:"MorningStarBridge", noExit: direction.north, difficulty:[0, 0]},
 				]
 			},
 			treasure: {
+				default:{autoSpawn: 7},
 				rooms: [
 					{weight:4, name:"CornerTurrets"},
 					{weight:4, name:"RockTurret"},
@@ -600,19 +599,19 @@ const encounters = {
 					{weight:4, name:"CrystalHole", noExit: direction.ew},
 					{weight:4, name:"TorchPuzzle", noExit: direction.ew},
 					{weight:4, name:"DoubleCell", noExit: direction.new},
-					{weight:4, name:"CellBlock", difficulty:[1, 0]},
+					{weight:4, name:"CellBlock", difficulty:[1, 0], autoSpawn: 31},
 					{weight:4, name:"SpikeSacrifice"},
 					{weight:3, name:"SetPiece", difficulty:[1, 0]},
-					{weight:2, name:"DoubleSetPiece", noExit: direction.north, difficulty:[1, -2]},
-					{weight:4, name:"JustSomeTreasure"},
-					{weight:3, name:"HealthLever"},
-					{weight:3, name:"Guantlet"},
-					{weight:5, name:"SecretShop", ...roomOptions.secretShop},
+					{weight:2, name:"DoubleSetPiece", noExit: direction.north, difficulty:[1, -2], autoSpawn: 31},
+					{weight:4, name:"JustSomeTreasure", autoSpawn: 3},
+					{weight:3, name:"HealthLever", autoSpawn: 3},
+					{weight:3, name:"Guantlet", autoSpawn: 3},
+					{weight:5, name:"SecretShop", ...roomOptions.secretShop, autoSpawn: 5},
 					{weight:3, name:"TurretDodging"},
 					{weight:3, name:"BarrelTimer", noExit: direction.sw, difficulty:[1, -6]},
 					{weight:1, name:"BladeBridge"},
 					{weight:2, name:"Choice"},
-					{weight:1, name:"SpikeWave", noExit: direction.west},
+					{weight:1, name:"SpikeWave", noExit: direction.west, autoSpawn: 5},
 					{weight:1, name:"StoreHouse"},
 				]
 			},
@@ -631,7 +630,7 @@ const encounters = {
 					{weight:1, name:"Blessing"},
 					{weight:4, name:"ChestItem"},
 					{weight:3, name:"Talisman", ...roomOptions.talismanSpawn},
-					{weight:1, name:"Garden", noExit: direction.esw},
+					{weight:1, name:"Garden", noExit: direction.esw, autoSpawn: 1},
 				]
 			},
 			hidden: {
@@ -663,30 +662,31 @@ const encounters = {
 					{tag:"priestesshall3", name:"PriestessHall3", ...roomOptions.priestessHall3},
 					{tag:"priestess_main", name:"Priestess", ...roomOptions.priestessMain},
 					{tag:"masters_key", name:"MastersKey", ...roomOptions.mastersKey},
-					{tag:"end_stone", name:"StonelordEntrance", ...roomOptions.bossRoom},
+					{tag:"down_boss", name:"StonelordEntrance", ...roomOptions.bossRoom},
 					{tag:"relic_altar", name:"RelicAltar", ...roomOptions.relicAltar},
+					{tag:"pre_room", name:"BeforeHallEntrance", ...roomOptions.dungeonEntrance},
 				]
 			},		
 			relic: {
 				default: roomOptions.relic,
 				rooms: [
-					{weight:1, name:"Dungeon_Large_Relic_Torches"},
-					{weight:1, name:"Dungeon_Large_Relic_Circle"},
-					{weight:1, name:"Dungeon_Large_Relic_Cell"},
+					{weight:1, name:"Dungeon_Large_Relic_Torches", autoSpawn: 7},
+					{weight:1, name:"Dungeon_Large_Relic_Circle", autoSpawn: 7},
+					{weight:1, name:"Dungeon_Large_Relic_Cell", autoSpawn: 7},
 				]
 			},
 			unlocked: {
 				default: roomOptions.relicUnlocked,
 				rooms: [
-					{weight:1, name:"Dungeon_Large_Relic_Torches"},
-					{weight:1, name:"Dungeon_Large_Relic_Circle"},
-					{weight:1, name:"Dungeon_Large_Relic_Cell"},
+					{weight:1, name:"Dungeon_Large_Relic_Torches", autoSpawn: 7},
+					{weight:1, name:"Dungeon_Large_Relic_Circle", autoSpawn: 7},
+					{weight:1, name:"Dungeon_Large_Relic_Cell", autoSpawn: 7},
 				]
 			},
 			challange: {
 				rooms: [
-					{weight:1, name:"GamblingRoom", icon: icon.shopBR},
-					{weight:1, name:"Combat", icon: icon.combat},
+					{weight:1, name:"GamblingRoom", icon: icon.shopBR, autoSpawn: 7},
+					{weight:1, name:"Combat", icon: icon.combat, autoSpawn: 15},
 				]
 			},
 		},
@@ -714,12 +714,12 @@ const encounters = {
 					{weight:1, name:"Torches"},
 				]
 			},
-			end: {
+			/*end: {
 				rooms: [
 					{weight:1, name:"End", icon: icon.exit, tag:"end"},
 					{weight:1, name:"Boss", icon: icon.boss, tag: "end_boss"},
 				]
-			},
+			},*/
 			normal: {
 				default:{difficulty:[1, -4]},
 				rooms: [
@@ -751,6 +751,9 @@ const encounters = {
 					{tag:"hoodie_entrance", name:"Hoodie_Unlocked", ...roomOptions.hoodieHallUnlocked},
 					{tag:"hall_library", name:"Library", ...roomOptions.hallLibrary},
 					{tag:"tribute_fountain", name:"TributeFountain", ...roomOptions.fountain},
+					{tag:"next_entrance", name:"CavernEntrance", ...roomOptions.dungeonEntrance},
+					{tag:"end", name:"Normal", icon: icon.exit},
+					{tag:"endBoss", name:"Boss", icon: icon.boss},
 				]
 			},
 			relic: {
@@ -771,7 +774,7 @@ const encounters = {
 			},
 			treasure: {
 				rooms: [
-					{weight:2, name:"SetPiece"},
+					{weight:2, name:"SetPiece", difficulty:[0.4, -6]},
 					{weight:3, name:"ChestSpawner"},
 					{weight:3, name:"HalfEast", noExit: direction.west},
 					{weight:3, name:"HalfWest", noExit: direction.east},
@@ -877,8 +880,8 @@ const encounters = {
 					{weight:2, name:"DonutSpinner", direction: direction.ns, difficulty:[1, -4]},
 					{weight:3, name:"HazardHeavy"},
 					{weight:2, name:"GargoyleHall", difficulty:[1, -4]},
-					{weight:2, name:"EWBridgeThin", direction: direction.ns, difficulty:[1, -8]},
-					{weight:3, name:"EWBridgeThick", direction: direction.ns, difficulty:[1, -10]},
+					{weight:2, name:"EWBridgeThin", direction: direction.ns, difficulty:[0.8, -8]},
+					{weight:3, name:"EWBridgeThick", direction: direction.ns, difficulty:[0.8, -10]},
 					{weight:3, name:"SpiderDen"},
 					{weight:4, name:"ChessBoard"},
 					{weight:5, name:"CrossHole"},
@@ -956,9 +959,10 @@ const encounters = {
 			},
 			special: {
 				rooms: [
-					{tag:"end_shadow", name:"ShadowlordEntrance", ...roomOptions.bossRoom},
+					{tag:"down_boss", name:"ShadowlordEntrance", ...roomOptions.bossRoom},
 					{tag:"hall_library_combat_arena", name:"CombatWave", ...roomOptions.hallLibraryCombat},
 					{tag:"relic_altar", name:"RelicAltar", ...roomOptions.relicAltar},
+					{tag:"pre_room", name:"BeforeCavernEntrance", ...roomOptions.dungeonEntrance},
 				]
 			},
 			challange: {
@@ -990,12 +994,12 @@ const encounters = {
 					{weight:1, name:"Round"},
 				]
 			},
-			end: {
+			/*end: {
 				rooms: [
 					{weight:1, name:"End", icon: icon.exit, tag:"end"},
 					{weight:1, name:"Boss", icon: icon.boss, tag: "end_boss"},
 				]
-			},
+			},*/
 			normal: {
 				default:{difficulty:[1, -8]},
 				rooms: [
@@ -1033,6 +1037,10 @@ const encounters = {
 					{tag:"hidden_campsite", name:"HiddenCampsite", door: door.rock},
 					{tag:"hidden_hallway", name:"HiddenHallway", noExit: direction.ew},
 					{tag:"tribute_fountain", name:"TributeFountain", ...roomOptions.fountain},
+					{tag:"end", name:"Normal", icon: icon.exit},
+					{tag:"endBoss", name:"Boss", icon: icon.boss},
+					{tag:"next_entrance", name:"CoreEntrance", ...roomOptions.dungeonEntrance},
+					{tag:"next_entrance_bog", name:"BogEntrance", ...roomOptions.dungeonEntrance},
 				]
 			},
 			relic: {
@@ -1241,8 +1249,10 @@ const encounters = {
 			},
 			special: {
 				rooms: [
-					{tag:"down_crystallord", name:"PonzuEntrance", ...roomOptions.bossRoom},
+					{tag:"down_boss", name:"PonzuEntrance", ...roomOptions.bossRoom},
 					{tag:"relic_altar", name:"RelicAltar", ...roomOptions.relicAltar},
+					{tag:"pre_room", name:"BeforeCoreEntrance", ...roomOptions.dungeonEntrance},
+					{tag:"pre_bog", name:"BeforeBogEntrance", ...roomOptions.dungeonEntrance},
 				]
 			},
 			challange: {
@@ -1274,12 +1284,12 @@ const encounters = {
 					{weight:1, name:"Blocks"},
 				]
 			},
-			end: {
+			/*end: {
 				rooms: [
 					{weight:1, name:"End", icon: icon.exit, tag:"end"},
 					{weight:1, name:"Boss", icon: icon.boss, tag: "end_boss"},
 				]
-			},
+			},*/
 			normal: {
 				default:{difficulty:[1, -15]},
 				rooms: [
@@ -1315,6 +1325,8 @@ const encounters = {
 			special: {
 				rooms: [
 					{tag:"core_entrance", name:"Entrance", ...roomOptions.nextAreaEntrance},
+					{tag:"end", name:"Normal", icon: icon.exit},
+					{tag:"endBoss", name:"Boss", icon: icon.boss},
 				]
 			},
 			relic: {
@@ -1539,8 +1551,10 @@ const encounters = {
 			},
 			special: {
 				rooms: [
-					{tag:"down_firelord", name:"SeerEntrance", ...roomOptions.bossRoom},
+					{tag:"down_boss", name:"SeerEntrance", ...roomOptions.bossRoom},
 					{tag:"relic_altar", name:"RelicAltar", ...roomOptions.relicAltar},
+					{tag:"end", name:"Normal", icon: icon.exit},
+					{tag:"endBoss", name:"Boss", icon: icon.boss},
 				]
 			},
 			challange: {
@@ -1573,12 +1587,12 @@ const encounters = {
 					{weight:1, name:"PressurePlate"},
 				]
 			},
-			end: {
+			/*end: {
 				rooms: [
 					{weight:1, name:"End", icon: icon.exit, tag:"end"},
 					{weight:1, name:"Boss", icon: icon.boss, tag: "end_boss"},
 				]
-			},
+			},*/
 			normal: {
 				default:{difficulty:[1, -22]},
 				rooms: [
@@ -1605,6 +1619,8 @@ const encounters = {
 			special: {
 				rooms: [
 					{tag:"bog_entrance", name:"Entrance", ...roomOptions.nextAreaEntrance},
+					{tag:"end", name:"Normal", icon: icon.exit},
+					{tag:"endBoss", name:"Boss", icon: icon.boss},
 				]
 			},
 			relic: {
@@ -1838,7 +1854,7 @@ const encounters = {
 			special: {
 				rooms: [
 					{tag:"relic_altar", name:"RelicAltar", ...roomOptions.relicAltar},					
-					{tag:"down_pk", name:"PlunderKingEntrance", ...roomOptions.bossRoom},					
+					{tag:"down_boss", name:"PlunderKingEntrance", ...roomOptions.bossRoom},					
 					{tag:"queen_room", name:"QueensRoom", ...roomOptions.queensRoom},					
 					{tag:"royal_road_4", name:"RoyalRoad_4", ...roomOptions.royalRoad},					
 					{tag:"royal_road_2", name:"RoyalRoad_2", ...roomOptions.royalRoad},					
