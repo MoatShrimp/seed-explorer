@@ -1,12 +1,16 @@
 interface Zone {
   name:string;
   map:string;
+  connectivity: number;
   zoneNumber:number;
   startFloor:number;
   baseDifficulty:number;
   difficultyStep:number;
   enemyTypeWeight:number[];
   requirements:Function;
+  extras?:any;
+  resources?:any;
+  setPieces?:any;
   floors:any[];
 }
 
@@ -15,16 +19,86 @@ const zoneData:Zone[][] = [
     {
       name:"mineTutorial",
       map:"mineEarly",
+      connectivity: 0.15,
       zoneNumber: 1,
       startFloor: 1,
       baseDifficulty: 2,
       difficultyStep: 3,
       enemyTypeWeight:[0,1,2],
       requirements: conditions.tutorialIncomplete,
+      extras: [
+        {
+          min: 10,
+          max: 12,
+          percent: false,
+          items:[
+            {weight: 1, name:"SkeletonSpawner"},
+            {weight: 3, name:"Crate01"},
+            {weight: 2, name:"Crate02"},
+            {weight: 3, name:"Barrel01"},
+            {weight: 6, name:"Crate01"},
+            {weight: 5, name:"Crate02"},
+            {weight: 5, name:"Barrel01"},
+            {weight: 4, name:"Plant01"},
+            {weight: 4, name:"Plant02"},
+            {weight: 1, name:"BarrelExploding01"},
+          ],
+        },
+        {
+          min: 1,
+          max: 1,
+          percent: true,
+          items: [
+            {weight:5, name:"PilferGolden"},
+          ],
+        },
+        {
+          min: 1,
+          max: 1,
+          percent: true,
+          items: [
+            {weight:10, name:"CrystalFire"},
+            {weight:10, name:"CrystalLightning"},
+            {weight:10, name:"CrystalPoison"},
+          ],
+        },
+        {
+          min: 0,
+          max: 1,
+          percent: false,
+          items: [
+            {weight:1, name:"TreasureHuntX"},
+          ],
+        },
+      ],
+      resources:[
+        {
+          min: 8,
+          max: 8,
+          percent: false,
+          items: [
+            {weight:3, name:"RockGold01"},
+            {weight:3, name:"RockGold02"},
+            {weight:3, name:"RockGold03"},
+            {weight:4, name:"OreWall"},
+          ],
+        },
+      ],
+      setPieces: [
+        {
+          min: 1,
+          max: 1,
+          percent: true,
+          items: [
+            {weight:30, name:"ItemCageMineSetPiece"},
+          ],
+        },
+      ],
       floors: [
         {
           override: {
             map:"mineTutorial",
+            connectivity: 0,
           },
           enemies: [],
         },
@@ -36,6 +110,9 @@ const zoneData:Zone[][] = [
           ],
         },
         {
+          override: {
+            connectivity: 0,
+          },
           enemies: [
             enemies.ratBasic,
             enemies.flyRanged,
@@ -66,12 +143,81 @@ const zoneData:Zone[][] = [
     {
       name:"mine1",
       map:"mineEarly",
+      connectivity: 0.15,
       zoneNumber: 1,
       startFloor: 1,
       baseDifficulty: 3,
       difficultyStep: 2,
       enemyTypeWeight:[0,1,2],
       requirements: conditions.tutorialComplete,
+      extras: [
+        {
+          min: 10,
+          max: 12,
+          percent: false,
+          items:[
+            {weight: 1, name:"SkeletonSpawner"},
+            {weight: 3, name:"Crate01"},
+            {weight: 2, name:"Crate02"},
+            {weight: 3, name:"Barrel01"},
+            {weight: 6, name:"Crate01"},
+            {weight: 5, name:"Crate02"},
+            {weight: 5, name:"Barrel01"},
+            {weight: 4, name:"Plant01"},
+            {weight: 4, name:"Plant02"},
+            {weight: 1, name:"BarrelExploding01"},
+          ],
+        },
+        {
+          min: 1,
+          max: 1,
+          percent: true,
+          items: [
+            {weight:5, name:"PilferGolden"},
+          ],
+        },
+        {
+          min: 1,
+          max: 1,
+          percent: true,
+          items: [
+            {weight:10, name:"CrystalFire"},
+            {weight:10, name:"CrystalLightning"},
+            {weight:10, name:"CrystalPoison"},
+          ],
+        },
+        {
+          min: 0,
+          max: 1,
+          percent: false,
+          items: [
+            {weight:1, name:"TreasureHuntX"},
+          ],
+        },
+      ],
+      resources:[
+        {
+          min: 8,
+          max: 8,
+          percent: false,
+          items: [
+            {weight:3, name:"RockGold01"},
+            {weight:3, name:"RockGold02"},
+            {weight:3, name:"RockGold03"},
+            {weight:4, name:"OreWall"},
+          ],
+        },
+      ],
+      setPieces: [
+        {
+          min: 1,
+          max: 1,
+          percent: true,
+          items: [
+            {weight:30, name:"ItemCageMineSetPiece"},
+          ],
+        },
+      ],
       floors: [
         {
           enemies: [
@@ -90,6 +236,7 @@ const zoneData:Zone[][] = [
         {
           override: {
             difficulty: 8,
+            connectivity: 0,
           },
           enemies: [
             enemies.ratBasic,
@@ -121,12 +268,81 @@ const zoneData:Zone[][] = [
     {
       name:"mine2",
       map:"mine",
+      connectivity: 0.15,
       zoneNumber: 1,
       startFloor: 1,
       baseDifficulty: 5,
       difficultyStep: 2,
       enemyTypeWeight:[0,1,2,1],
       requirements: conditions.mimicKilled,
+      extras: [
+        {
+          min: 10,
+          max: 12,
+          percent: false,
+          items:[
+            {weight: 1, name:"SkeletonSpawner"},
+            {weight: 3, name:"Crate01"},
+            {weight: 2, name:"Crate02"},
+            {weight: 3, name:"Barrel01"},
+            {weight: 6, name:"Crate01"},
+            {weight: 5, name:"Crate02"},
+            {weight: 5, name:"Barrel01"},
+            {weight: 4, name:"Plant01"},
+            {weight: 4, name:"Plant02"},
+            {weight: 1, name:"BarrelExploding01"},
+          ],
+        },
+        {
+          min: 1,
+          max: 1,
+          percent: true,
+          items: [
+            {weight:5, name:"PilferGolden"},
+          ],
+        },
+        {
+          min: 1,
+          max: 1,
+          percent: true,
+          items: [
+            {weight:10, name:"CrystalFire"},
+            {weight:10, name:"CrystalLightning"},
+            {weight:10, name:"CrystalPoison"},
+          ],
+        },
+        {
+          min: 0,
+          max: 1,
+          percent: false,
+          items: [
+            {weight:1, name:"TreasureHuntX"},
+          ],
+        },
+      ],
+      resources:[
+        {
+          min: 8,
+          max: 8,
+          percent: false,
+          items: [
+            {weight:3, name:"RockGold01"},
+            {weight:3, name:"RockGold02"},
+            {weight:3, name:"RockGold03"},
+            {weight:4, name:"OreWall"},
+          ],
+        },
+      ],
+      setPieces: [
+        {
+          min: 1,
+          max: 1,
+          percent: true,
+          items: [
+            {weight:30, name:"ItemCageMineSetPiece"},
+          ],
+        },
+      ],
       floors: [
         {
           override: {
@@ -182,12 +398,81 @@ const zoneData:Zone[][] = [
     {
       name:"mine3",
       map:"mine",
+      connectivity: 0.25,
       zoneNumber: 1,
       startFloor: 1,
       baseDifficulty: 8,
       difficultyStep: 2,
       enemyTypeWeight:[0,1,2,1],
       requirements: conditions.mineSandwormKilled,
+      extras: [
+        {
+          min: 10,
+          max: 12,
+          percent: false,
+          items:[
+            {weight: 1, name:"SkeletonSpawner"},
+            {weight: 3, name:"Crate01"},
+            {weight: 2, name:"Crate02"},
+            {weight: 3, name:"Barrel01"},
+            {weight: 6, name:"Crate01"},
+            {weight: 5, name:"Crate02"},
+            {weight: 5, name:"Barrel01"},
+            {weight: 4, name:"Plant01"},
+            {weight: 4, name:"Plant02"},
+            {weight: 1, name:"BarrelExploding01"},
+          ],
+        },
+        {
+          min: 1,
+          max: 1,
+          percent: true,
+          items: [
+            {weight:5, name:"PilferGolden"},
+          ],
+        },
+        {
+          min: 1,
+          max: 1,
+          percent: true,
+          items: [
+            {weight:10, name:"CrystalFire"},
+            {weight:10, name:"CrystalLightning"},
+            {weight:10, name:"CrystalPoison"},
+          ],
+        },
+        {
+          min: 0,
+          max: 1,
+          percent: false,
+          items: [
+            {weight:1, name:"TreasureHuntX"},
+          ],
+        },
+      ],
+      resources:[
+        {
+          min: 8,
+          max: 8,
+          percent: false,
+          items: [
+            {weight:3, name:"RockGold01"},
+            {weight:3, name:"RockGold02"},
+            {weight:3, name:"RockGold03"},
+            {weight:4, name:"OreWall"},
+          ],
+        },
+      ],
+      setPieces: [
+        {
+          min: 1,
+          max: 1,
+          percent: true,
+          items: [
+            {weight:30, name:"ItemCageMineSetPiece"},
+          ],
+        },
+      ],
       floors: [
         {
           override: {
@@ -255,12 +540,81 @@ const zoneData:Zone[][] = [
     {
       name:"mine4",
       map:"mine",
+      connectivity: 0.25,
       zoneNumber: 1,
       startFloor: 1,
       baseDifficulty: 12,
       difficultyStep: 2,
       enemyTypeWeight:[0,1,2,1],
       requirements: conditions.mineStonelordKilled,
+      extras: [
+        {
+          min: 10,
+          max: 12,
+          percent: false,
+          items:[
+            {weight: 1, name:"SkeletonSpawner"},
+            {weight: 3, name:"Crate01"},
+            {weight: 2, name:"Crate02"},
+            {weight: 3, name:"Barrel01"},
+            {weight: 6, name:"Crate01"},
+            {weight: 5, name:"Crate02"},
+            {weight: 5, name:"Barrel01"},
+            {weight: 4, name:"Plant01"},
+            {weight: 4, name:"Plant02"},
+            {weight: 1, name:"BarrelExploding01"},
+          ],
+        },
+        {
+          min: 1,
+          max: 1,
+          percent: true,
+          items: [
+            {weight:5, name:"PilferGolden"},
+          ],
+        },
+        {
+          min: 1,
+          max: 1,
+          percent: true,
+          items: [
+            {weight:10, name:"CrystalFire"},
+            {weight:10, name:"CrystalLightning"},
+            {weight:10, name:"CrystalPoison"},
+          ],
+        },
+        {
+          min: 0,
+          max: 1,
+          percent: false,
+          items: [
+            {weight:1, name:"TreasureHuntX"},
+          ],
+        },
+      ],
+      resources:[
+        {
+          min: 8,
+          max: 8,
+          percent: false,
+          items: [
+            {weight:3, name:"RockGold01"},
+            {weight:3, name:"RockGold02"},
+            {weight:3, name:"RockGold03"},
+            {weight:4, name:"OreWall"},
+          ],
+        },
+      ],
+      setPieces: [
+        {
+          min: 1,
+          max: 1,
+          percent: true,
+          items: [
+            {weight:30, name:"ItemCageMineSetPiece"},
+          ],
+        },
+      ],
       floors: [
         {
           enemies: [
@@ -329,12 +683,99 @@ const zoneData:Zone[][] = [
     {
       name:"mine5",
       map:"mine",
+      connectivity: 0.25,
       zoneNumber: 1,
       startFloor: 1,
       baseDifficulty: 16,
       difficultyStep: 2,
       enemyTypeWeight:[0,1,2,1],
       requirements: conditions.mineShadowlordKilled,
+      extras: [
+        {
+          min: 10,
+          max: 12,
+          percent: false,
+          items:[
+            {weight: 1, name:"SkeletonSpawner"},
+            {weight: 3, name:"Crate01Loot"},
+            {weight: 2, name:"Crate02Loot"},
+            {weight: 3, name:"Barrel01Loot"},
+            {weight: 6, name:"Crate01NoLoot"},
+            {weight: 5, name:"Crate02NoLoot"},
+            {weight: 5, name:"Barrel01NoLoot"},
+            {weight: 4, name:"Plant01"},
+            {weight: 4, name:"Plant02"},
+            {weight: 1, name:"BarrelExploding01"},
+          ],
+        },
+        {
+          min: 1,
+          max: 1,
+          percent: true,
+          items: [
+            {weight:5, name:"PilferGolden"},
+          ],
+        },
+        {
+          min: 1,
+          max: 1,
+          percent: true,
+          items: [
+            {weight:10, name:"CrystalFire"},
+            {weight:10, name:"CrystalLightning"},
+            {weight:10, name:"CrystalPoison"},
+          ],
+        },
+        {
+          min: 0,
+          max: 1,
+          percent: false,
+          items: [
+            {weight:1, name:"TreasureHuntX"},
+          ],
+        },
+      ],
+      resources:[
+        {
+          min: 8,
+          max: 8,
+          percent: false,
+          items: [
+            {weight:3, name:"RockGold01"},
+            {weight:3, name:"RockGold02"},
+            {weight:3, name:"RockGold03"},
+            {weight:4, name:"OreWall"},
+          ],
+        },
+      ],
+      setPieces: [
+        {
+          min: 1,
+          max: 1,
+          percent: true,
+          items: [
+            {
+              weight:30,
+              name:"ItemCageMineSetPiece",
+              choosers: [
+                [
+                  {weight:3, name:"itemSpawner"},
+                  {weight:1, name:"chestSpawner"},
+                ],
+                [
+                  {weight:1, name:"TallRocks"},
+                  {weight:1, name:"TallRocksSpikes"},
+                  {weight:1, name:"LockedBlock"},
+                  {weight:1, name:"TallRockLockedBlock"},
+                  {weight:1, name:"CrystalRocks"},
+                  {weight:1, name:"Spikes"},
+                  {weight:1, name:"Rail"},
+                ],                
+              ],
+            },
+          ],
+        },
+      ],
       floors: [
         {
           enemies: [
@@ -410,6 +851,7 @@ const zoneData:Zone[][] = [
     {
       name:"dungeon1",
       map:"dungeon",
+      connectivity: 0.15,
       zoneNumber: 2,
       startFloor: 6,
       baseDifficulty: 12,
@@ -489,6 +931,7 @@ const zoneData:Zone[][] = [
     {
       name:"dungeon2",
       map:"dungeon",
+      connectivity: 0.15,
       zoneNumber: 2,
       startFloor: 6,
       baseDifficulty: 16,
@@ -566,6 +1009,7 @@ const zoneData:Zone[][] = [
     {
       name:"dungeon3",
       map:"dungeon",
+      connectivity: 0.15,
       zoneNumber: 2,
       startFloor: 6,
       baseDifficulty: 20,
@@ -641,6 +1085,7 @@ const zoneData:Zone[][] = [
     {
       name:"dungeon4",
       map:"dungeon",
+      connectivity: 0.15,
       zoneNumber: 2,
       startFloor: 6,
       baseDifficulty: 24,
@@ -719,6 +1164,7 @@ const zoneData:Zone[][] = [
     {
       name:"dungeon5",
       map:"dungeon",
+      connectivity: 0.15,
       zoneNumber: 2,
       startFloor: 6,
       baseDifficulty: 28,
@@ -799,6 +1245,7 @@ const zoneData:Zone[][] = [
     {
       name:"hall1",
       map:"hall",
+      connectivity: 0.15,
       zoneNumber: 3,
       startFloor: 11,
       baseDifficulty: 20,
@@ -881,6 +1328,7 @@ const zoneData:Zone[][] = [
     {
       name:"hall2",
       map:"hall",
+      connectivity: 0.15,
       zoneNumber: 3,
       startFloor: 11,
       baseDifficulty: 24,
@@ -967,6 +1415,7 @@ const zoneData:Zone[][] = [
     {
       name:"hall3",
       map:"hall",
+      connectivity: 0.15,
       zoneNumber: 3,
       startFloor: 11,
       baseDifficulty: 28,
@@ -1056,6 +1505,7 @@ const zoneData:Zone[][] = [
     {
       name:"hall4",
       map:"hall",
+      connectivity: 0.15,
       zoneNumber: 3,
       startFloor: 11,
       baseDifficulty: 28,
@@ -1149,6 +1599,7 @@ const zoneData:Zone[][] = [
     {
       name:"cavern1",
       map:"cavern",
+      connectivity: 0.15,
       zoneNumber: 4,
       startFloor: 16,
       baseDifficulty: 28,
@@ -1220,6 +1671,7 @@ const zoneData:Zone[][] = [
     {
       name:"cavern2",
       map:"cavern",
+      connectivity: 0.15,
       zoneNumber: 4,
       startFloor: 16,
       baseDifficulty: 32,
@@ -1294,6 +1746,7 @@ const zoneData:Zone[][] = [
     {
       name:"cavern3",
       map:"cavern",
+      connectivity: 0.15,
       zoneNumber: 4,
       startFloor: 16,
       baseDifficulty: 36,
@@ -1372,6 +1825,7 @@ const zoneData:Zone[][] = [
     {
       name:"core1",
       map:"core",
+      connectivity: 0.15,
       zoneNumber: 5,
       startFloor: 21,
       baseDifficulty: 40,
@@ -1448,6 +1902,7 @@ const zoneData:Zone[][] = [
     {
       name:"core2",
       map:"core",
+      connectivity: 0.15,
       zoneNumber: 5,
       startFloor: 21,
       baseDifficulty: 44,
@@ -1521,6 +1976,7 @@ const zoneData:Zone[][] = [
     {
       name:"core3",
       map:"core",
+      connectivity: 0.15,
       zoneNumber: 5,
       startFloor: 21,
       baseDifficulty: 48,
@@ -1594,6 +2050,7 @@ const zoneData:Zone[][] = [
     {
       name:"bog",
       map:"bog",
+      connectivity: 0.1,
       zoneNumber: 5,
       startFloor: 21,
       baseDifficulty: 50,

@@ -35,8 +35,8 @@ const conditions:Requirements = {
   mushroomBlue: (flag) => (!flag.mushroom_blue && flag.apprentice_met && !flag.whip_enabled && flag.storyMode) ?? false,
   mushroomPurple: (flag) => (!flag.mushroom_purple && flag.apprentice_met && !flag.whip_enabled && flag.storyMode) ?? false,
   //hoodie
-  hoodieMineL: (flag) => (flag.rockmimic_defeated && flag.hoodie_met_mine && (flag.floor_number == 1) && flag.storyMode) ?? false,
-  hoodieMineU: (flag) => (flag.rockmimic_defeated &&flag.hoodie_met_mine && (flag.floor_number == 1) && flag.storyMode) ?? false,
+  hoodieMineL: (flag) => (flag.rockmimic_defeated && !flag.hoodie_met_mine && (flag.floor_number == 1) && flag.storyMode) ?? false,
+  hoodieMineU: (flag) => (flag.rockmimic_defeated && flag.hoodie_met_mine && (flag.floor_number == 1) && flag.storyMode) ?? false,
   hoodieDungeonL: (flag) => (!flag.hoodie_met_dungeon && (flag.floor_number == 5) && flag.storyMode) ?? false,
   hoodieDungeonU: (flag) => (flag.hoodie_met_dungeon && (flag.floor_number == 5) && flag.storyMode) ?? false,
   hoodieHallL: (flag) => (!flag.hoodie_met_hall && (flag.floor_number == 11) && flag.storyMode) ?? false,
@@ -150,4 +150,9 @@ const conditions:Requirements = {
   enterBog: (flag) => (
     flag.enterBog
   ) ?? false,
+  //Spawn Conditions
+  treasureHuntX: (flag) => (flag.secret_treasure_note > 0) ?? false,
+  chestBig: (flag) => (flag.floor_number > 5) ?? false,
+  bogVisited: (flag) => (flag.bog_visited) ?? false,
+  
 }

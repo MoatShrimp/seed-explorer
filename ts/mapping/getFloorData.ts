@@ -11,11 +11,15 @@ function getFloorData(floor:number, flags) {
         name: `${z.name}-${zoneIndex+1}`,
         index: zoneIndex,
         map: override?.map ?? z.map,
+        connectivity: override?.connectivity ?? z.connectivity,
         zoneNumber: z.zoneNumber,
         floor: z.startFloor + zoneIndex,
         difficulty: override?.difficulty ?? z.baseDifficulty + (z.difficultyStep*(zoneIndex)),
         enemyTypeWeight: override?.enemyTypeWeight ?? z.enemyTypeWeight,
         enemies: z.floors[zoneIndex].enemies,
+        setPieces: z.setPieces ?? null,
+        extras: z.extras ?? null,
+        resources: z.resources ?? null,
       }
     }
   }

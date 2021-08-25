@@ -17,3 +17,9 @@ function e$c(type:string, options?:{}):any {
 		return document.createElement(type);
 	}
 }
+
+function loop(func, loops) {
+	for (let i = 0; i < loops; ++i) {
+		func();
+	}
+}

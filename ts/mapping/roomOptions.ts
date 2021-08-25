@@ -7,6 +7,7 @@ const roomOptions = {
   begin: {
     icon: icon.start,
     sequence: rooms("hoodieTop"),
+    autoSpawn: 23,
   },
   shop: {
     weightedDoor: weightedDoors.shop,
@@ -16,36 +17,43 @@ const roomOptions = {
     icon: icon.relicOn,
     door: door.locked,
     requirements: conditions.noHexDesolation,
+    autoSpawn: 1,
   },
   relicUnlocked: {
     icon: icon.relicOn,
     requirements: conditions.noHexDesolation,
+    autoSpawn: 1,
   },
   secret: {
     icon: icon.secret,
     door: door.secret,
     reqursion: 1,
     sequence: rooms("circinus"),
+    autoSpawn: 7,
   },
   hidden: {
     door: door.hidden,
     subFloor:1,
+    autoSpawn: 7,
   },
   altar: {
     icon: icon.altarOn,
     sequence: rooms("guacamole"),
     weightedDoor: weightedDoors.altar,
+    autoSpawn: 7,
     requirements: conditions.priestessRescued,
   },
   altarLocked: {
     icon: icon.altarOn,
     sequence: rooms("guacamole"),
     door: door.locked,
+    autoSpawn: 7,
     requirements: conditions.priestessRescued,
   },
   altarGuacamole: {
     icon: icon.altarOn,
     door: door.locked,
+    autoSpawn: 7,
     requirements: conditions.relicGuacamole,
   },
   altarGuacamoleBug: {
@@ -55,12 +63,14 @@ const roomOptions = {
   },
   altarAlt: {
     icon: icon.altarOn,
+    autoSpawn: 7,
     sequence: rooms("guacamoleAlt"),
     weightedDoor: weightedDoors.altar,
     requirements: conditions.priestessRescued,
   },
   altarLockedAlt: {
     icon: icon.altarOn,
+    autoSpawn: 7,
     equence: rooms("guacamoleAlt"),
     door: door.locked,
     requirements: conditions.priestessRescued,
@@ -68,11 +78,13 @@ const roomOptions = {
   altarGuacamoleAlt: {
     icon: icon.altarOn,
     door: door.locked,
+    autoSpawn: 7,
     requirements: conditions.priestessRescued,
   },
   fountain: {
     icon: icon.fountain,
     requirements: conditions.noFountain,
+    autoSpawn: 7,
   },
   secretFountain: {
     icon: icon.fountain,
@@ -80,11 +92,13 @@ const roomOptions = {
   },
   bard: {
     requirements: conditions.notBardMet,
+    autoSpawn: 5,
   },
   relicAltar: {
     icon: icon.relicAltar,
     upgrade: (flag) => flag.relicAltar = 1,
     requirements: conditions.relicAltar,
+    autoSpawn: 7,
   },
   blackRabbitShop:{
     requirements: conditions.blackRabbitMet,
@@ -122,34 +136,42 @@ const roomOptions = {
   hoodieMineLocked: {
     door: door.crystal,
     requirements: conditions.hoodieMineL,
+    autoSpawn: 5,
   },
   hoodieMineUnlocked: {
     icon: icon.hoody,
     requirements: conditions.hoodieMineU,
+    autoSpawn: 5,
   },
   hoodieDungeonLocked: {
     door: door.crystal,
     requirements: conditions.hoodieDungeonL,
+    autoSpawn: 5,
   },
   hoodieDungeonUnlocked: {
     icon: icon.hoody,
     requirements: conditions.hoodieDungeonU,
+    autoSpawn: 5,
   },
   hoodieHallLocked: {
     door: door.crystal,
     requirements: conditions.hoodieHallL,
+    autoSpawn: 5,
   },
   hoodieHallUnlocked: {
     icon: icon.hoody,
     requirements: conditions.hoodieHallU,
+    autoSpawn: 5,
   },
   hoodieCavernLocked: {
     door: door.crystal,
     requirements: conditions.hoodieCavernL,
+    autoSpawn: 5,
   },
   hoodieCavernUnlocked: {
     icon: icon.hoody,
     requirements: conditions.hoodieCavernU,
+    autoSpawn: 5,
   },
   //dogs
   dogShadow: {
@@ -165,14 +187,17 @@ const roomOptions = {
   alchemistApprentice0: {
     icon: icon.exclamation,
     requirements: conditions.alchemistApprentice0,
+    autoSpawn: 31,
   },
   alchemistApprentice3: {
     icon: icon.exclamation,
     requirements: conditions.alchemistApprentice3,
+    autoSpawn: 31,
   },
   mushroomPurple: {
     door: door.rock,
     requirements: conditions.mushroomPurple,
+    autoSpawn: 7,
   },
   mushroomGreen: {
     noExit: direction.north,
@@ -181,33 +206,40 @@ const roomOptions = {
   },
   mushroomBlue: {
     requirements: conditions.mushroomBlue,
+    autoSpawn: 7,
   },
   //priestess
   priestessEntrance: {
     sequence: rooms("priestesshall1"),
     requirements: conditions.priestessEntrance,
+    autoSpawn: 6,
   },
   priestessHall1: {
     noExit: direction.ew,
     requirements: conditions.storyNotWhip,
+    autoSpawn: 6,
   },
   priestessHall2: {
     noExit: direction.ew,
     requirements: conditions.storyNotWhip,
+    autoSpawn: 6,
   },
   priestessHall3: {
     noExit: direction.ew,
     requirements: conditions.storyNotWhip,
+    autoSpawn: 6,
   },
   priestessMain: {
     icon: icon.exclamation,
     noExit: direction.new,
     requirements: conditions.storyNotWhip,
+    autoSpawn: 6,
   },
   mastersKey: {
     icon: icon.boss,
     noExit: direction.new,
     requirements: conditions.mastersKey,
+    autoSpawn: 6,
   },
   //Bog Trials
   royalRoad:{
@@ -230,26 +262,32 @@ const roomOptions = {
   dodson: {
     icon: icon.exclamation,
     requirements: conditions.dodsonNotRescued,
+    autoSpawn: 1,
   },
   wayland: {
     requirements: conditions.waylandShop,
+    autoSpawn: 1,
   },
   blackRabbitFirst: {
     icon: icon.shopBR,
     noExit: direction.nsw,
     requirements: conditions.blackRabbitFirst,
+    autoSpawn: 5
   },
   treasureHunt: {
     noExit: direction.north,
     upgrade: (flag) => flag.secret_treasure_note = 1,
     requirements: conditions.treasureHunt,
+    autoSpawn: 0,
   },
   ratFriendship: {
     tags: "mrrat",
     requirements: conditions.ratFriendship,
+    autoSpawn: 3
   },
   rockMimic:{
     requirements: conditions.rockMimic,
+    autoSpawn: 1,
   },
   dangerousToGo: {
     noExit: direction.new,
@@ -270,11 +308,13 @@ const roomOptions = {
     noExit: direction.ew,
     sequence: rooms("storeRoom"),
     requirements: conditions.dibble,
+    autoSpawn: 3,
   },
   dibblesStoreRoom: {
     icon: icon.exclamation,
     door: door.secret,
     requirements: conditions.dibblesStoreRoom,
+    autoSpawn: 1,
   },
   kurtz: {
     tag: "kurtz",
