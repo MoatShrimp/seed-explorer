@@ -44,7 +44,7 @@ class Random {
 	get value() {
 		return 1 - this.rangeFloat();
 	}	
-	
+
 	//next random uint based on xorshift128
 	get nextUInt() {
 		let x = this.seed.shift(); //drops first value in array and retuns value

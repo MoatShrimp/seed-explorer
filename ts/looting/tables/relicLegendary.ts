@@ -1,0 +1,25 @@
+Looter.tables.relicLegendary = {
+  defaultLoot: {guid: "5445617cf5a24b678e1680f88ba4f134"},
+  randState: "basicItem",
+  items: [    
+    {weight: 1, guid: "4cf72d4585f64a95b4d614bd559e4d58"},
+    {weight: 1, guid: "830216e9492c484489ef90c303f07b68"},
+    {weight: 1, guid: "4202645d8fa34a97a70ded11ee0f8f31"},
+    {weight: 1, guid: "f3973f00fda94bfbb4eed373ed28b775"},
+    {weight: 1, guid: "212720105e1a4605b4d5bc4295a684cd"},
+    {weight: 1, guid: "49e257bc3ed04cde9e5b0a7089d7af10"},
+    {weight: 1, guid: "bab552535a104b059e636abfd7d05685"},
+    {weight: 1, guid: "f7eca5455bdf49fe9d2dafd4ec32d1e7"},
+    {weight: 1, guid: "dd44a1f545ad48cda6d653cb6b5eaafb"},
+    {weight: 1, guid: "35ccd3bee9604d10988601bfecb53a3a"},
+    {weight: 1, guid: "b7a8798a25ca4137a95538358085f2f4"},
+    {weight: 1, guid: "01dd414291604477aa1405b5683a29a3"},
+    {weight: 1, guid: "f568bbf4ecb54daf9d7d472f06d97521"},
+    {weight: 1, guid: "079a976e3dd24ea8819941b9f81259c2"},
+    {weight: 1, guid: "7a06da12309d4136917c71be7772e055"},
+    {weight: 1, guid: "19dc5130b5404db7a09262d609d9b8ba"},
+    {weight: 1, guid: "a1ca0abb4f8c47bbb719be48fb7fd470"},
+    {weight: 1, guid: "93272a3527ad43f7a68272a0fdb560a3"},
+    {weight: 1, guid: "26e6112f67b1cbc4fa1d6dc594e40401"},
+  ]
+}

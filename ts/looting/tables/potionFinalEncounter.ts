@@ -1,0 +1,26 @@
+Looter.tables.potionFinalEncounter = {
+  defaultLoot: {guid: ""},
+	randState: "basicItem",
+  items: [    
+		{weight: 9, guid: "5e2dd0724b8cfcb4f82384ea43306933"},
+		{weight: 7, guid: "b2b5dda6d4f8eb847864f99009683c0b"},
+		{weight: 9, guid: "fe08c145c98ee834b8a13528a3928c78"},
+		{weight: 9, guid: "fdab5233be4a33c43a1c0767e0ed11b4"},
+		{weight: 3, guid: "1c780a1a65952c64eaad5f42bb3fc354"},
+		{weight: 9, guid: "8c79aeb8773a4a4449967fe4acb8b652"},
+		{weight: 9, guid: "5625b4e1283309244be760ee327e73a3"},
+		{weight: 9, guid: "1c04caed521a793468cb2c4f2f3227c0"},
+		{weight: 9, guid: "e315c96c8cc13e54fa7beae2a965d076"},
+		{weight: 9, guid: "d64f994c1b38fea4592322b196c19714"},
+		{weight: 9, guid: "ebc6a5ad3e625e94c8cc66f5e8cc1b25"},
+		{weight: 7, guid: "904b001b5a4299440a104cf0f6c71189"},
+		{weight: 9, guid: "83a828ce33b28e94f894cdf209188b26"},
+		{weight: 9, guid: "57612a8e59cffd94fb071011f052c28a"},
+		{weight: 9, guid: "ce11620eb7fcd2e42a769a785e130fb5"},
+		{weight: 9, guid: "9b9d2a90a2b9eae4d862582936e8fd49"},
+		{weight: 3, guid: "cd32c858a48d7784aa8da2db08f88c6f"},
+		{weight: 6, guid: "dcd68a223a04705459fcede2fbe03518"},
+		{weight: 9, guid: "649297c1d0565ac42b7b16c12953b559"},
+		{weight: 9, guid: "b54860d1c481ca843a42757c83bab04a"},
+  ]
+}

@@ -1,0 +1,25 @@
+Looter.tables.blessing = {
+  defaultLoot: {guid: ""},
+  randState: "blessing",
+  items: [    
+    {weight: 9, guid: "7ab38b68908c1c24db9bde758636d201"},
+    {weight: 9, guid: "871433ab29309f84bba886d1d468ce25"},
+    {weight: 9, guid: "393b54072334959438bebebdba058a33"},
+    {weight: 2, guid: "72dc5b81e9e460d488d559205c45480c"},
+    {weight: 9, guid: "4a8549142f7040f41bb4c6af1ba27685"},
+    {weight: 9, guid: "491f8b90f55af994e9b5d11e1ad5c6c6"},
+    {weight: 9, guid: "f0594afe52fdd18458278f6dc1ae4695"},
+    {weight: 9, guid: "eddccd1fcd98d3640a6265521deef32a"},
+    {weight: 9, guid: "e25179f1c7976b645a7aaa3b6d517d8b"},
+    {weight: 3, guid: "cac06059b4384bd438c6a1aba74a6b8b"},
+    {weight: 5, guid: "7f56da2425614364890b17b4f56f43e9"},
+    {weight: 9, guid: "322ea5a131ba4f641bf1553f6089078b"},
+    {weight: 3, guid: "3fe5ddf9b07ee4249b78fa269f79cdfe"},
+    {weight: 3, guid: "af4a3e6a5508c3a40bfba0ccac1f4de8"},
+    {weight: 9, guid: "1e2b635733f73114a849eb3a1a0c060b"},
+    {weight: 9, guid: "c16bcb5ae7e78924a870dca0a897309d"},
+    {weight: 9, guid: "b551d2bdf43d6a64b93cb98094597ec4"},
+    {weight: 9, guid: "b10e372c91e372f4584803406b2255ac"},
+    {weight: 9, guid: "763ffdf7480aa024ea6dd731244306e8"},
+  ]
+}
