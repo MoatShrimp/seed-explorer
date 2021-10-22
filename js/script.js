@@ -10973,7 +10973,7 @@ function shop(zone, level) {
     });
 }
 function randomSeed() {
-    e$("seed-input").value = (12121212).toString();
+    e$("seed-input").value = (seedRand.next).toString();
     loadSeed();
 }
 function nextRand(seed) {
