@@ -77,12 +77,16 @@ class Random {
 		return this.nextUInt % (max - min) + min;
 	}
 	
-	//return float between min and max, not matching Unity exactly but is close enough for usage right now.
+	//return float between min and max
 	rangeFloat (min = 0, max = 1) {
 		if (max < min){
 			[min, max] = [max, min];
 		}
-		return (max - min) * (1 - (toUInt32(this.nextUInt << 9) / 0xFFFFFFFF)) + min;
+		//Old inaccurate version
+		//return (max - min) * (1 - (toUInt32(this.nextUInt << 9) / 0xFFFFFFFF)) + min; 
+		
+		// new version, using Math.fround() to simulate 32-bit floating point numbers and bit-masking to 24-bit (floaitng point mantissa)
+		return (max - min) * (1 - Math.fround(toUInt32(this.nextUInt & 0x7FFFFF) / 0x7FFFFF) + min;
 	}
 
 	//Copy of rangeInclusive from Undermine
