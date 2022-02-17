@@ -119,8 +119,6 @@ class Random {
 	}
 
 
-	// Token: 0x06000754 RID: 1876 RVA: 0x0001A910 File Offset: 0x00018B10
-
 	arrayPick (array) {
 		const totalWeight = array.reduce((total, current) => total + current, 0);
 		let randWeight = this.rangeInclusive(1, totalWeight);
