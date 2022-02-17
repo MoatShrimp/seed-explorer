@@ -40,7 +40,7 @@ class Random {
 		return this.nextInt;
 	} 
 	
-	//return a float between 0.0 and 1.0, not matching Unity exactly but is close enough for usage right now.
+	//return a float between 0.0 and 1.0
 	get value() {
 		return 1 - this.rangeFloat();
 	}	
